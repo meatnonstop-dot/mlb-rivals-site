@@ -19,12 +19,17 @@
     .stat-bar {
       height: 10px;
       border-radius: 999px;
-      background: linear-gradient(to right, #ec4899, #9333ea);
+      transition: width 0.8s ease;
     }
 
-    .modal {
-      backdrop-filter: blur(6px);
+    .modal-content {
+      transition: 0.3s;
+      box-shadow: 0 0 40px rgba(0,0,0,0.6);
     }
+
+    .rarity-SIGNATURE { box-shadow: 0 0 40px rgba(236,72,153,0.5); }
+    .rarity-PRIME { box-shadow: 0 0 40px rgba(59,130,246,0.5); }
+    .rarity-IMPACT { box-shadow: 0 0 40px rgba(16,185,129,0.5); }
   </style>
 </head>
 
@@ -46,16 +51,13 @@
 </header>
 
 <section class="max-w-6xl mx-auto px-6 py-12">
-
   <h2 class="text-4xl font-extrabold mb-8">Player Index</h2>
-
   <div id="playerGrid" class="grid md:grid-cols-3 gap-8"></div>
-
 </section>
 
 <!-- Modal -->
-<div id="playerModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center modal">
-  <div class="bg-black rounded-2xl p-8 w-full max-w-lg relative">
+<div id="playerModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center backdrop-blur-sm">
+  <div id="modalBox" class="modal-content bg-black rounded-2xl p-8 w-full max-w-lg relative border border-white/10">
 
     <button onclick="closeModal()" class="absolute top-4 right-4 text-white/60 hover:text-white">
       ✕
@@ -120,6 +122,9 @@ function renderPlayers() {
 function openModal(player) {
   const modal = document.getElementById("playerModal");
   const content = document.getElementById("modalContent");
+  const modalBox = document.getElementById("modalBox");
+
+  modalBox.className = "modal-content bg-black rounded-2xl p-8 w-full max-w-lg relative border border-white/10 rarity-" + player.rarity;
 
   let statsHTML = "";
 
@@ -128,7 +133,7 @@ function openModal(player) {
       <div class="mb-4">
         <p class="text-sm mb-1">${stat}</p>
         <div class="bg-white/10 rounded-full">
-          <div class="stat-bar" style="width:${player.stats[stat]}%"></div>
+          <div class="stat-bar" id="stat-${stat}" style="width:0%; background: linear-gradient(to right, #ec4899, #9333ea);"></div>
         </div>
       </div>
     `;
@@ -136,12 +141,18 @@ function openModal(player) {
 
   content.innerHTML = `
     <h2 class="text-2xl font-bold mb-2">${player.name}</h2>
-    <p class="text-white/60 mb-4">${player.rarity} · ${player.team} · OVR ${player.ovr}</p>
+    <p class="text-white/60 mb-6">${player.rarity} · ${player.team} · OVR ${player.ovr}</p>
     ${statsHTML}
   `;
 
   modal.classList.remove("hidden");
   modal.classList.add("flex");
+
+  setTimeout(() => {
+    for (let stat in player.stats) {
+      document.getElementById("stat-" + stat).style.width = player.stats[stat] + "%";
+    }
+  }, 100);
 }
 
 function closeModal() {
