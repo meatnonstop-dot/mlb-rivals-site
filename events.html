@@ -111,12 +111,76 @@ nav{display:flex;gap:2px}
   margin-bottom:40px;position:relative;animation:fadeUp .5s .25s ease both;
   background:var(--surface)}
 .feat-img-wrap{position:relative;height:300px;overflow:hidden}
-.feat-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center top;
-  transition:transform .6s ease}
-.feat-event:hover .feat-img-wrap img{transform:scale(1.03)}
 .feat-img-overlay{position:absolute;inset:0;background:
   linear-gradient(to bottom,transparent 30%,rgba(5,8,16,.95) 100%)}
 .feat-body{padding:24px 28px 28px;border-top:1px solid var(--border)}
+
+/* ── CSS BANNERS ── */
+.banner{position:relative;width:100%;height:100%;display:flex;
+  align-items:flex-end;justify-content:flex-start;overflow:hidden}
+.banner-wbc{
+  background:linear-gradient(135deg,#05112b 0%,#0a1f44 40%,#0d2d1a 70%,#081a2e 100%)}
+.banner-wbc::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 80% 30%,rgba(34,211,238,.18),transparent 65%),
+             radial-gradient(ellipse 50% 50% at 20% 70%,rgba(230,57,70,.12),transparent 60%)}
+.banner-wbc::after{content:'WBC\A2026';white-space:pre;
+  position:absolute;right:24px;top:50%;transform:translateY(-50%);
+  font-family:var(--fd);font-size:clamp(3.5rem,10vw,6rem);line-height:.9;
+  letter-spacing:.04em;color:rgba(34,211,238,.12);pointer-events:none;text-align:right}
+.banner-spring{
+  background:linear-gradient(135deg,#081a10 0%,#0d2b18 45%,#152408 75%,#0a1a0e 100%)}
+.banner-spring::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 60% 20%,rgba(34,197,94,.15),transparent 65%),
+             radial-gradient(ellipse 40% 40% at 10% 80%,rgba(47,124,246,.08),transparent 55%)}
+.banner-spring::after{content:'SPRING\ATRAINING\A2026';white-space:pre;
+  position:absolute;right:24px;top:50%;transform:translateY(-50%);
+  font-family:var(--fd);font-size:clamp(2rem,6vw,3.8rem);line-height:.95;
+  letter-spacing:.04em;color:rgba(34,197,94,.13);pointer-events:none;text-align:right}
+.banner-allstar{
+  background:linear-gradient(135deg,#0d1020 0%,#15182e 50%,#1a1020 100%)}
+.banner-allstar::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 30%,rgba(244,185,66,.09),transparent 65%)}
+.banner-allstar::after{content:'ALL-STAR\A2025';white-space:pre;
+  position:absolute;right:24px;top:50%;transform:translateY(-50%);
+  font-family:var(--fd);font-size:clamp(2rem,6vw,3.5rem);line-height:.95;
+  letter-spacing:.04em;color:rgba(244,185,66,.12);pointer-events:none;text-align:right}
+.banner-pass{
+  background:linear-gradient(135deg,#0a1020 0%,#14182a 50%,#0e1828 100%)}
+.banner-pass::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 40% 40%,rgba(47,124,246,.10),transparent 65%)}
+.banner-pass::after{content:'SEASON\APASS\A2025';white-space:pre;
+  position:absolute;right:24px;top:50%;transform:translateY(-50%);
+  font-family:var(--fd);font-size:clamp(1.8rem,5vw,3rem);line-height:.95;
+  letter-spacing:.04em;color:rgba(47,124,246,.13);pointer-events:none;text-align:right}
+.banner-slugger{
+  background:linear-gradient(135deg,#080d1f 0%,#0e1535 50%,#14102a 100%)}
+.banner-slugger::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 70% 40%,rgba(47,124,246,.18),transparent 65%),
+             radial-gradient(ellipse 40% 40% at 15% 70%,rgba(168,85,247,.10),transparent 55%)}
+.banner-slugger::after{content:'RANKED\ASLUGGER\ACHAMP.';white-space:pre;
+  position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  font-family:var(--fd);font-size:clamp(1.6rem,4vw,2.8rem);line-height:.95;
+  letter-spacing:.04em;color:rgba(47,124,246,.13);pointer-events:none;text-align:right}
+
+/* shared banner dot pattern */
+.banner::before{background-image:radial-gradient(circle,rgba(255,255,255,.06)1px,transparent 1px);
+  background-size:22px 22px}
+
+/* banner content inside */
+.banner-inner{position:relative;z-index:1;padding:20px 24px;
+  display:flex;flex-direction:column;gap:6px}
+.banner-label{font-family:var(--fu);font-size:.7rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.banner-title{font-family:var(--fd);font-size:clamp(1.4rem,5vw,2.2rem);
+  letter-spacing:.04em;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+.banner-sub{font-family:var(--fu);font-size:.75rem;color:var(--muted);margin-top:2px}
+
+/* banner accent lines */
+.banner-wbc .banner-inner{border-left:3px solid rgba(34,211,238,.6)}
+.banner-spring .banner-inner{border-left:3px solid rgba(34,197,94,.6)}
+.banner-allstar .banner-inner{border-left:3px solid rgba(244,185,66,.6)}
+.banner-pass .banner-inner{border-left:3px solid rgba(47,124,246,.6)}
+.banner-slugger .banner-inner{border-left:3px solid rgba(168,85,247,.6)}
 .feat-status-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
 .status-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--fu);
   font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
@@ -168,8 +232,7 @@ nav{display:flex;gap:2px}
 .sub-event.open .sub-chevron{transform:rotate(180deg);color:var(--blue)}
 .sub-event-body{display:none;padding:0 18px 18px;border-top:1px solid var(--border)}
 .sub-event.open .sub-event-body{display:block}
-.sub-event-img{border-radius:8px;overflow:hidden;margin-bottom:16px;max-height:220px}
-.sub-event-img img{width:100%;height:100%;object-fit:cover}
+.sub-event-img{border-radius:8px;overflow:hidden;margin-bottom:16px;height:160px}
 
 /* ── REWARD TABLES ── */
 .reward-section{margin-bottom:16px}
@@ -227,14 +290,9 @@ nav{display:flex;gap:2px}
   animation:fadeUp .5s ease both}
 .event-card:hover{border-color:var(--border2);transform:translateY(-2px)}
 .ec-img-wrap{position:relative;height:200px;overflow:hidden}
-.ec-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
-.event-card:hover .ec-img-wrap img{transform:scale(1.04)}
-.ec-img-wrap.placeholder{background:linear-gradient(135deg,var(--surface2),var(--surface3));
-  display:flex;align-items:center;justify-content:center}
-.ec-placeholder-icon{font-size:3rem;opacity:.3}
 .ec-overlay{position:absolute;inset:0;background:
-  linear-gradient(to bottom,transparent 40%,rgba(5,8,16,.9) 100%)}
-.ec-status-float{position:absolute;top:12px;left:12px}
+  linear-gradient(to bottom,transparent 40%,rgba(5,8,16,.85) 100%);pointer-events:none}
+.ec-status-float{position:absolute;top:12px;left:12px;z-index:2}
 .ec-body{padding:18px 20px 20px;border-top:1px solid var(--border)}
 .ec-title{font-family:var(--fu);font-size:1.05rem;font-weight:700;
   letter-spacing:.04em;line-height:1.3;margin-bottom:8px}
@@ -356,7 +414,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
   .feat-img-wrap{height:220px}
   .feat-body{padding:18px 18px 22px}
   .feat-title{font-size:1.5rem}
-  .ec-img-wrap{height:170px}
+  .ec-img-wrap{height:160px}
   .sub-period{display:none}
   .odds-grid{grid-template-columns:1fr 1fr}
   .coupon-card{padding:18px 18px}
@@ -367,7 +425,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
   .page-hero{padding:20px 14px 16px}
   .filters-wrap,.content,.coupon-section{padding-left:14px;padding-right:14px}
   .feat-img-wrap{height:180px}
-  .ec-img-wrap{height:150px}
+  .ec-img-wrap{height:140px}
   .feat-actions{flex-direction:column}
   .btn-primary,.btn-ghost{width:100%;text-align:center}
   .odds-grid{grid-template-columns:1fr}
@@ -432,9 +490,13 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
   <!-- ─────────────────────────────────────────────── -->
   <div class="feat-event" data-status="active">
     <div class="feat-img-wrap">
-      <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/25/20260225_103619_54wm6WBET1.jpg"
-           alt="2026 World Baseball Classic Special Promotion banner"
-           onerror="this.parentElement.classList.add('placeholder');this.style.display='none';this.parentElement.innerHTML+='<div class=\'ec-placeholder-icon\'>🌏⚾</div>'"/>
+      <div class="banner banner-wbc">
+        <div class="banner-inner">
+          <div class="banner-label">🌍 2026 Season Event</div>
+          <div class="banner-title">World Baseball<br>Classic</div>
+          <div class="banner-sub">Feb 25 – Mar 23 · vs. 2026 USA Team</div>
+        </div>
+      </div>
       <div class="feat-img-overlay"></div>
     </div>
     <div class="feat-body">
@@ -599,9 +661,12 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
           </div>
           <div class="sub-event-body">
             <div class="sub-event-img">
-              <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/25/20260225_103716_alqFpYhhEi.png"
-                   alt="Ranked Slugger World Championship"
-                   onerror="this.style.display='none'"/>
+              <div class="banner banner-slugger" style="height:160px">
+                <div class="banner-inner">
+                  <div class="banner-label">⚡ Weekly Rankings</div>
+                  <div class="banner-title">Ranked Slugger<br>World Championship</div>
+                </div>
+              </div>
             </div>
             <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;line-height:1.55">Weekly rounds — up to <strong style="color:var(--text)">30 games per round</strong>. Matches use two USA WBC pitchers. Each player can only be used once per round. Rankings are based on your <strong style="color:var(--text)">top 3 scores</strong> per round. WBC Special Cards receive <span style="color:var(--gold)">Upgrade +20 &amp; Full Swing S+</span> boost.</p>
             <div class="reward-section">
@@ -732,9 +797,13 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
     <!-- Spring Training 2026 -->
     <div class="event-card" data-status="active" style="animation-delay:.05s">
       <div class="ec-img-wrap">
-        <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/11/20260211_152932_LW0OSkRCGO.jpeg"
-             alt="2026 Spring Training Event"
-             onerror="this.parentElement.classList.add('placeholder');this.style.display='none';this.parentElement.innerHTML+='<div class=\'ec-placeholder-icon\'>⚾🌸</div>'"/>
+        <div class="banner banner-spring" style="height:200px">
+          <div class="banner-inner">
+            <div class="banner-label">🌸 Active Event</div>
+            <div class="banner-title">Spring Training<br>2026</div>
+            <div class="banner-sub">25-Day Daily Missions · Event Pass · Shop</div>
+          </div>
+        </div>
         <div class="ec-overlay"></div>
         <div class="ec-status-float"><span class="status-badge status-live">Live Now</span></div>
       </div>
@@ -821,9 +890,14 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
   <div class="events-grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr))">
 
     <!-- 2025 All-Star Game Coupon -->
-    <div class="event-card" data-status="ended" style="animation-delay:.1s;opacity:.75">
-      <div class="ec-img-wrap placeholder" style="height:140px">
-        <div class="ec-placeholder-icon">⭐🎮</div>
+    <div class="event-card" data-status="ended" style="animation-delay:.1s;opacity:.7">
+      <div class="ec-img-wrap">
+        <div class="banner banner-allstar" style="height:140px;opacity:.7">
+          <div class="banner-inner">
+            <div class="banner-label">⭐ Coupon Event</div>
+            <div class="banner-title">MLB All-Star<br>Game 2025</div>
+          </div>
+        </div>
         <div class="ec-overlay"></div>
         <div class="ec-status-float"><span class="status-badge status-ended">Ended</span></div>
       </div>
@@ -858,9 +932,14 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
     </div>
 
     <!-- Season Opening Pass 2025 -->
-    <div class="event-card" data-status="ended" style="animation-delay:.15s;opacity:.75">
-      <div class="ec-img-wrap placeholder" style="height:140px">
-        <div class="ec-placeholder-icon">🏆📋</div>
+    <div class="event-card" data-status="ended" style="animation-delay:.15s;opacity:.7">
+      <div class="ec-img-wrap">
+        <div class="banner banner-pass" style="height:140px;opacity:.7">
+          <div class="banner-inner">
+            <div class="banner-label">🏆 Season Pass</div>
+            <div class="banner-title">2025 Season<br>Opening Pass</div>
+          </div>
+        </div>
         <div class="ec-overlay"></div>
         <div class="ec-status-float"><span class="status-badge status-ended">Ended</span></div>
       </div>
@@ -944,12 +1023,12 @@ function toggleAllSubs(){
 function toggleCard(btn){
   const card = btn.closest('.event-card');
   card.classList.toggle('open');
-  const detail = card.querySelector('.ec-detail');
-  if(card.classList.contains('open')){
-    btn.innerHTML = btn.innerHTML.replace('Full Event Details','Hide Details').replace('Show Codes (Expired)','Hide Details');
-  } else {
-    btn.innerHTML = btn.innerHTML.replace('Hide Details','Full Event Details');
-    btn.querySelector('svg');
+  const isOpen = card.classList.contains('open');
+  const textNode = btn.childNodes[0];
+  if(textNode && textNode.nodeType === 3){
+    const orig = btn.dataset.origText || textNode.textContent.trim();
+    if(!btn.dataset.origText) btn.dataset.origText = orig;
+    textNode.textContent = isOpen ? '\n          Hide Details\n          ' : '\n          ' + orig + '\n          ';
   }
 }
 
