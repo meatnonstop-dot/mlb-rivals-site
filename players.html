@@ -2,14 +2,83 @@
 <html>
 <head>
   <title>MLB Rivals – Players</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: radial-gradient(circle at top, #111827, #000); }
+    .card-glow { box-shadow: 0 0 30px rgba(236,72,153,0.35); }
+    .card-glow-blue { box-shadow: 0 0 30px rgba(59,130,246,0.35); }
+  </style>
 </head>
-<body class="bg-black text-white p-10">
+<body class="text-white min-h-screen">
 
-<h1 class="text-3xl font-bold mb-4">Player Index</h1>
-<p class="text-white/70">Player cards and stats will go here.</p>
+<header class="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+    <h1 class="text-2xl font-extrabold tracking-wider text-blue-400">
+      MLB RIVALS
+    </h1>
+    <nav class="hidden md:flex gap-6 text-sm text-white/70">
+      <a href="index.html">Home</a>
+      <a href="scouts.html">Scouts</a>
+      <a href="players.html" class="text-white">Players</a>
+      <a href="updates.html">Updates</a>
+      <a href="guide.html">Guide</a>
+    </nav>
+  </div>
+</header>
 
-<a href="index.html" class="text-blue-400 underline mt-6 block">← Back Home</a>
+<section class="max-w-6xl mx-auto px-6 py-16">
+  <h2 class="text-4xl font-extrabold mb-10">Player Index</h2>
+
+  <div class="grid md:grid-cols-3 gap-8">
+
+    <!-- Signature Card -->
+    <div class="card-glow rounded-2xl bg-gradient-to-br from-pink-600 to-fuchsia-600 p-[1px]">
+      <div class="bg-black/80 rounded-2xl p-6 hover:bg-black/70 transition">
+        <div class="flex justify-between text-sm mb-2">
+          <span>SIGNATURE</span>
+          <span>OVR 66</span>
+        </div>
+        <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
+          CARD ART
+        </div>
+        <h3 class="font-semibold">Shohei Ohtani</h3>
+        <p class="text-sm text-white/60">LAD · SP / DH</p>
+      </div>
+    </div>
+
+    <!-- Prime Card -->
+    <div class="card-glow-blue rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 p-[1px]">
+      <div class="bg-black/80 rounded-2xl p-6 hover:bg-black/70 transition">
+        <div class="flex justify-between text-sm mb-2">
+          <span>PRIME</span>
+          <span>OVR 65</span>
+        </div>
+        <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
+          CARD ART
+        </div>
+        <h3 class="font-semibold">Mookie Betts</h3>
+        <p class="text-sm text-white/60">LAD · RF</p>
+      </div>
+    </div>
+
+    <!-- Impact Card -->
+    <div class="rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px]" style="box-shadow:0 0 30px rgba(16,185,129,0.35);">
+      <div class="bg-black/80 rounded-2xl p-6 hover:bg-black/70 transition">
+        <div class="flex justify-between text-sm mb-2">
+          <span>IMPACT</span>
+          <span>OVR 62</span>
+        </div>
+        <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
+          CARD ART
+        </div>
+        <h3 class="font-semibold">Freddie Freeman</h3>
+        <p class="text-sm text-white/60">LAD · 1B</p>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 </body>
 </html>
