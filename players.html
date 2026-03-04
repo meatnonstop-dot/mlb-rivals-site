@@ -7,73 +7,97 @@
 
   <style>
     body {
-      background: radial-gradient(circle at top, #0f172a 0%, #000 70%);
+      margin: 0;
+      background:
+        radial-gradient(circle at center, rgba(30,41,59,0.6), #000 70%),
+        url("https://images.unsplash.com/photo-1508341591423-4347099e1f19?q=80&w=1920&auto=format&fit=crop");
+      background-size: cover;
+      background-attachment: fixed;
+      background-blend-mode: overlay;
     }
 
-    /* ===== CARD WRAPPER ===== */
-    .flip-card {
-      perspective: 1200px;
-    }
+    /* ===== CARD BASE ===== */
+    .flip-card { perspective: 1200px; }
 
     .flip-inner {
       position: relative;
       width: 100%;
-      height: 320px;
+      height: 330px;
       transform-style: preserve-3d;
       transition: transform 0.8s cubic-bezier(.22,.61,.36,1);
     }
 
-    .flipped {
-      transform: rotateY(180deg);
-    }
+    .flipped { transform: rotateY(180deg); }
 
     .face {
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: 16px;
+      border-radius: 18px;
       backface-visibility: hidden;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(0,0,0,0.92);
-      overflow: hidden;
       padding: 1.5rem;
+      overflow: hidden;
+      background: rgba(0,0,0,0.9);
     }
 
     .back {
       transform: rotateY(180deg);
-      background: rgba(0,0,0,0.97);
+      background: rgba(0,0,0,0.95);
     }
 
-    /* ===== SUBTLE TILT (very controlled) ===== */
-    .tilt-layer {
-      width: 100%;
-      height: 100%;
-      transition: transform 0.15s ease-out;
-    }
-
-    /* ===== SMOOTH SHINE SWEEP ===== */
-    .shine::before {
+    /* ===== ENERGY RING ===== */
+    .energy-ring::before {
       content: "";
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(
-        circle at 50% 50%,
-        rgba(255,255,255,0.15),
-        transparent 60%
+      inset: -3px;
+      border-radius: 20px;
+      z-index: -1;
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== SOFT BORDER GLOW ===== */
+    @keyframes breathe {
+      0%,100% { box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+      50% { box-shadow: 0 0 35px rgba(255,255,255,0.25); }
+    }
+
+    .glow-breathe {
+      animation: breathe 4s ease-in-out infinite;
+    }
+
+    /* ===== SHINE ===== */
+    .shine::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        transparent 45%,
+        rgba(255,255,255,0.12),
+        transparent 55%
       );
-      transform: rotate(25deg);
-      animation: sweep 6s ease-in-out infinite;
+      transform: translateX(-100%);
+      animation: sweep 7s ease-in-out infinite;
       pointer-events: none;
     }
 
     @keyframes sweep {
-      0% { transform: translateX(-60%) rotate(25deg); opacity: 0; }
-      40% { opacity: 0.4; }
-      60% { opacity: 0.4; }
-      100% { transform: translateX(60%) rotate(25deg); opacity: 0; }
+      0% { transform: translateX(-100%); opacity: 0; }
+      40% { opacity: 0.35; }
+      60% { opacity: 0.35; }
+      100% { transform: translateX(100%); opacity: 0; }
+    }
+
+    /* ===== TILT ===== */
+    .tilt-layer {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.15s ease-out;
     }
 
     /* ===== STAT BARS ===== */
@@ -84,7 +108,7 @@
       transition: width 0.9s cubic-bezier(.22,.61,.36,1);
     }
 
-    /* ===== RARITY THEMES ===== */
+    /* ===== RARITY COLORS ===== */
     .SIGNATURE .stat-bar {
       background: linear-gradient(to right, #ec4899, #9333ea);
     }
@@ -95,16 +119,22 @@
       background: linear-gradient(to right, #10b981, #14b8a6);
     }
 
-    .SIGNATURE { box-shadow: 0 0 20px rgba(236,72,153,0.35); }
-    .PRIME { box-shadow: 0 0 20px rgba(59,130,246,0.35); }
-    .IMPACT { box-shadow: 0 0 20px rgba(16,185,129,0.35); }
+    .SIGNATURE.energy-ring::before {
+      background: conic-gradient(#ec4899, #9333ea, #ec4899);
+    }
+    .PRIME.energy-ring::before {
+      background: conic-gradient(#3b82f6, #6366f1, #3b82f6);
+    }
+    .IMPACT.energy-ring::before {
+      background: conic-gradient(#10b981, #14b8a6, #10b981);
+    }
 
   </style>
 </head>
 
 <body class="text-white min-h-screen">
 
-<header class="bg-black/80 backdrop-blur border-b border-white/10 p-5">
+<header class="bg-black/70 backdrop-blur border-b border-white/10 p-5">
   <h1 class="text-2xl font-extrabold text-blue-400">MLB RIVALS</h1>
 </header>
 
@@ -135,7 +165,7 @@
     </select>
   </div>
 
-  <div id="playerGrid" class="grid md:grid-cols-3 gap-8"></div>
+  <div id="playerGrid" class="grid md:grid-cols-3 gap-10"></div>
 
 </section>
 
@@ -184,7 +214,7 @@ function renderPlayers() {
     }
 
     const card = document.createElement("div");
-    card.className = "flip-card " + player.rarity;
+    card.className = "flip-card energy-ring glow-breathe " + player.rarity;
 
     card.innerHTML = `
       <div class="flip-inner">
@@ -236,15 +266,14 @@ function flipCard(flipInner, index) {
   }
 }
 
-/* Very subtle tilt */
 function tiltCard(event, element) {
 
   const rect = element.getBoundingClientRect();
   const x = (event.clientX - rect.left) / rect.width - 0.5;
   const y = (event.clientY - rect.top) / rect.height - 0.5;
 
-  const rotateX = y * -6;
-  const rotateY = x * 6;
+  const rotateX = y * -5;
+  const rotateY = x * 5;
 
   element.style.transform =
     `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
