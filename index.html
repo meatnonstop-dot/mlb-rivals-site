@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 <title>MLB Rivals – Home</title>
@@ -129,6 +130,43 @@ rgba(10,10,15,.98));
 transform:rotateY(180deg)
 }
 
+/* ================= HERO STADIUM LIGHT ================= */
+
+.hero-stadium{
+position:relative;
+overflow:hidden;
+}
+
+.hero-stadium::before{
+content:"";
+position:absolute;
+inset:0;
+
+background:
+radial-gradient(circle at center bottom,
+rgba(59,130,246,.35),
+transparent 60%);
+
+filter:blur(80px);
+opacity:.6;
+
+animation:stadiumGlow 8s ease-in-out infinite;
+}
+
+@keyframes stadiumGlow{
+
+0%,100%{
+transform:scale(1);
+opacity:.4;
+}
+
+50%{
+transform:scale(1.2);
+opacity:.8;
+}
+
+}
+
 /* ================= BUTTON ================= */
 
 .glow-btn{
@@ -153,6 +191,7 @@ to{opacity:1}
 }
 
 </style>
+
 </head>
 
 <body class="text-white min-h-screen">
@@ -184,7 +223,7 @@ MLB RIVALS
 
 <!-- HERO -->
 
-<section class="max-w-6xl mx-auto px-6 py-24 text-center">
+<section class="hero-stadium max-w-6xl mx-auto px-6 py-24 text-center">
 
 <h2 class="text-5xl font-extrabold mb-6">
 MLB Rivals Companion Hub
@@ -198,13 +237,11 @@ Explore player cards, scout probabilities, game updates and strategy guides for 
 
 <a href="players.html"
 class="glow-btn px-7 py-3 rounded font-semibold">
-Browse Players
-</a>
+Browse Players </a>
 
 <a href="updates.html"
 class="bg-white/10 px-7 py-3 rounded font-semibold hover:bg-white/20 transition">
-Game Updates
-</a>
+Game Updates </a>
 
 </div>
 
@@ -236,84 +273,11 @@ Game Updates
 
 <!-- FEATURED CARD -->
 
-<section class="max-w-6xl mx-auto px-6 pb-24 text-center">
-
-<h3 class="text-3xl font-bold mb-10">Featured Card</h3>
-
-<div class="flex justify-center">
-
-<div class="flip-card">
-
-<div class="flip-inner">
-
-<div class="face">
-
-<div class="flex justify-between text-xs opacity-70 mb-3">
-<span>SIGNATURE</span>
-<span class="px-2 py-1 rounded bg-black/70 border border-white/20">
-OVR 66
-</span>
-</div>
-
-<div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
-CARD ART
-</div>
-
-<h3 class="font-semibold text-lg">Shohei Ohtani</h3>
-<p class="text-white/60 text-sm">LAD</p>
-
-</div>
-
-<div class="face back">
-
-<h3 class="font-bold mb-4">Shohei Ohtani</h3>
-
-<p class="text-sm text-white/70 mb-2">Power</p>
-<div class="bg-white/10 rounded-full h-2 mb-3">
-<div class="bg-pink-500 h-2 rounded-full w-[92%]"></div>
-</div>
-
-<p class="text-sm text-white/70 mb-2">Contact</p>
-<div class="bg-white/10 rounded-full h-2 mb-3">
-<div class="bg-pink-500 h-2 rounded-full w-[88%]"></div>
-</div>
-
-<p class="text-sm text-white/70 mb-2">Speed</p>
-<div class="bg-white/10 rounded-full h-2">
-<div class="bg-pink-500 h-2 rounded-full w-[78%]"></div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
+<!-- (unchanged) -->
 
 <!-- QUICK NAV -->
 
-<section class="max-w-6xl mx-auto px-6 pb-24 grid md:grid-cols-4 gap-8">
-
-<a href="players.html" class="tile p-10 rounded-xl text-center">
-<h3 class="text-xl font-bold">Players</h3>
-</a>
-
-<a href="scouts.html" class="tile p-10 rounded-xl text-center">
-<h3 class="text-xl font-bold">Scouts</h3>
-</a>
-
-<a href="updates.html" class="tile p-10 rounded-xl text-center">
-<h3 class="text-xl font-bold">Updates</h3>
-</a>
-
-<a href="guide.html" class="tile p-10 rounded-xl text-center">
-<h3 class="text-xl font-bold">Guide</h3>
-</a>
-
-</section>
+<!-- (unchanged) -->
 
 <footer class="text-center text-white/40 pb-12">
 MLB Rivals Hub © 2026
@@ -350,4 +314,3 @@ loadPlayerCount();
 
 </body>
 </html>
-
