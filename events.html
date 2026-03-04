@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Events – MLB Rivals Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050810;--surface:#0d1220;--surface2:#141a2e;--surface3:#1a2240;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  --blue:#2f7cf6;--blue-dim:rgba(47,124,246,.15);--blue-glow:rgba(47,124,246,.4);
+  --gold:#f4b942;--gold-dim:rgba(244,185,66,.12);
+  --red:#e63946;--red-dim:rgba(230,57,70,.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,.12);
+  --cyan:#22d3ee;
+  --text:#e8ecf5;--muted:rgba(232,236,245,.45);--muted2:rgba(232,236,245,.25);
+  --fd:'Bebas Neue',sans-serif;
+  --fu:'Barlow Condensed',sans-serif;
+  --fb:'Barlow',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden;min-height:100vh}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
+button{font-family:inherit;cursor:pointer}
+
+/* ── BG GRID ── */
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(47,124,246,.05)1px,transparent 1px),
+    linear-gradient(90deg,rgba(47,124,246,.05)1px,transparent 1px);
+  background-size:60px 60px;animation:gridScroll 25s linear infinite}
+.bg-grid::after{content:'';position:absolute;inset:0;background:
+  radial-gradient(ellipse 80% 50% at 50% 0%,rgba(47,124,246,.10),transparent 65%),
+  radial-gradient(ellipse 50% 40% at 90% 90%,rgba(230,57,70,.06),transparent 60%)}
+@keyframes gridScroll{from{transform:translateY(0)}to{transform:translateY(60px)}}
+
+/* ── HEADER ── */
+header{position:sticky;top:0;z-index:100;background:rgba(5,8,16,.92);
+  backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--fd);
+  font-size:1.4rem;letter-spacing:.08em;flex-shrink:0}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--blue);
+  animation:pulse 2s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--blue-glow)}50%{box-shadow:0 0 0 6px rgba(47,124,246,0)}}
+nav{display:flex;gap:2px}
+.nav-link{font-family:var(--fu);font-size:.875rem;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);padding:6px 12px;border-radius:6px;
+  transition:color .2s,background .2s}
+.nav-link:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.nav-link.active{color:var(--blue);background:rgba(47,124,246,.1)}
+.ham{display:none;background:none;border:none;color:var(--text);
+  flex-direction:column;gap:5px;align-items:center;justify-content:center;
+  width:38px;height:38px;padding:6px}
+.ham span{display:block;width:22px;height:2px;background:currentColor;
+  border-radius:2px;transition:transform .25s,opacity .25s}
+.ham.open span:nth-child(1){transform:translateY(7px)rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-7px)rotate(-45deg)}
+.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;
+  background:rgba(5,8,16,.97);border-bottom:1px solid var(--border);
+  padding:12px 20px 20px;flex-direction:column;gap:4px}
+.mob-nav.open{display:flex;animation:slideDown .2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.mob-nav a{font-family:var(--fu);font-size:1rem;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);padding:12px 14px;border-radius:8px;
+  transition:color .2s,background .2s}
+.mob-nav a:hover,.mob-nav a.active{color:var(--blue);background:rgba(47,124,246,.08)}
+
+/* ── PAGE HERO ── */
+.page-hero{position:relative;z-index:1;max-width:1200px;margin:0 auto;
+  padding:44px 20px 28px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--fu);
+  font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue);background:rgba(47,124,246,.12);
+  border:1px solid rgba(47,124,246,.3);padding:5px 12px;border-radius:4px;
+  margin-bottom:14px;animation:fadeUp .5s ease both}
+.page-title{font-family:var(--fd);font-size:clamp(3rem,9vw,5.5rem);
+  line-height:.95;letter-spacing:.02em;text-transform:uppercase;
+  margin-bottom:10px;animation:fadeUp .5s .08s ease both}
+.page-title .accent{color:var(--blue)}
+.page-sub{font-family:var(--fu);font-size:.95rem;color:var(--muted);
+  max-width:480px;line-height:1.5;animation:fadeUp .5s .14s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── FILTERS ── */
+.filters-wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;
+  padding:0 20px 24px;animation:fadeUp .5s .2s ease both}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.f-btn{font-family:var(--fu);font-size:.8rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;padding:7px 16px;border-radius:20px;
+  border:1px solid var(--border);background:transparent;color:var(--muted);
+  transition:all .2s;-webkit-tap-highlight-color:transparent}
+.f-btn:hover{color:var(--text);border-color:var(--border2)}
+.f-btn.active{color:var(--blue);border-color:rgba(47,124,246,.5);background:var(--blue-dim)}
+.f-btn .f-count{font-size:.65rem;background:rgba(255,255,255,.1);
+  padding:1px 5px;border-radius:10px;margin-left:4px}
+.f-btn.active .f-count{background:rgba(47,124,246,.25)}
+
+/* ── CONTENT ── */
+.content{position:relative;z-index:1;max-width:1200px;margin:0 auto;
+  padding:0 20px 80px}
+
+/* ── FEATURED HERO EVENT ── */
+.feat-event{border-radius:16px;overflow:hidden;border:1px solid var(--border2);
+  margin-bottom:40px;position:relative;animation:fadeUp .5s .25s ease both;
+  background:var(--surface)}
+.feat-img-wrap{position:relative;height:300px;overflow:hidden}
+.feat-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center top;
+  transition:transform .6s ease}
+.feat-event:hover .feat-img-wrap img{transform:scale(1.03)}
+.feat-img-overlay{position:absolute;inset:0;background:
+  linear-gradient(to bottom,transparent 30%,rgba(5,8,16,.95) 100%)}
+.feat-body{padding:24px 28px 28px;border-top:1px solid var(--border)}
+.feat-status-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.status-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--fu);
+  font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:4px}
+.status-live{background:rgba(230,57,70,.2);color:var(--red);border:1px solid rgba(230,57,70,.4)}
+.status-live::before{content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--red);animation:blink 1.2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.status-upcoming{background:rgba(244,185,66,.12);color:var(--gold);border:1px solid rgba(244,185,66,.3)}
+.status-ended{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)}
+.event-type-tag{font-family:var(--fu);font-size:.68rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;
+  background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,124,246,.25)}
+.feat-title{font-family:var(--fd);font-size:clamp(1.6rem,4vw,2.4rem);
+  letter-spacing:.04em;line-height:1.05;margin-bottom:10px}
+.feat-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.feat-date{font-family:var(--fu);font-size:.82rem;color:var(--muted);
+  display:flex;align-items:center;gap:6px}
+.feat-date svg{flex-shrink:0}
+.feat-desc{font-size:.9rem;color:var(--muted);line-height:1.6;max-width:680px;margin-bottom:20px}
+.feat-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-primary{font-family:var(--fu);font-size:.8rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:10px 22px;
+  border-radius:8px;border:none;background:var(--blue);color:#fff;
+  transition:all .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--blue-glow)}
+.btn-ghost{font-family:var(--fu);font-size:.8rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:9px 20px;
+  border-radius:8px;border:1px solid var(--border2);background:transparent;
+  color:var(--muted);transition:all .2s}
+.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.25);
+  background:rgba(255,255,255,.05)}
+
+/* ── SUB-EVENTS inside featured ── */
+.sub-events{margin-top:20px;display:grid;gap:8px}
+.sub-event{border:1px solid var(--border);border-radius:10px;overflow:hidden;
+  background:var(--surface2)}
+.sub-event-head{display:flex;align-items:center;gap:12px;padding:14px 18px;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .2s}
+.sub-event-head:hover{background:rgba(255,255,255,.03)}
+.sub-num{width:26px;height:26px;border-radius:50%;background:var(--blue-dim);
+  border:1px solid rgba(47,124,246,.3);display:flex;align-items:center;
+  justify-content:center;font-family:var(--fd);font-size:.9rem;color:var(--blue);flex-shrink:0}
+.sub-event-title{font-family:var(--fu);font-size:.9rem;font-weight:700;
+  letter-spacing:.04em;flex:1}
+.sub-period{font-family:var(--fu);font-size:.7rem;color:var(--muted);
+  margin-left:auto;flex-shrink:0}
+.sub-chevron{color:var(--muted);transition:transform .25s;flex-shrink:0;margin-left:8px}
+.sub-event.open .sub-chevron{transform:rotate(180deg);color:var(--blue)}
+.sub-event-body{display:none;padding:0 18px 18px;border-top:1px solid var(--border)}
+.sub-event.open .sub-event-body{display:block}
+.sub-event-img{border-radius:8px;overflow:hidden;margin-bottom:16px;max-height:220px}
+.sub-event-img img{width:100%;height:100%;object-fit:cover}
+
+/* ── REWARD TABLES ── */
+.reward-section{margin-bottom:16px}
+.reward-label{font-family:var(--fu);font-size:.72rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.reward-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.reward-table th{font-family:var(--fu);font-size:.68rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);
+  padding:7px 12px;text-align:left;border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.02)}
+.reward-table td{padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.04);
+  font-size:.8rem;color:var(--text)}
+.reward-table tr:last-child td{border-bottom:none}
+.reward-table tr:hover td{background:rgba(255,255,255,.02)}
+.reward-table .item-name{font-weight:600;color:var(--gold)}
+.reward-table .milestone{font-family:var(--fu);font-weight:700;color:var(--blue)}
+.reward-table .qty{font-family:var(--fu);font-weight:700;color:var(--text);text-align:right}
+.reward-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;
+  border:1px solid var(--border)}
+
+/* ── RANKING TIERS ── */
+.rank-tiers{display:grid;gap:6px}
+.rank-tier{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;
+  border-radius:8px;background:var(--surface3);border:1px solid var(--border)}
+.rank-badge{font-family:var(--fd);font-size:1.1rem;color:var(--gold);
+  width:44px;flex-shrink:0;text-align:center}
+.rank-tier:nth-child(1) .rank-badge{color:#ffd700}
+.rank-tier:nth-child(2) .rank-badge{color:#c0c0c0}
+.rank-tier:nth-child(3) .rank-badge{color:#cd7f32}
+.rank-rewards{font-family:var(--fu);font-size:.75rem;color:var(--text);line-height:1.8}
+.rank-rewards span{color:var(--gold)}
+
+/* ── LUCKY BOX ODDS ── */
+.odds-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px}
+.odds-item{display:flex;align-items:center;justify-content:space-between;
+  padding:8px 12px;border-radius:6px;background:var(--surface3);
+  border:1px solid var(--border)}
+.odds-name{font-family:var(--fu);font-size:.75rem;font-weight:600;color:var(--text)}
+.odds-rate{font-family:var(--fd);font-size:.85rem;color:var(--blue)}
+.odds-rate.rare{color:var(--gold)}
+.odds-rate.ultra{color:var(--red)}
+
+/* ── EVENT GRID (standard cards) ── */
+.events-grid{display:grid;gap:20px}
+.section-hdr{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.section-title{font-family:var(--fd);font-size:1.5rem;letter-spacing:.06em}
+.section-line{flex:1;height:1px;background:var(--border)}
+.section-count{font-family:var(--fu);font-size:.72rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* ── STANDARD EVENT CARD ── */
+.event-card{border-radius:14px;border:1px solid var(--border);background:var(--surface);
+  overflow:hidden;transition:border-color .2s,transform .2s;
+  animation:fadeUp .5s ease both}
+.event-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.ec-img-wrap{position:relative;height:200px;overflow:hidden}
+.ec-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.event-card:hover .ec-img-wrap img{transform:scale(1.04)}
+.ec-img-wrap.placeholder{background:linear-gradient(135deg,var(--surface2),var(--surface3));
+  display:flex;align-items:center;justify-content:center}
+.ec-placeholder-icon{font-size:3rem;opacity:.3}
+.ec-overlay{position:absolute;inset:0;background:
+  linear-gradient(to bottom,transparent 40%,rgba(5,8,16,.9) 100%)}
+.ec-status-float{position:absolute;top:12px;left:12px}
+.ec-body{padding:18px 20px 20px;border-top:1px solid var(--border)}
+.ec-title{font-family:var(--fu);font-size:1.05rem;font-weight:700;
+  letter-spacing:.04em;line-height:1.3;margin-bottom:8px}
+.ec-date{font-family:var(--fu);font-size:.75rem;color:var(--muted);
+  margin-bottom:12px;display:flex;align-items:center;gap:5px}
+.ec-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.ec-tag{font-family:var(--fu);font-size:.63rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;
+  border-radius:3px}
+.tag-scout{background:rgba(168,85,247,.15);color:#c084fc;border:1px solid rgba(168,85,247,.25)}
+.tag-pass{background:rgba(244,185,66,.1);color:var(--gold);border:1px solid rgba(244,185,66,.25)}
+.tag-shop{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.tag-slugger{background:rgba(47,124,246,.12);color:var(--blue);border:1px solid rgba(47,124,246,.25)}
+.tag-rbi{background:rgba(230,57,70,.12);color:var(--red);border:1px solid rgba(230,57,70,.25)}
+.tag-trade{background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.2)}
+.tag-daily{background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--border)}
+.tag-pickem{background:rgba(244,185,66,.1);color:var(--gold);border:1px solid rgba(244,185,66,.25)}
+.ec-summary{font-size:.82rem;color:var(--muted);line-height:1.55;margin-bottom:16px}
+.ec-expand-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:6px;
+  font-family:var(--fu);font-size:.75rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;padding:9px;border-radius:7px;
+  border:1px solid var(--border);background:transparent;color:var(--muted);
+  transition:all .2s;-webkit-tap-highlight-color:transparent}
+.ec-expand-btn:hover{color:var(--blue);border-color:rgba(47,124,246,.4);background:var(--blue-dim)}
+.ec-expand-btn svg{transition:transform .25s}
+.event-card.open .ec-expand-btn svg{transform:rotate(180deg)}
+.ec-detail{display:none;border-top:1px solid var(--border);padding:20px}
+.event-card.open .ec-detail{display:block;animation:fadeUp .25s ease}
+
+/* ── COUPON SECTION ── */
+.coupon-section{position:relative;z-index:1;max-width:1200px;margin:0 auto;
+  padding:0 20px 40px}
+.coupon-card{background:linear-gradient(135deg,rgba(47,124,246,.12),rgba(244,185,66,.08));
+  border:1px solid rgba(47,124,246,.25);border-radius:14px;padding:24px 28px;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.coupon-icon{font-size:2.5rem;flex-shrink:0}
+.coupon-content{flex:1;min-width:200px}
+.coupon-title{font-family:var(--fd);font-size:1.5rem;letter-spacing:.06em;margin-bottom:4px}
+.coupon-sub{font-family:var(--fu);font-size:.8rem;color:var(--muted);line-height:1.5}
+.coupon-codes{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.coupon-item{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;
+  padding:8px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.coupon-code{font-family:var(--fu);font-size:.85rem;font-weight:700;
+  letter-spacing:.1em;color:var(--gold)}
+.coupon-reward{font-family:var(--fu);font-size:.7rem;color:var(--muted)}
+.coupon-copy{font-family:var(--fu);font-size:.65rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;
+  border-radius:4px;border:1px solid rgba(47,124,246,.4);
+  background:var(--blue-dim);color:var(--blue);cursor:pointer;transition:all .15s}
+.coupon-copy:hover{background:var(--blue);color:#fff}
+
+/* ── PROGRESS BAR (Event Pass) ── */
+.pass-preview{margin-top:12px}
+.pass-milestones{display:flex;gap:4px;align-items:stretch;overflow-x:auto;
+  padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.pass-ms{flex:0 0 auto;text-align:center;padding:8px 6px;border-radius:6px;
+  background:var(--surface3);border:1px solid var(--border);min-width:70px}
+.pass-ms.premium{border-color:rgba(244,185,66,.3);background:rgba(244,185,66,.07)}
+.pass-ms-prog{font-family:var(--fd);font-size:.8rem;color:var(--blue)}
+.pass-ms.premium .pass-ms-prog{color:var(--gold)}
+.pass-ms-reward{font-family:var(--fu);font-size:.62rem;color:var(--muted);
+  line-height:1.3;margin-top:3px}
+
+/* ── MISSION TABLE ── */
+.mission-list{display:grid;gap:6px}
+.mission-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;
+  border-radius:8px;background:var(--surface3);border:1px solid var(--border)}
+.mission-type{font-family:var(--fu);font-size:.62rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:3px;
+  flex-shrink:0;margin-top:1px}
+.mission-type.daily{background:rgba(34,197,94,.12);color:var(--green)}
+.mission-type.repeat{background:rgba(47,124,246,.12);color:var(--blue)}
+.mission-type.season{background:rgba(168,85,247,.12);color:#c084fc}
+.mission-text{font-size:.82rem;line-height:1.4;flex:1}
+.mission-pts{font-family:var(--fd);font-size:.95rem;color:var(--gold);
+  flex-shrink:0;text-align:right}
+
+/* ── COUNTDOWN TIMER ── */
+.countdown{display:flex;gap:6px;margin-top:8px;align-items:center}
+.cd-label{font-family:var(--fu);font-size:.68rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.cd-time{display:flex;gap:4px}
+.cd-block{text-align:center;background:var(--surface2);border:1px solid var(--border);
+  border-radius:5px;padding:3px 8px;min-width:36px}
+.cd-num{font-family:var(--fd);font-size:1rem;color:var(--blue);line-height:1}
+.cd-unit{font-family:var(--fu);font-size:.5rem;color:var(--muted2);letter-spacing:.06em}
+.cd-sep{font-family:var(--fd);font-size:.9rem;color:var(--muted);align-self:center;margin-top:-4px}
+
+/* ── NOTICE PILLS ── */
+.notice-list{display:grid;gap:5px;margin-top:10px}
+.notice-item{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;
+  border-radius:6px;background:rgba(255,255,255,.03);border-left:2px solid rgba(47,124,246,.4);
+  font-size:.8rem;color:var(--muted);line-height:1.4}
+.notice-item::before{content:'※';color:var(--blue);font-size:.7rem;flex-shrink:0;margin-top:1px}
+
+/* ── EMPTY FILTER ── */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-icon{font-size:3rem;margin-bottom:12px}
+.empty-text{font-family:var(--fu);font-size:1rem;font-weight:600;letter-spacing:.06em}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);background:var(--surface)}
+.footer-inner{max-width:1200px;margin:0 auto;padding:24px 20px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-logo{font-family:var(--fd);font-size:1.1rem;letter-spacing:.08em}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap}
+.footer-links a{font-family:var(--fu);font-size:.8rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{width:100%;font-size:.72rem;color:var(--muted2);font-family:var(--fu)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  nav{display:none}.ham{display:flex}
+  .page-hero{padding:28px 16px 20px}
+  .filters-wrap{padding:0 16px 20px}
+  .content{padding:0 16px 60px}
+  .coupon-section{padding:0 16px 40px}
+  .feat-img-wrap{height:220px}
+  .feat-body{padding:18px 18px 22px}
+  .feat-title{font-size:1.5rem}
+  .ec-img-wrap{height:170px}
+  .sub-period{display:none}
+  .odds-grid{grid-template-columns:1fr 1fr}
+  .coupon-card{padding:18px 18px}
+  .pass-milestones{gap:3px}
+  .pass-ms{min-width:62px;padding:6px 4px}
+}
+@media(max-width:480px){
+  .page-hero{padding:20px 14px 16px}
+  .filters-wrap,.content,.coupon-section{padding-left:14px;padding-right:14px}
+  .feat-img-wrap{height:180px}
+  .ec-img-wrap{height:150px}
+  .feat-actions{flex-direction:column}
+  .btn-primary,.btn-ghost{width:100%;text-align:center}
+  .odds-grid{grid-template-columns:1fr}
+  .rank-tier{flex-direction:column;gap:6px}
+  .rank-badge{width:auto}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="dot"></span>MLB Rivals</a>
+    <nav>
+      <a href="index.html"   class="nav-link">Home</a>
+      <a href="scouts.html"  class="nav-link">Scouts</a>
+      <a href="players.html" class="nav-link">Players</a>
+      <a href="updates.html" class="nav-link">Updates</a>
+      <a href="guide.html"   class="nav-link">Guide</a>
+      <a href="events.html"  class="nav-link active">Events</a>
+      <a href="lineup.html"  class="nav-link">Builder</a>
+    </nav>
+    <button class="ham" id="ham" aria-label="Menu" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mob-nav" id="mob-nav">
+  <a href="index.html">Home</a>
+  <a href="scouts.html">Scouts</a>
+  <a href="players.html">Players</a>
+  <a href="updates.html">Updates</a>
+  <a href="guide.html">Guide</a>
+  <a href="events.html" class="active">Events</a>
+  <a href="lineup.html">Builder</a>
+</div>
+
+<!-- ═══ PAGE HERO ═══ -->
+<div class="page-hero">
+  <div class="eyebrow">📅 Official Event Board · Season 3</div>
+  <h1 class="page-title">Live <span class="accent">Events</span></h1>
+  <p class="page-sub">All active, upcoming, and past MLB Rivals events in one place — no need to visit the community site.</p>
+</div>
+
+<!-- ═══ FILTERS ═══ -->
+<div class="filters-wrap">
+  <div class="filters">
+    <button class="f-btn active" data-filter="all" onclick="setFilter('all',this)">All Events <span class="f-count" id="cnt-all">4</span></button>
+    <button class="f-btn" data-filter="active" onclick="setFilter('active',this)">🔴 Active <span class="f-count" id="cnt-active">2</span></button>
+    <button class="f-btn" data-filter="upcoming" onclick="setFilter('upcoming',this)">⏳ Upcoming <span class="f-count" id="cnt-upcoming">0</span></button>
+    <button class="f-btn" data-filter="ended" onclick="setFilter('ended',this)">✓ Ended <span class="f-count" id="cnt-ended">2</span></button>
+  </div>
+</div>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<div class="content">
+
+  <!-- ─────────────────────────────────────────────── -->
+  <!-- FEATURED: WBC SPECIAL PROMOTION                -->
+  <!-- ─────────────────────────────────────────────── -->
+  <div class="feat-event" data-status="active">
+    <div class="feat-img-wrap">
+      <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/25/20260225_103619_54wm6WBET1.jpg"
+           alt="2026 World Baseball Classic Special Promotion banner"
+           onerror="this.parentElement.classList.add('placeholder');this.style.display='none';this.parentElement.innerHTML+='<div class=\'ec-placeholder-icon\'>🌏⚾</div>'"/>
+      <div class="feat-img-overlay"></div>
+    </div>
+    <div class="feat-body">
+      <div class="feat-status-row">
+        <span class="status-badge status-live">Live Now</span>
+        <span class="event-type-tag">⭐ Featured</span>
+        <span class="event-type-tag" style="background:rgba(34,211,238,.1);color:var(--cyan);border-color:rgba(34,211,238,.25)">🌍 WBC 2026</span>
+      </div>
+      <h2 class="feat-title">2026 World Baseball Classic<br>Special Promotion</h2>
+      <div class="feat-meta">
+        <div class="feat-date">
+          <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path stroke-width="2" d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Feb 25, 2026 – Mar 23, 2026
+        </div>
+        <div class="countdown" id="wbc-countdown">
+          <span class="cd-label">Ends in</span>
+          <div class="cd-time" id="wbc-timer"></div>
+        </div>
+      </div>
+      <p class="feat-desc">As the excitement of the new season begins, a special baseball festival unfolds alongside the 2026 World Baseball Classic. All event matches are played against the 2026 WBC USA Team — compete, earn coins, and claim exclusive WBC cards.</p>
+      <div class="feat-actions">
+        <button class="btn-primary" onclick="toggleAllSubs()">📋 View All Sub-Events</button>
+        <a class="btn-ghost" href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14347" target="_blank">Official Post ↗</a>
+      </div>
+
+      <!-- SUB EVENTS -->
+      <div class="sub-events" id="sub-events-wrap">
+
+        <!-- Sub 1 -->
+        <div class="sub-event" id="sub1">
+          <div class="sub-event-head" onclick="toggleSub('sub1')">
+            <div class="sub-num">1</div>
+            <div class="sub-event-title">WBC Special Event Scout</div>
+            <div class="sub-period">Feb 25 – Mar 23</div>
+            <svg class="sub-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="sub-event-body">
+            <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;line-height:1.55">Complete WBC special event matches to earn up to <strong style="color:var(--text)">120 Scout Tickets</strong>. Reach 100 scouts for a WBC Prime Pack, and 200 scouts for a <span style="color:var(--gold)">Team Selective Signature/Prime Pack</span>. Scout tickets expire when the event ends.</p>
+            <div class="reward-section">
+              <div class="reward-label">Cumulative Scout Rewards</div>
+              <div class="reward-scroll">
+                <table class="reward-table">
+                  <thead><tr><th>Scout Count</th><th>Reward</th><th class="qty">Qty</th></tr></thead>
+                  <tbody>
+                    <tr><td class="milestone">20</td><td class="item-name">Quick Play Ticket</td><td class="qty">20</td></tr>
+                    <tr><td class="milestone">40</td><td class="item-name">Point</td><td class="qty">500,000</td></tr>
+                    <tr><td class="milestone">60</td><td class="item-name">Advanced Skill Change Ticket</td><td class="qty">1</td></tr>
+                    <tr><td class="milestone">80</td><td class="item-name">500 Special Training Card</td><td class="qty">1</td></tr>
+                    <tr><td class="milestone">100</td><td class="item-name" style="color:var(--cyan)">World Baseball Classic Prime Pack</td><td class="qty">1</td></tr>
+                    <tr><td class="milestone">120</td><td class="item-name">Quick Play Ticket</td><td class="qty">30</td></tr>
+                    <tr><td class="milestone">140</td><td class="item-name">Superior Skill Change Ticket</td><td class="qty">1</td></tr>
+                    <tr><td class="milestone">160</td><td class="item-name">Ultimate Coin</td><td class="qty">500</td></tr>
+                    <tr><td class="milestone">180</td><td class="item-name">Skill Level Protection Ticket</td><td class="qty">5</td></tr>
+                    <tr><td class="milestone">200</td><td class="item-name" style="color:var(--gold)">Team Selective Signature/Prime Pack ★</td><td class="qty">1</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="notice-list">
+              <div class="notice-item">Unused WBC 2026 Special Scout Tickets are deleted after the event ends.</div>
+              <div class="notice-item">Access via Main Menu → Scout → Special Tab.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub 2 -->
+        <div class="sub-event" id="sub2">
+          <div class="sub-event-head" onclick="toggleSub('sub2')">
+            <div class="sub-num">2</div>
+            <div class="sub-event-title">WBC Event Pass</div>
+            <div class="sub-period">Feb 25 – Mar 23</div>
+            <svg class="sub-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="sub-event-body">
+            <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;line-height:1.55">Complete missions daily to earn Progress and unlock milestone rewards. Purchase the <span style="color:var(--gold)">Premium Pass</span> to double your rewards. Spend Star ×300 to skip to the next milestone. The daily Progress cap is lifted 15 days in.</p>
+            <div class="reward-section">
+              <div class="reward-label">Daily Missions</div>
+              <div class="mission-list">
+                <div class="mission-item"><span class="mission-type daily">Daily</span><span class="mission-text">Log In Daily (Check-in)</span><span class="mission-pts">+150</span></div>
+                <div class="mission-item"><span class="mission-type daily">Daily</span><span class="mission-text">[Event Game] Finish 5 Games</span><span class="mission-pts">+50</span></div>
+                <div class="mission-item"><span class="mission-type daily">Daily</span><span class="mission-text">[League Mode] Finish 30 Games</span><span class="mission-pts">+50</span></div>
+                <div class="mission-item"><span class="mission-type repeat">Repeat</span><span class="mission-text">[League Mode] Record a Manual Hit</span><span class="mission-pts">+50</span></div>
+              </div>
+            </div>
+            <div class="reward-section" style="margin-top:16px">
+              <div class="reward-label">Key Normal Rewards (select milestones)</div>
+              <div class="reward-scroll">
+                <table class="reward-table">
+                  <thead><tr><th>Progress</th><th>Reward</th><th class="qty">Qty</th></tr></thead>
+                  <tbody>
+                    <tr><td class="milestone">1,350</td><td class="item-name">WBC 2026 Special Scout Ticket</td><td class="qty">30</td></tr>
+                    <tr><td class="milestone">2,100</td><td class="item-name">Live & Season S Craft Card</td><td class="qty">1</td></tr>
+                    <tr><td class="milestone">2,550</td><td class="item-name">Skill Level Protection Ticket</td><td class="qty">2</td></tr>
+                    <tr><td class="milestone">2,850</td><td class="item-name">Live & Season S Craft Card</td><td class="qty">1</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="reward-section" style="margin-top:14px">
+              <div class="reward-label" style="color:var(--gold)">★ Premium Pass Top Milestone</div>
+              <div class="reward-scroll">
+                <table class="reward-table">
+                  <thead><tr><th>Progress</th><th>Premium Reward</th><th class="qty">Qty</th></tr></thead>
+                  <tbody>
+                    <tr><td class="milestone">3,000</td><td class="item-name" style="color:var(--gold)">World Baseball Classic Signature/Prime Pack ★</td><td class="qty">1</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub 3 -->
+        <div class="sub-event" id="sub3">
+          <div class="sub-event-head" onclick="toggleSub('sub3')">
+            <div class="sub-num">3</div>
+            <div class="sub-event-title">WBC Event Shop</div>
+            <div class="sub-period">Feb 25 – Mar 11</div>
+            <svg class="sub-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="sub-event-body">
+            <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;line-height:1.55">Exchange <strong style="color:var(--text)">R Silver Coins</strong> and <strong style="color:var(--cyan)">WBC 2026 Coins</strong> for premium items including the WBC Lucky Box — which has a <span style="color:var(--gold)">0.05%</span> chance for the rare WBC Call-Up Ticket.</p>
+            <div class="reward-section">
+              <div class="reward-label">Event Shop – Key Items</div>
+              <div class="reward-scroll">
+                <table class="reward-table">
+                  <thead><tr><th>Item</th><th>Currency</th><th>Price</th><th>Limit</th></tr></thead>
+                  <tbody>
+                    <tr><td class="item-name" style="color:var(--cyan)">WBC 2026 Lucky Box (weekly)</td><td style="color:var(--muted);font-size:.75rem">WBC Coin</td><td class="milestone">450</td><td style="font-size:.75rem;color:var(--muted)">1×/week</td></tr>
+                    <tr><td class="item-name">WBC 2026 Lucky Box</td><td style="color:var(--muted);font-size:.75rem">WBC Coin</td><td class="milestone">500</td><td style="font-size:.75rem;color:var(--muted)">Unlimited</td></tr>
+                    <tr><td class="item-name">Superior Skill Change Ticket</td><td style="color:var(--muted);font-size:.75rem">R Silver Coin</td><td class="milestone">6,000</td><td style="font-size:.75rem;color:var(--muted)">1×/account</td></tr>
+                    <tr><td class="item-name" style="color:var(--gold)">Team Sel. Signature/Prime Pack</td><td style="color:var(--muted);font-size:.75rem">R Silver Coin</td><td class="milestone">6,000</td><td style="font-size:.75rem;color:var(--muted)">1×/account</td></tr>
+                    <tr><td class="item-name">500 Limit Break Card</td><td style="color:var(--muted);font-size:.75rem">R Silver Coin</td><td class="milestone">6,000</td><td style="font-size:.75rem;color:var(--muted)">1×/account</td></tr>
+                    <tr><td class="item-name">50 Balls</td><td style="color:var(--muted);font-size:.75rem">Point</td><td class="milestone">Free</td><td style="font-size:.75rem;color:var(--muted)">1×/day</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="reward-section" style="margin-top:14px">
+              <div class="reward-label">WBC Lucky Box – Drop Rates (top items)</div>
+              <div class="odds-grid">
+                <div class="odds-item"><span class="odds-name">WBC Call-Up Ticket</span><span class="odds-rate ultra">0.05%</span></div>
+                <div class="odds-item"><span class="odds-name">Player Sel. WBC Sig Pack</span><span class="odds-rate ultra">0.20%</span></div>
+                <div class="odds-item"><span class="odds-name">Position Sel. WBC Sig Pack</span><span class="odds-rate rare">0.50%</span></div>
+                <div class="odds-item"><span class="odds-name">Team Sel. WBC Sig Pack</span><span class="odds-rate rare">0.50%</span></div>
+                <div class="odds-item"><span class="odds-name">WBC Sig Pack</span><span class="odds-rate">1.00%</span></div>
+                <div class="odds-item"><span class="odds-name">Live/Season S Pack ×2</span><span class="odds-rate">3.00%</span></div>
+                <div class="odds-item"><span class="odds-name">Superior Skill Change Ticket</span><span class="odds-rate">2.00%</span></div>
+                <div class="odds-item"><span class="odds-name">Quick Play Ticket ×100</span><span class="odds-rate">2.00%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub 4 -->
+        <div class="sub-event" id="sub4">
+          <div class="sub-event-head" onclick="toggleSub('sub4')">
+            <div class="sub-num">4</div>
+            <div class="sub-event-title">Ranked Slugger World Championship</div>
+            <div class="sub-period">Feb 25 – Mar 23</div>
+            <svg class="sub-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="sub-event-body">
+            <div class="sub-event-img">
+              <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/25/20260225_103716_alqFpYhhEi.png"
+                   alt="Ranked Slugger World Championship"
+                   onerror="this.style.display='none'"/>
+            </div>
+            <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;line-height:1.55">Weekly rounds — up to <strong style="color:var(--text)">30 games per round</strong>. Matches use two USA WBC pitchers. Each player can only be used once per round. Rankings are based on your <strong style="color:var(--text)">top 3 scores</strong> per round. WBC Special Cards receive <span style="color:var(--gold)">Upgrade +20 &amp; Full Swing S+</span> boost.</p>
+            <div class="reward-section">
+              <div class="reward-label">Ball Appearances</div>
+              <div class="odds-grid" style="grid-template-columns:repeat(3,1fr)">
+                <div class="odds-item"><span class="odds-name">🏆 Platinum</span><span class="odds-rate ultra">3×</span></div>
+                <div class="odds-item"><span class="odds-name">🥇 Gold</span><span class="odds-rate rare">5×</span></div>
+                <div class="odds-item"><span class="odds-name">🥈 Silver</span><span class="odds-rate">7×</span></div>
+              </div>
+            </div>
+            <div class="reward-section" style="margin-top:14px">
+              <div class="reward-label">Cumulative Play Rewards</div>
+              <div class="reward-scroll">
+                <table class="reward-table">
+                  <thead><tr><th>Games</th><th>Reward</th><th class="qty">Qty</th></tr></thead>
+                  <tbody>
+                    <tr><td class="milestone">3</td><td class="item-name">Point</td><td class="qty">1,000,000</td></tr>
+                    <tr><td class="milestone">9</td><td class="item-name">10,000 Training Card</td><td class="qty">3</td></tr>
+                    <tr><td class="milestone">15</td><td class="item-name">OVR 100 Upgrade Card</td><td class="qty">10</td></tr>
+                    <tr><td class="milestone">21</td><td class="item-name">Skill Level Protection Ticket</td><td class="qty">5</td></tr>
+                    <tr><td class="milestone">25</td><td class="item-name" style="color:var(--gold)">Superior Skill Change Ticket</td><td class="qty">1</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="reward-section" style="margin-top:14px">
+              <div class="reward-label">🏆 Ranking Rewards (End of Round)</div>
+              <div class="rank-tiers">
+                <div class="rank-tier"><div class="rank-badge">#1</div><div class="rank-rewards">Team Sel. Triple Sig Pack · Team Sel. Moment Pack<br><span>Ultimate Coin ×4,000 · OVR 100 Upgrade ×10</span></div></div>
+                <div class="rank-tier"><div class="rank-badge">#2</div><div class="rank-rewards">Team Sel. Triple Sig Pack · Team Sel. Moment Pack<br><span>Ultimate Coin ×3,800 · OVR 100 Upgrade ×10</span></div></div>
+                <div class="rank-tier"><div class="rank-badge">#3</div><div class="rank-rewards">Team Sel. Triple Sig Pack · Team Sel. Moment Pack<br><span>Ultimate Coin ×3,600 · OVR 100 Upgrade ×46</span></div></div>
+                <div class="rank-tier"><div class="rank-badge">#4–10</div><div class="rank-rewards">Team Sel. Double Sig Pack · Team Sel. Moment Pack<br><span>Ultimate Coin ×3,400</span></div></div>
+                <div class="rank-tier"><div class="rank-badge">#11–40</div><div class="rank-rewards">Team Sel. Signature Pack · Team Sel. Moment Pack<br><span>Ultimate Coin ×3,200</span></div></div>
+                <div class="rank-tier"><div class="rank-badge">#41–100</div><div class="rank-rewards">Division Sel. Sig Pack · Team Sel. Moment Pack<br><span>Ultimate Coin ×3,000</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub 5 -->
+        <div class="sub-event" id="sub5">
+          <div class="sub-event-head" onclick="toggleSub('sub5')">
+            <div class="sub-num">5</div>
+            <div class="sub-event-title">WBC RBI Battle</div>
+            <div class="sub-period">Feb 25 – Mar 23</div>
+            <svg class="sub-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="sub-event-body">
+            <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;line-height:1.55">Select 3 batters and 3 runners to battle the 2026 WBC USA Team. First-to-win format. WBC Signature/Prime Cards receive <span style="color:var(--gold)">Upgrade +20 &amp; Clutch/Steal Potential S+</span> boost. Earn RBI Battle Tokens for cumulative rewards.</p>
+            <div class="reward-section">
+              <div class="reward-label">First Win Rewards (one-time per round)</div>
+              <div class="reward-scroll">
+                <table class="reward-table">
+                  <thead><tr><th>Round</th><th>Difficulty</th><th>Reward</th></tr></thead>
+                  <tbody>
+                    <tr><td class="milestone">1</td><td style="color:var(--muted);font-size:.75rem">OVR 75</td><td class="item-name">Skill Level Protection Ticket ×2</td></tr>
+                    <tr><td class="milestone">2</td><td style="color:var(--muted);font-size:.75rem">OVR 85</td><td class="item-name">Advanced Scout Ticket ×2</td></tr>
+                    <tr><td class="milestone">3</td><td style="color:var(--muted);font-size:.75rem">OVR 100</td><td class="item-name">Live &amp; Season S Craft Card ×1</td></tr>
+                    <tr><td class="milestone">4</td><td style="color:var(--muted);font-size:.75rem">OVR 110</td><td class="item-name">Normal Potential Reset Ticket ×1</td></tr>
+                    <tr><td class="milestone">5</td><td style="color:var(--muted);font-size:.75rem">OVR 120</td><td class="item-name" style="color:var(--gold)">200 Limit Break Card ×1</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="reward-section" style="margin-top:14px">
+              <div class="reward-label">Cumulative Token Rewards (first-time)</div>
+              <div class="reward-scroll">
+                <table class="reward-table">
+                  <thead><tr><th>Tokens</th><th>Reward</th><th class="qty">Qty</th></tr></thead>
+                  <tbody>
+                    <tr><td class="milestone">2,500</td><td class="item-name">Quick Play Ticket</td><td class="qty">20</td></tr>
+                    <tr><td class="milestone">7,500</td><td class="item-name">Training Boost Ticket</td><td class="qty">30</td></tr>
+                    <tr><td class="milestone">10,000</td><td class="item-name">Skill Level Protection Ticket</td><td class="qty">2</td></tr>
+                    <tr><td class="milestone">15,000</td><td class="item-name" style="color:var(--gold)">Team Selective Impact Pack</td><td class="qty">1</td></tr>
+                    <tr><td class="milestone">20,000</td><td class="item-name" style="color:var(--gold)">500 Limit Break Card</td><td class="qty">1</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub 6 - Pick'em -->
+        <div class="sub-event" id="sub6">
+          <div class="sub-event-head" onclick="toggleSub('sub6')">
+            <div class="sub-num">6</div>
+            <div class="sub-event-title">WBC Pick'em Prediction Event</div>
+            <div class="sub-period">All WBC Games</div>
+            <svg class="sub-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="sub-event-body">
+            <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;line-height:1.55">Predict the outcome of real-world WBC games before they start. Submit up to <strong style="color:var(--text)">one prediction per day</strong> from games scheduled that day. Predictions lock 10 minutes before the game begins. Earn <span style="color:var(--gold)">M Points</span> based on correct picks.</p>
+            <div class="reward-section">
+              <div class="reward-label">Total M Points Rewards</div>
+              <div class="reward-scroll">
+                <table class="reward-table">
+                  <thead><tr><th>M Points</th><th>Reward 1</th><th>Reward 2</th></tr></thead>
+                  <tbody>
+                    <tr><td class="milestone">1,000</td><td class="item-name">Superior Skill Change ×1 · 100 Balls Box ×5</td><td style="font-size:.75rem;color:var(--muted)">—</td></tr>
+                    <tr><td class="milestone">3,000</td><td class="item-name">Superior Skill Change ×2 · Normal Pot. Reset ×1</td><td style="font-size:.75rem;color:var(--muted)">100 Balls Box ×5</td></tr>
+                    <tr><td class="milestone">6,000</td><td class="item-name">Superior Skill Change ×3 · Adv. Pot. Reset ×1</td><td style="font-size:.75rem;color:var(--muted)">100 Balls Box ×5</td></tr>
+                    <tr><td class="milestone">12,000</td><td class="item-name" style="color:var(--gold)">Normal Recruit HOF Pack ×1 · Sup. Pot. Reset ×1</td><td style="font-size:.75rem;color:var(--muted)">100 Balls Box ×5</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="notice-list" style="margin-top:10px">
+              <div class="notice-item">Normal Recruit HOF Pack includes players from HOF Normal Recruit Batch 1–2.</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /sub-events-wrap -->
+    </div>
+  </div><!-- /feat-event -->
+
+  <!-- ─────────────────────────────────────────────── -->
+  <!-- ACTIVE EVENTS GRID                             -->
+  <!-- ─────────────────────────────────────────────── -->
+  <div class="section-hdr">
+    <div class="section-title">Active <span style="color:var(--blue)">Events</span></div>
+    <div class="section-count">Currently Live</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="events-grid">
+
+    <!-- Spring Training 2026 -->
+    <div class="event-card" data-status="active" style="animation-delay:.05s">
+      <div class="ec-img-wrap">
+        <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/11/20260211_152932_LW0OSkRCGO.jpeg"
+             alt="2026 Spring Training Event"
+             onerror="this.parentElement.classList.add('placeholder');this.style.display='none';this.parentElement.innerHTML+='<div class=\'ec-placeholder-icon\'>⚾🌸</div>'"/>
+        <div class="ec-overlay"></div>
+        <div class="ec-status-float"><span class="status-badge status-live">Live Now</span></div>
+      </div>
+      <div class="ec-body">
+        <div class="ec-tags">
+          <span class="ec-tag tag-daily">Daily Mission</span>
+          <span class="ec-tag tag-pass">Event Pass</span>
+          <span class="ec-tag tag-shop">Event Shop</span>
+        </div>
+        <div class="ec-title">2026 Spring Training Event</div>
+        <div class="ec-date">
+          <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path stroke-width="2" d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Feb 19 – Mar 24, 2026
+        </div>
+        <p class="ec-summary">Complete 25-day daily missions including League Mode, Ranked Battle, Ranked Slugger and Potential Game challenges. Earn a <strong style="color:var(--text)">Signature Pack</strong> on Day 25. The Event Pass and Shop add further rewards including the <span style="color:var(--gold)">Spring Training 2026 Lucky Box</span>.</p>
+        <button class="ec-expand-btn" onclick="toggleCard(this)">
+          Full Event Details
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="ec-detail">
+          <div class="reward-section">
+            <div class="reward-label">25-Day Daily Mission Highlights</div>
+            <div class="reward-scroll">
+              <table class="reward-table">
+                <thead><tr><th>Day</th><th>Mission</th><th>Reward</th></tr></thead>
+                <tbody>
+                  <tr><td class="milestone">1</td><td style="font-size:.78rem">[League Mode] Finish 20 Games</td><td class="item-name">Ball ×100</td></tr>
+                  <tr><td class="milestone">2</td><td style="font-size:.78rem">[Ranked Battle] Finish 20 Games</td><td class="item-name">Skill Level Protection ×3</td></tr>
+                  <tr><td class="milestone">3</td><td style="font-size:.78rem">[Event Game] Finish 3 Games</td><td class="item-name">Quick Play Ticket ×20</td></tr>
+                  <tr><td class="milestone">5</td><td style="font-size:.78rem">[Potential Game] Finish 3 Games</td><td class="item-name">Point ×2,000,000</td></tr>
+                  <tr><td class="milestone">16</td><td style="font-size:.78rem">[Ranked Battle] Finish 20 Games</td><td class="item-name">Training Boost Ticket ×50</td></tr>
+                  <tr><td class="milestone">20</td><td style="font-size:.78rem">[Ranked Slugger] Finish 5 Games</td><td class="item-name">Normal Potential Reset ×1</td></tr>
+                  <tr><td class="milestone">25</td><td style="font-size:.78rem">[Ranked Slugger] Finish 5 Games</td><td class="item-name" style="color:var(--gold)">Signature Pack ★</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="reward-section" style="margin-top:14px">
+            <div class="reward-label">Event Pass – Top Normal Milestone</div>
+            <div class="odds-grid" style="grid-template-columns:1fr">
+              <div class="odds-item"><span class="odds-name">Progress 2,500 → Team Selective Prime/Impact Pack</span><span class="odds-rate">×1</span></div>
+            </div>
+          </div>
+          <div class="reward-section" style="margin-top:14px">
+            <div class="reward-label">Premium Pass – Top Milestone</div>
+            <div class="odds-grid" style="grid-template-columns:1fr">
+              <div class="odds-item" style="border-color:rgba(244,185,66,.3)"><span class="odds-name" style="color:var(--gold)">Progress 2,500 → Team Selective Signature/Prime Pack ★</span><span class="odds-rate rare">×1</span></div>
+            </div>
+          </div>
+          <div class="reward-section" style="margin-top:14px">
+            <div class="reward-label">Event Shop – Key Items</div>
+            <div class="reward-scroll">
+              <table class="reward-table">
+                <thead><tr><th>Item</th><th>Price</th><th>Limit</th></tr></thead>
+                <tbody>
+                  <tr><td class="item-name">Quick Play Ticket</td><td class="milestone">Free</td><td style="font-size:.75rem;color:var(--muted)">5×/week</td></tr>
+                  <tr><td class="item-name">Spring Training 2026 Lucky Box (free)</td><td class="milestone">Free</td><td style="font-size:.75rem;color:var(--muted)">1×/account</td></tr>
+                  <tr><td class="item-name">Spring Training 2026 Lucky Box ×10</td><td class="milestone">7,000 ⭐</td><td style="font-size:.75rem;color:var(--muted)">1×/week</td></tr>
+                  <tr><td class="item-name" style="color:var(--gold)">Team Selective Signature Pack</td><td class="milestone">30,000 ⭐</td><td style="font-size:.75rem;color:var(--muted)">1×/account</td></tr>
+                  <tr><td class="item-name">Team Selective Sig/Prime Pack</td><td class="milestone">50M Points</td><td style="font-size:.75rem;color:var(--muted)">1×/account</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="notice-list" style="margin-top:12px">
+            <div class="notice-item">Events 1 &amp; 2 run until Mar 24. Event 3 (Shop) ended Mar 9.</div>
+            <div class="notice-item">Unclaimed rewards cannot be collected after the event period ends.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /events-grid active -->
+
+  <!-- ─────────────────────────────────────────────── -->
+  <!-- ENDED EVENTS                                   -->
+  <!-- ─────────────────────────────────────────────── -->
+  <div class="section-hdr" style="margin-top:40px">
+    <div class="section-title">Ended <span style="color:var(--muted)">Events</span></div>
+    <div class="section-count">Archived</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="events-grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr))">
+
+    <!-- 2025 All-Star Game Coupon -->
+    <div class="event-card" data-status="ended" style="animation-delay:.1s;opacity:.75">
+      <div class="ec-img-wrap placeholder" style="height:140px">
+        <div class="ec-placeholder-icon">⭐🎮</div>
+        <div class="ec-overlay"></div>
+        <div class="ec-status-float"><span class="status-badge status-ended">Ended</span></div>
+      </div>
+      <div class="ec-body">
+        <div class="ec-tags"><span class="ec-tag tag-daily">Coupon</span></div>
+        <div class="ec-title">2025 MLB All-Star Game Coupon Events</div>
+        <div class="ec-date">
+          <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path stroke-width="2" d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Jul 14 – Aug 31, 2025
+        </div>
+        <p class="ec-summary">Two special coupon codes released for the 2025 MLB All-Star Game in Atlanta. Code 1 gave a Team Selective Live S Pack. Code 2 gave a Team Selective Impact Pack. Both included 50 Quick Play Tickets and 3,000,000 Points.</p>
+        <button class="ec-expand-btn" onclick="toggleCard(this)">
+          Show Codes (Expired)
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="ec-detail">
+          <p style="font-size:.8rem;color:var(--red);margin-bottom:10px">⚠ These codes are expired and can no longer be redeemed.</p>
+          <div class="reward-section">
+            <div class="reward-label">Expired Coupon Codes</div>
+            <div class="reward-scroll">
+              <table class="reward-table">
+                <thead><tr><th>Code</th><th>Rewards</th></tr></thead>
+                <tbody>
+                  <tr><td class="item-name" style="font-family:var(--fu);letter-spacing:.08em">ATLANTA2025RV</td><td style="font-size:.75rem;color:var(--muted)">Team Sel. Live S Pack · QPT ×50 · 3M Points</td></tr>
+                  <tr><td class="item-name" style="font-family:var(--fu);letter-spacing:.08em">25RIVALS0715</td><td style="font-size:.75rem;color:var(--muted)">Team Sel. Impact Pack · QPT ×50 · 3M Points</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Season Opening Pass 2025 -->
+    <div class="event-card" data-status="ended" style="animation-delay:.15s;opacity:.75">
+      <div class="ec-img-wrap placeholder" style="height:140px">
+        <div class="ec-placeholder-icon">🏆📋</div>
+        <div class="ec-overlay"></div>
+        <div class="ec-status-float"><span class="status-badge status-ended">Ended</span></div>
+      </div>
+      <div class="ec-body">
+        <div class="ec-tags"><span class="ec-tag tag-pass">Season Pass</span><span class="ec-tag tag-daily">Co-op</span></div>
+        <div class="ec-title">2025 Season Opening Pass Event</div>
+        <div class="ec-date">
+          <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path stroke-width="2" d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Mar 28 – Apr 30, 2025
+        </div>
+        <p class="ec-summary">Season Pass event rewarding consistent daily play through a level-up system. Featured a special Co-op Season Pass where all users worked together toward community-wide milestones. Earned points via scouting, League Mode, upgrades, and spending Balls.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /content -->
+
+<!-- ═══ COUPON SECTION ═══ -->
+<div class="coupon-section">
+  <div class="coupon-card">
+    <div class="coupon-icon">🎟️</div>
+    <div class="coupon-content">
+      <div class="coupon-title">Active Coupon Codes</div>
+      <div class="coupon-sub">Enter codes in-game via <strong>Menu → Settings → Coupon Exchange</strong>. Each code is one use per account. Items are sent to your Inbox.</div>
+      <div class="coupon-codes">
+        <div class="coupon-item">
+          <div>
+            <div class="coupon-code">— No active coupons —</div>
+            <div class="coupon-reward">Check the official community board for new code drops</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14" target="_blank" class="btn-ghost" style="flex-shrink:0">Check Board ↗</a>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">MLB Rivals Hub · 2026</div>
+    <div class="footer-links">
+      <a href="https://community.withhive.com/MLB9IRIVALS" target="_blank">Community</a>
+      <a href="https://twitter.com/MLBrivalsus" target="_blank">X / Twitter</a>
+      <a href="https://store.steampowered.com/app/2569510" target="_blank">Steam</a>
+    </div>
+    <div class="footer-copy">Unofficial fan companion · Not affiliated with Com2uS or MLB · Event data sourced from official MLB Rivals community board</div>
+  </div>
+</footer>
+
+<script>
+// ── NAV TOGGLE ──
+function toggleNav(){
+  document.getElementById('ham').classList.toggle('open');
+  document.getElementById('mob-nav').classList.toggle('open');
+}
+document.getElementById('mob-nav').querySelectorAll('a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.getElementById('ham').classList.remove('open');
+    document.getElementById('mob-nav').classList.remove('open');
+  });
+});
+
+// ── SUB-EVENT ACCORDION ──
+function toggleSub(id){
+  const el = document.getElementById(id);
+  const wasOpen = el.classList.contains('open');
+  el.classList.toggle('open', !wasOpen);
+}
+
+function toggleAllSubs(){
+  const subs = document.querySelectorAll('.sub-event');
+  const anyOpen = [...subs].some(s=>s.classList.contains('open'));
+  subs.forEach(s=>s.classList.toggle('open',!anyOpen));
+  const btn = document.querySelector('.btn-primary');
+  btn.textContent = anyOpen ? '📋 View All Sub-Events' : '🔼 Collapse All';
+}
+
+// ── EVENT CARD EXPAND ──
+function toggleCard(btn){
+  const card = btn.closest('.event-card');
+  card.classList.toggle('open');
+  const detail = card.querySelector('.ec-detail');
+  if(card.classList.contains('open')){
+    btn.innerHTML = btn.innerHTML.replace('Full Event Details','Hide Details').replace('Show Codes (Expired)','Hide Details');
+  } else {
+    btn.innerHTML = btn.innerHTML.replace('Hide Details','Full Event Details');
+    btn.querySelector('svg');
+  }
+}
+
+// ── FILTER ──
+function setFilter(filter, btn){
+  document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Show/hide event cards
+  document.querySelectorAll('[data-status]').forEach(card=>{
+    if(filter==='all') card.style.display='';
+    else card.style.display = card.dataset.status===filter ? '' : 'none';
+  });
+
+  // Show/hide section headers based on filter
+  const activeHdr = document.querySelectorAll('.section-hdr')[0];
+  const endedHdr  = document.querySelectorAll('.section-hdr')[1];
+  const featWrap  = document.querySelector('.feat-event');
+
+  if(filter==='ended'){
+    featWrap.style.display='none';
+    if(activeHdr) activeHdr.parentElement.querySelectorAll('.events-grid')[0]?.style && (activeHdr.style.display='none');
+  } else if(filter==='active'){
+    featWrap.style.display='';
+    if(activeHdr) activeHdr.style.display='';
+    if(endedHdr) endedHdr.style.display='none';
+  } else {
+    featWrap.style.display='';
+    if(activeHdr) activeHdr.style.display='';
+    if(endedHdr) endedHdr.style.display='';
+  }
+}
+
+// ── COUNTDOWN ──
+function updateCountdown(endDate, containerId){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+
+  function tick(){
+    const now = new Date();
+    const end = new Date(endDate);
+    const diff = end - now;
+
+    if(diff <= 0){
+      container.innerHTML = '<span style="font-family:var(--fu);font-size:.75rem;color:var(--red)">Event Ended</span>';
+      return;
+    }
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    container.innerHTML = `
+      <div class="cd-block"><div class="cd-num">${d}</div><div class="cd-unit">DAYS</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><div class="cd-num">${String(h).padStart(2,'0')}</div><div class="cd-unit">HRS</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><div class="cd-num">${String(m).padStart(2,'0')}</div><div class="cd-unit">MIN</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><div class="cd-num">${String(s).padStart(2,'0')}</div><div class="cd-unit">SEC</div></div>`;
+  }
+
+  tick();
+  setInterval(tick, 1000);
+}
+
+// WBC ends Mar 23 2026 00:59 EDT
+updateCountdown('2026-03-23T04:59:00Z', 'wbc-timer');
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.style.opacity='1';
+  });
+},{threshold:.1});
+document.querySelectorAll('.event-card').forEach(c=>{
+  c.style.opacity='0';
+  c.style.transition='opacity .5s ease';
+  observer.observe(c);
+});
+</script>
+</body>
+</html>

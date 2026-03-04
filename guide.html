@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>MLB Rivals – Game Guide</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050810;--surface:#0d1220;--surface2:#141a2e;--surface3:#1a2240;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  --blue:#2f7cf6;--blue-glow:rgba(47,124,246,.4);
+  --red:#e63946;--gold:#f4b942;--green:#10b981;--purple:#8b5cf6;
+  --text:#e8ecf5;--muted:rgba(232,236,245,.45);--muted2:rgba(232,236,245,.65);
+  --fd:'Bebas Neue',sans-serif;
+  --fu:'Barlow Condensed',sans-serif;
+  --fb:'Barlow',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+/* BG */
+.bg-grid{position:fixed;inset:0;z-index:0;
+  background-image:linear-gradient(rgba(47,124,246,.05)1px,transparent 1px),
+    linear-gradient(90deg,rgba(47,124,246,.05)1px,transparent 1px);
+  background-size:60px 60px;animation:gridScroll 25s linear infinite;pointer-events:none}
+.bg-grid::after{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(47,124,246,.12),transparent 70%)}
+@keyframes gridScroll{from{transform:translateY(0)}to{transform:translateY(60px)}}
+
+/* NAV */
+header{position:sticky;top:0;z-index:100;background:rgba(5,8,16,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-size:1.4rem;letter-spacing:.08em}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--blue);animation:dpulse 2s ease-in-out infinite;flex-shrink:0}
+@keyframes dpulse{0%,100%{box-shadow:0 0 0 0 var(--blue-glow)}50%{box-shadow:0 0 0 6px rgba(47,124,246,0)}}
+nav{display:flex;gap:2px}
+.nl{font-family:var(--fu);font-size:.875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 14px;border-radius:6px;transition:color .2s,background .2s}
+.nl:hover,.nl.active{color:var(--text);background:rgba(255,255,255,.06)}
+.nl.active{color:var(--blue)}
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;padding:8px;border-radius:8px;cursor:pointer;background:rgba(255,255,255,.06);border:1px solid var(--border);flex-shrink:0}
+.ham span{display:block;height:2px;background:var(--text);border-radius:2px;transition:transform .3s,opacity .3s}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;background:rgba(5,8,16,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);flex-direction:column;padding:12px 16px 20px}
+.mob-nav.open{display:flex}
+.mob-nav a{font-family:var(--fu);font-size:1.1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:14px 12px;border-radius:8px;border-bottom:1px solid var(--border);transition:color .2s,background .2s}
+.mob-nav a:last-child{border-bottom:none}
+.mob-nav a:hover,.mob-nav a.active{color:var(--text);background:rgba(255,255,255,.06)}
+.mob-nav a.active{color:var(--blue)}
+
+/* PAGE HEADER */
+.ph{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:48px 24px 32px}
+.ph-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--fu);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);background:rgba(47,124,246,.1);border:1px solid rgba(47,124,246,.25);padding:5px 12px;border-radius:4px;margin-bottom:16px}
+.ph-title{font-family:var(--fd);font-size:clamp(2.4rem,6vw,3.8rem);letter-spacing:.03em;text-transform:uppercase;line-height:.95}
+.ph-title span{color:var(--blue)}
+.ph-sub{font-family:var(--fu);font-size:1rem;color:var(--muted);margin-top:8px;max-width:580px;line-height:1.5}
+
+/* LAYOUT: sidebar + content */
+.guide-layout{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:240px 1fr;gap:32px;align-items:start}
+
+/* SIDEBAR */
+.sidebar{position:sticky;top:80px}
+.sidebar-inner{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.sidebar-label{font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:14px 16px 8px}
+.sidebar-nav{display:flex;flex-direction:column}
+.snav-group{border-top:1px solid var(--border)}
+.snav-group-title{font-family:var(--fu);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:12px 16px 4px;display:flex;align-items:center;gap:8px}
+.snav-link{font-family:var(--fu);font-size:.82rem;font-weight:600;letter-spacing:.04em;color:var(--muted2);padding:8px 16px 8px 28px;display:flex;align-items:center;gap:7px;transition:color .2s,background .2s;cursor:pointer;border-left:2px solid transparent}
+.snav-link:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.snav-link.active{color:var(--blue);background:rgba(47,124,246,.08);border-left-color:var(--blue)}
+
+/* MAIN CONTENT */
+.guide-content{min-width:0}
+
+/* CHAPTER */
+.chapter{margin-bottom:48px;scroll-margin-top:80px}
+.chapter-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.chapter-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;border:1px solid var(--border)}
+.chapter-title{font-family:var(--fd);font-size:2rem;letter-spacing:.04em;text-transform:uppercase}
+.chapter-title span{color:var(--blue)}
+
+/* ACCORDION */
+.acc{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px;transition:border-color .2s}
+.acc:hover{border-color:var(--border2)}
+.acc.open{border-color:rgba(47,124,246,.3)}
+.acc-head{padding:16px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+.acc-icon-wrap{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;background:var(--surface2);border:1px solid var(--border);transition:background .2s,border-color .2s}
+.acc.open .acc-icon-wrap{background:rgba(47,124,246,.12);border-color:rgba(47,124,246,.3)}
+.acc-title{font-family:var(--fu);font-size:1rem;font-weight:800;letter-spacing:.03em;flex:1}
+.acc-chevron{width:18px;height:18px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:transform .3s,color .2s;flex-shrink:0}
+.acc.open .acc-chevron{transform:rotate(180deg);color:var(--blue)}
+.acc-body{display:none;padding:0 20px 20px;flex-direction:column;gap:14px}
+.acc.open .acc-body{display:flex}
+
+/* CONTENT BLOCKS inside accordion */
+.guide-p{font-family:var(--fb);font-size:.9rem;line-height:1.7;color:var(--muted2)}
+.guide-p strong{color:var(--text);font-weight:600}
+
+.tip-box{background:rgba(47,124,246,.08);border:1px solid rgba(47,124,246,.2);border-radius:8px;padding:12px 16px;display:flex;gap:10px;align-items:flex-start}
+.tip-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+.tip-text{font-family:var(--fu);font-size:.82rem;line-height:1.5;color:var(--muted2)}
+.tip-text strong{color:var(--blue)}
+
+.warn-box{background:rgba(244,185,66,.08);border:1px solid rgba(244,185,66,.2);border-radius:8px;padding:12px 16px;display:flex;gap:10px;align-items:flex-start}
+.warn-text{font-family:var(--fu);font-size:.82rem;line-height:1.5;color:var(--muted2)}
+.warn-text strong{color:var(--gold)}
+
+.guide-list{display:flex;flex-direction:column;gap:6px;padding-left:4px}
+.guide-list li{font-family:var(--fb);font-size:.88rem;line-height:1.6;color:var(--muted2);display:flex;gap:8px;align-items:baseline}
+.guide-list li::before{content:'›';color:var(--blue);font-weight:700;flex-shrink:0}
+.guide-list li strong{color:var(--text)}
+
+/* RARITY CHIPS row */
+.rarity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.rarity-card{background:var(--surface2);border-radius:10px;padding:14px 16px;border-left:3px solid;border-top:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.rarity-card .rc-name{font-family:var(--fu);font-size:.9rem;font-weight:800;margin-bottom:4px}
+.rarity-card .rc-ovr{font-family:var(--fd);font-size:1.2rem;margin-bottom:6px}
+.rarity-card .rc-desc{font-family:var(--fb);font-size:.78rem;line-height:1.5;color:var(--muted)}
+
+/* STAT TABLE */
+.stat-table{width:100%;border-collapse:collapse;font-family:var(--fu);font-size:.82rem}
+.stat-table th{text-align:left;padding:10px 14px;background:var(--surface2);color:var(--muted);font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.stat-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted2)}
+.stat-table tr:last-child td{border-bottom:none}
+.stat-table tr:hover td{background:rgba(255,255,255,.02)}
+.stat-table td strong{color:var(--text)}
+.stat-table .val{font-family:var(--fd);font-size:.95rem;color:var(--blue)}
+
+/* STEP FLOW */
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step-num{width:28px;height:28px;border-radius:50%;background:rgba(47,124,246,.15);border:1px solid rgba(47,124,246,.3);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.9rem;color:var(--blue);flex-shrink:0;margin-top:1px}
+.step-body{flex:1}
+.step-title{font-family:var(--fu);font-size:.9rem;font-weight:800;margin-bottom:3px}
+.step-desc{font-family:var(--fb);font-size:.82rem;line-height:1.5;color:var(--muted)}
+
+/* MOBILE NAV pill (replaces sidebar on mobile) */
+.mob-guide-nav{display:none;position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 16px 16px;overflow-x:auto}
+.mob-guide-nav-inner{display:flex;gap:8px;width:max-content;padding-bottom:4px}
+.mgn-chip{font-family:var(--fu);font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .2s}
+.mgn-chip.active,.mgn-chip:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* DIVIDER */
+.section-divider{height:1px;background:linear-gradient(to right,transparent,var(--border) 20%,var(--border) 80%,transparent);margin-bottom:40px}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);background:var(--surface);margin-top:0}
+.fi{max-width:1280px;margin:0 auto;padding:28px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.fl{font-family:var(--fd);font-size:1.1rem;letter-spacing:.08em;color:var(--muted)}
+.fc{font-family:var(--fu);font-size:.72rem;color:rgba(232,236,245,.25)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{display:none}.ham{display:flex}
+  .guide-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .mob-guide-nav{display:block}
+}
+@media(max-width:600px){
+  .ph{padding:28px 16px 20px}
+  .guide-layout{padding:0 16px 48px}
+  .ph-title{font-size:2rem}
+  .chapter-title{font-size:1.5rem}
+  .rarity-grid{grid-template-columns:1fr 1fr}
+  .acc-head{padding:14px 16px}
+  .acc-body{padding:0 16px 16px}
+  footer .fi{flex-direction:column;align-items:flex-start;padding:20px 16px}
+}
+@media(max-width:380px){
+  .rarity-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="dot"></span>MLB Rivals</a>
+    <nav>
+      <a href="index.html" class="nl">Home</a>
+      <a href="scouts.html" class="nl">Scouts</a>
+      <a href="players.html" class="nl">Players</a>
+      <a href="updates.html" class="nl">Updates</a>
+      <a href="guide.html" class="nl active">Guide</a>
+      <a href="events.html" class="nl">Events</a>
+      <a href="lineup.html" class="nl">Builder</a>
+    </nav>
+    <button class="ham" id="ham" aria-label="Open menu" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mob-nav" id="mob-nav">
+  <a href="index.html">Home</a>
+  <a href="scouts.html">Scouts</a>
+  <a href="players.html">Players</a>
+  <a href="updates.html">Updates</a>
+  <a href="guide.html" class="active">Guide</a>
+  <a href="events.html">Events</a>
+  <a href="lineup.html">Builder</a>
+</div>
+
+<div class="ph">
+  <div class="ph-eyebrow">📖 Official Guide · v3.10.00</div>
+  <h1 class="ph-title">Game <span>Guide</span></h1>
+  <p class="ph-sub">Everything from UI basics to advanced development systems — sourced directly from the official MLB Rivals community guides.</p>
+</div>
+
+<!-- Mobile chapter nav -->
+<div class="mob-guide-nav">
+  <div class="mob-guide-nav-inner">
+    <a href="#getting-started" class="mgn-chip">🏠 Getting Started</a>
+    <a href="#player-cards" class="mgn-chip">🃏 Player Cards</a>
+    <a href="#development" class="mgn-chip">⚙️ Development</a>
+    <a href="#deck-score" class="mgn-chip">📊 Deck Score</a>
+    <a href="#game-modes" class="mgn-chip">🎮 Game Modes</a>
+    <a href="#gameplay" class="mgn-chip">⚾ Gameplay</a>
+  </div>
+</div>
+
+<div class="guide-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <div class="sidebar-label">Contents</div>
+      <div class="sidebar-nav">
+        <div class="snav-group">
+          <div class="snav-group-title">🏠 Getting Started</div>
+          <a class="snav-link" href="#getting-started" onclick="scrollTo('getting-started')">Main Lobby & UI</a>
+          <a class="snav-link" href="#getting-started" onclick="scrollTo('getting-started')">Game Menu</a>
+          <a class="snav-link" href="#getting-started" onclick="scrollTo('getting-started')">Player Index</a>
+        </div>
+        <div class="snav-group">
+          <div class="snav-group-title">🃏 Player Cards</div>
+          <a class="snav-link" href="#player-cards">Live & Season</a>
+          <a class="snav-link" href="#player-cards">Impact, Prime & Signature</a>
+          <a class="snav-link" href="#player-cards">FA Cards</a>
+          <a class="snav-link" href="#player-cards">Moment, WBC & HOF</a>
+        </div>
+        <div class="snav-group">
+          <div class="snav-group-title">⚙️ Development</div>
+          <a class="snav-link" href="#development">Upgrade</a>
+          <a class="snav-link" href="#development">Limit Break</a>
+          <a class="snav-link" href="#development">Training & Skills</a>
+          <a class="snav-link" href="#development">Special Training</a>
+          <a class="snav-link" href="#development">Transcendence</a>
+          <a class="snav-link" href="#development">Potential</a>
+          <a class="snav-link" href="#development">Position Training</a>
+          <a class="snav-link" href="#development">Development Transfer</a>
+        </div>
+        <div class="snav-group">
+          <div class="snav-group-title">📊 Deck Score & Lineup</div>
+          <a class="snav-link" href="#deck-score">Team Deck Score</a>
+          <a class="snav-link" href="#deck-score">Special Deck Score</a>
+          <a class="snav-link" href="#deck-score">Rival Pick & Rival Link</a>
+          <a class="snav-link" href="#deck-score">Lineup Settings</a>
+        </div>
+        <div class="snav-group">
+          <div class="snav-group-title">🎮 Game Modes</div>
+          <a class="snav-link" href="#game-modes">League Mode</a>
+          <a class="snav-link" href="#game-modes">Rival Series</a>
+          <a class="snav-link" href="#game-modes">Exhibition Game</a>
+          <a class="snav-link" href="#game-modes">Special Match</a>
+        </div>
+        <div class="snav-group">
+          <div class="snav-group-title">⚾ Gameplay</div>
+          <a class="snav-link" href="#gameplay">Hitting System</a>
+          <a class="snav-link" href="#gameplay">Pitching & Skills</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="guide-content">
+
+    <!-- ═══════════════════════════════ GETTING STARTED ═══════════════════════════════ -->
+    <section class="chapter" id="getting-started">
+      <div class="chapter-header">
+        <div class="chapter-icon" style="background:rgba(47,124,246,.12);border-color:rgba(47,124,246,.25)">🏠</div>
+        <h2 class="chapter-title">Getting <span>Started</span></h2>
+      </div>
+
+      <div class="acc open" id="acc-lobby">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🎮</div>
+          <span class="acc-title">Main Lobby & Menu</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">The main lobby is your hub for everything in MLB Rivals. Your <strong>preferred team emblem</strong> shows your team name and active lineup OVR — tap it to reach your Profile page.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Mode Select</strong> — opens all available game modes (League, Rival Series, Exhibition, etc.)</li>
+            <li><strong>Scout</strong> — recruit new players via scouts and packs</li>
+            <li><strong>Lineup</strong> — set up and manage your team rosters</li>
+            <li><strong>Development</strong> — upgrade and train individual player cards</li>
+            <li><strong>Shop</strong> — purchase items, packs, and resources</li>
+            <li><strong>Play Pass</strong> — complete daily/weekly missions for rewards</li>
+            <li><strong>Inbox</strong> — claim purchases, gifts, and event rewards</li>
+            <li><strong>Storage</strong> — holds player packs and items you own</li>
+            <li><strong>Trade Event</strong> — participate in the active trade event</li>
+            <li><strong>Guide Missions</strong> — structured missions to help you progress</li>
+            <li><strong>Club</strong> — join or manage your club and participate in Club Battles</li>
+          </ul></div>
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <p class="tip-text"><strong>Daily Check-In</strong> gives you free resources every day — don't miss it. Guide Missions are the fastest way to build a strong early roster with guaranteed rewards.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc" id="acc-playerindex">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">📋</div>
+          <span class="acc-title">Player Index</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">The Player Index lets you browse every player card and skill available in the game. Cards you've already obtained appear in full color — unowned ones are grayed out.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Advanced Search</strong> — filter by name, OVR, team, card type/grade, and position</li>
+            <li><strong>Sort Options</strong> — sort by rarity, year, stats, position, owned status, or deck score (ascending/descending)</li>
+            <li><strong>Wishlist</strong> — bookmark cards you want to target in scouts</li>
+            <li><strong>Skill Index</strong> — view every pitcher and batter skill with full grade-by-grade effect breakdowns</li>
+          </ul></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════════════════════ PLAYER CARDS ═══════════════════════════════ -->
+    <section class="chapter" id="player-cards">
+      <div class="chapter-header">
+        <div class="chapter-icon" style="background:rgba(236,72,153,.12);border-color:rgba(236,72,153,.25)">🃏</div>
+        <h2 class="chapter-title">Player <span>Cards</span></h2>
+      </div>
+
+      <div class="acc open">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">📺</div>
+          <span class="acc-title">Live & Season Cards</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <div class="rarity-grid">
+            <div class="rarity-card" style="border-left-color:#94a3b8">
+              <div class="rc-name" style="color:#94a3b8">Live Cards</div>
+              <div class="rc-ovr" style="color:#94a3b8">Deck: 8–30</div>
+              <div class="rc-desc">Reflect current MLB season performance. Stats are updated dynamically until season end. WAR determines deck score. Graded S, A, B, or C based on base OVR.</div>
+            </div>
+            <div class="rarity-card" style="border-left-color:#6b7280">
+              <div class="rc-name" style="color:#9ca3af">Season Cards</div>
+              <div class="rc-ovr" style="color:#9ca3af">Deck: 4–20</div>
+              <div class="rc-desc">Reflect final regular season performance. Live cards convert to Season cards at season end based on their closing OVR. Graded S, A, B, or C.</div>
+            </div>
+          </div>
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <p class="tip-text"><strong>Live cards are dynamic</strong> — a player having a great year will see their card OVR and deck score rise week-by-week. Check the Live Update tab to see stat changes across all teams.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">⭐</div>
+          <span class="acc-title">Special Cards — Impact, Prime & Signature</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Special cards represent the elite players from each MLB season. They carry both a <strong>Team Deck Score</strong> and a <strong>Special Deck Score</strong>, and can be developed far beyond standard Live/Season cards.</p>
+          <div class="rarity-grid">
+            <div class="rarity-card" style="border-left-color:#eab308">
+              <div class="rc-name" style="color:#eab308">Impact</div>
+              <div class="rc-ovr" style="color:#eab308">Deck: 13 → 19</div>
+              <div class="rc-desc">Base Special card. +1 to all stats vs same-year Season card. Max deck score 19 via Special Training.</div>
+            </div>
+            <div class="rarity-card" style="border-left-color:#3b82f6">
+              <div class="rc-name" style="color:#3b82f6">Prime</div>
+              <div class="rc-ovr" style="color:#3b82f6">Deck: 16 → 22</div>
+              <div class="rc-desc">Key team players. +2 stats vs Season card. Comes with an A-grade skill. Max deck 22 via Special Training.</div>
+            </div>
+            <div class="rarity-card" style="border-left-color:#ec4899">
+              <div class="rc-name" style="color:#ec4899">Signature</div>
+              <div class="rc-ovr" style="color:#ec4899">Deck: 20 → 26</div>
+              <div class="rc-desc">Top franchise players. +2 to +4 stats. Highest MAX development level of all grades. Max deck 26 via Special Training.</div>
+            </div>
+          </div>
+          <div class="warn-box">
+            <span class="tip-icon">⚠️</span>
+            <p class="warn-text"><strong>Special Training</strong> is the key to maxing deck scores. Prioritize same-team materials for double the EXP gain.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🌟</div>
+          <span class="acc-title">FA Cards (Free Agent)</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">FA Cards let you field star players from any team. When registered to your lineup, they receive your preferred team's full Deck Score effect — but carry slightly lower deck scores and base stats than their Special Card counterparts.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Lineup Limit:</strong> Up to 5 FA Cards total — max 4 pitchers or 4 batters. Two-way players count as one card regardless of role.</li>
+            <li><strong>Acquisition:</strong> Open FA Card Packs, or convert an existing Special Card using <strong>FA Contract Tickets</strong> (development progress is preserved).</li>
+            <li><strong>Development:</strong> FA Cards require less EXP for Limit Break and Special Training than Special Cards — faster to develop overall.</li>
+            <li><strong>Upgrade gap:</strong> FA Cards have 4–5 OVR lower Upgrade stats than the equivalent Special Card rarity.</li>
+            <li><strong>Cross-material:</strong> FA and Special Cards of the same player can be used as Limit Break and Special Training materials for each other.</li>
+          </ul></div>
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <p class="tip-text">When converting, using a Special Card of the same <strong>position</strong> as the target can reduce the FA Contract Tickets required. FA Cards of the same rarity also qualify as conversion material.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">✨</div>
+          <span class="acc-title">Moment, WBC, & HOF Cards</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <div class="rarity-grid">
+            <div class="rarity-card" style="border-left-color:#10b981">
+              <div class="rc-name" style="color:#10b981">Moment</div>
+              <div class="rc-ovr" style="color:#10b981">Event Exclusive</div>
+              <div class="rc-desc">Limited-time cards tied to historic or in-season performances. Each carries a named emblem (Slugger, Frontline, Closer, etc.) reflecting the performance type.</div>
+            </div>
+            <div class="rarity-card" style="border-left-color:#38bdf8">
+              <div class="rc-name" style="color:#38bdf8">WBC</div>
+              <div class="rc-ovr" style="color:#38bdf8">WBC Event</div>
+              <div class="rc-desc">World Baseball Classic exclusive cards. WBC Signature, Prime, and affiliated Moment cards. Available through WBC event scouts and packs during the 2026 WBC promotion.</div>
+            </div>
+            <div class="rarity-card" style="border-left-color:#f4b942">
+              <div class="rc-name" style="color:#f4b942">HOF</div>
+              <div class="rc-ovr" style="color:#f4b942">Hall of Fame</div>
+              <div class="rc-desc">The rarest cards in the game. Legendary all-time players enshrined in the National Baseball Hall of Fame. Unique HOF-tier skills and potentials. 2× Special Training EXP applies to all eligible teams for HOF cards.</div>
+            </div>
+          </div>
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <p class="tip-text"><strong>HOF cards</strong> with multiple team affiliations (e.g. Greg Maddux — Braves and Cubs) receive 2× Special Training EXP from materials of all eligible teams without needing to change the HOF card's team setting.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════════════════════ DEVELOPMENT ═══════════════════════════════ -->
+    <section class="chapter" id="development">
+      <div class="chapter-header">
+        <div class="chapter-icon" style="background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.25)">⚙️</div>
+        <h2 class="chapter-title">Player <span>Development</span></h2>
+      </div>
+
+      <div class="acc open">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🔺</div>
+          <span class="acc-title">Upgrade</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Upgrading is the primary way to increase a player card's OVR. Player cards, upgrade material cards, and points are consumed per attempt. Each card grade has a cap on the stats increase per level.</p>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Base Level</div><div class="step-desc">All players start upgradeable to Level 10. Each successful upgrade raises OVR within the grade's per-level cap.</div></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Boost Gauge</div><div class="step-desc">Fill the boost gauge by attempting upgrades. A bonus success rate applies once full. Every failed upgrade adds a booster rate until the next success.</div></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Critical Upgrades</div><div class="step-desc">Using the exact same player as material applies a Critical rate — jumping 2 levels simultaneously. Upgrade Success and Critical Badges further boost these rates.</div></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Material Restrictions</div><div class="step-desc">Materials must meet a minimum OVR requirement based on the upgrade level and target card grade.</div></div></div>
+          </div>
+          <div class="warn-box">
+            <span class="tip-icon">⚠️</span>
+            <p class="warn-text"><strong>Limit Break</strong> is required to upgrade beyond Level 10. Each Limit Break raises the cap by +2, up to a max of Level 20.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">💥</div>
+          <span class="acc-title">Limit Break</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Limit Break expands a card's development ceiling. All players can Limit Break up to <strong>5 levels</strong>.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Materials:</strong> Limit Break EXP cards, Limit Break Tickets (instant +1 level), or the same player as material card</li>
+            <li><strong>Live/Season:</strong> Only the same player can serve as material</li>
+            <li><strong>Special cards (Impact/Prime/Signature):</strong> Same player at any grade works as material</li>
+            <li><strong>Each Limit Break:</strong> Raises the MAX Upgrade level by +2 (up to Level 20 total)</li>
+            <li><strong>Special Training bonus:</strong> MAX Special Training level increases at Limit Break Lv. 2 and Lv. 4 for special cards</li>
+            <li><strong>Potential unlock:</strong> Reaching Upgrade Lv. 10 unlocks all Potential stages at once</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">📈</div>
+          <span class="acc-title">Training, Training Boost & Skills</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Training increases individual stats on a player card. Once max training is reached, <strong>Training Reallocation</strong> lets you redistribute stats — select 1 stat to receive the least allocation, useful for optimizing a card's build.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Skills:</strong> All stats have a grade — S, A, B, C, D. Players start with 3 D-grade skills (Prime cards start with 1 A-grade skill in slot 1)</li>
+            <li><strong>Skill upgrades:</strong> Feed material cards to raise skill grades over time</li>
+            <li><strong>Skill Level Effect:</strong> Activates based on the combined level of a card's 3 skills — note this is separate from Position Training's skill bonuses</li>
+            <li><strong>Training Boost:</strong> Accelerates training EXP gain. Boost level affects how much EXP is transferred in Development Transfers</li>
+          </ul></div>
+          <div class="warn-box">
+            <span class="tip-icon">⚠️</span>
+            <p class="warn-text">Signature cards can reallocate <strong>only specific stats</strong>. The reallocation is irreversible — plan your stat priority before committing.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🏋️</div>
+          <span class="acc-title">Special Training</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Special Training applies to Impact, Prime, Signature, and FA cards. It's one of the most impactful systems for increasing both OVR and deck score.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Uses:</strong> 1 time when first obtained; up to 3 additional times via Limit Break (total 4 max)</li>
+            <li><strong>Materials:</strong> Special Training Tickets, Special Training EXP cards, or other special player cards</li>
+            <li><strong>Same-team bonus:</strong> Materials from the same preferred team grant <strong>double EXP</strong></li>
+            <li><strong>Ticket shortcut:</strong> Special Training Tickets raise the level by 1 regardless of current EXP</li>
+            <li><strong>Each level:</strong> Deck score +2 and +1 to a stat of your choice</li>
+          </ul></div>
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <p class="tip-text">Maxing Special Training on a Signature card raises its deck score from 20 to 26. Always use same-team cards as materials whenever possible to cut EXP costs in half.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🚀</div>
+          <span class="acc-title">Transcendence</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Transcendence is an advanced development system for special cards (Impact, Prime, Signature, and FA), with a MAX level of 9.</p>
+          <div class="guide-list"><ul>
+            <li><strong>+1 level:</strong> Use a card of the same team, rarity, and position as material</li>
+            <li><strong>+3 levels:</strong> Use the exact same player and rarity (any team)</li>
+            <li><strong>FA compatibility:</strong> FA Cards of the same rarity can be used as materials for Special Cards and vice versa</li>
+            <li><strong>Signature/FA Signature:</strong> Different player but same rarity materials grant +1 (team-matched) or +3 (same player)</li>
+          </ul></div>
+          <div class="warn-box">
+            <span class="tip-icon">🔑</span>
+            <p class="warn-text"><strong>Transcendence Lv. 9:</strong> Impact and Prime cards at max Transcendence can undergo a higher-grade conversion, developing into a higher-rarity card of the same player via the player recruitment system.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🔮</div>
+          <span class="acc-title">Potential</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Potential adds unique passive bonuses to player cards. It's unlocked and expanded through upgrades and Limit Break.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Unlock:</strong> Reaching <strong>Upgrade Lv. 10</strong> unlocks all Potential stages simultaneously</li>
+            <li><strong>Earn Potential Notes:</strong> Play Special Match (Potential Game) to collect the 5 types of Potential Notes used for development</li>
+            <li><strong>Reset:</strong> Potential can be reset from Limit Break Level 1 onward to re-allocate bonuses</li>
+            <li><strong>HOF Potentials:</strong> HOF cards have their own named unique Potentials distinct from standard cards</li>
+          </ul></div>
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <p class="tip-text">After a Development Transfer, the Potential resets automatically. Re-unlocking requires reaching Upgrade Lv. 10 again on the target card.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🧩</div>
+          <span class="acc-title">Position Training</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Position Training applies stat and skill level boosts to players registered in your lineup's position slots. Effects carry across <strong>all lineups</strong> and are long-term investments in your team.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Pitcher slots:</strong> Effects are applied based on the pitcher strategy you have set — if you run 6 starters and 2 closers, develop those position slots accordingly</li>
+            <li><strong>Relief pitchers:</strong> Numbered top-left to bottom-right, regardless of specific position</li>
+            <li><strong>Level Bonus Effect:</strong> Can be reset with a Level Bonus Effect Reset item (the previous effect may reappear)</li>
+            <li><strong>Material Reset Ticket:</strong> Changes the required material card to a different player from the available list</li>
+            <li><strong>No final confirmation:</strong> Position Training executes immediately when all required materials are registered — no undo</li>
+            <li><strong>Exclusions:</strong> Position Training effects do NOT apply in RBI Battle or Ranked Slugger</li>
+          </ul></div>
+          <div class="warn-box">
+            <span class="tip-icon">⚠️</span>
+            <p class="warn-text">The <strong>skill level effect</strong> (which activates based on 3 skill levels) is NOT boosted by Position Training's skill level increase — they are separate systems.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🔄</div>
+          <span class="acc-title">Development Transfer</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Development Transfer moves all accumulated development (Upgrade, Training, Limit Break, Special Training, etc.) from one card to another of the same player.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Eligibility:</strong> Same player across Live/Season cards, or across Impact/Prime/Signature (including FA) cards. Different teams are allowed.</li>
+            <li><strong>Two-way players:</strong> Batter and pitcher development must be transferred separately and only to the same position type (no pitcher → batter transfers)</li>
+            <li><strong>Requirements:</strong> A Development Transfer Ticket + sufficient points for the target card's level</li>
+            <li><strong>Transfer Card:</strong> Is NOT consumed — it remains but all development resets to zero</li>
+            <li><strong>Excess EXP:</strong> Any Limit Break or Special Training EXP beyond the target card's max is discarded</li>
+            <li><strong>Potential:</strong> Resets automatically after transfer — must be re-unlocked via Upgrade Lv. 10</li>
+          </ul></div>
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <p class="tip-text">Use Development Transfer to move a fully-developed Live card's progress to the same player's newly-released Signature card without starting from scratch.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════════════════════ DECK SCORE ═══════════════════════════════ -->
+    <section class="chapter" id="deck-score">
+      <div class="chapter-header">
+        <div class="chapter-icon" style="background:rgba(234,179,8,.12);border-color:rgba(234,179,8,.25)">📊</div>
+        <h2 class="chapter-title">Deck Score <span>&amp; Lineup</span></h2>
+      </div>
+
+      <div class="acc open">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🏟️</div>
+          <span class="acc-title">Team Deck Score</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Team Deck Score is the sum of deck scores from all <strong>preferred team players</strong> in your lineup. Higher totals unlock increasingly powerful team-wide effects — batting, pitching, and fielding bonuses that compound across your whole roster.</p>
+          <div class="guide-list"><ul>
+            <li>Live cards: deck score of 8–30 (based on WAR)</li>
+            <li>Season cards: deck score of 4–20</li>
+            <li>Building a full preferred-team lineup dramatically increases this score vs. mixing teams</li>
+            <li>FA Cards count toward the preferred team's deck score effect when in your lineup</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">💠</div>
+          <span class="acc-title">Special Deck Score</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Special Deck Score is the sum of deck scores from all special cards (Impact, Prime, Signature, FA) in your lineup — regardless of team. This unlocks separate bonus effects that stack with Team Deck Score.</p>
+          <table class="stat-table">
+            <thead><tr><th>Card Type</th><th>Base Deck</th><th>Max (with Special Training)</th></tr></thead>
+            <tbody>
+              <tr><td>Impact</td><td class="val">13</td><td class="val">19</td></tr>
+              <tr><td>Prime</td><td class="val">16</td><td class="val">22</td></tr>
+              <tr><td>Signature</td><td class="val">20</td><td class="val">26</td></tr>
+              <tr><td>FA cards</td><td><em style="color:var(--muted)">Slightly lower than equivalent Special</em></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">⚡</div>
+          <span class="acc-title">Rival Pick & Rival Link</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p"><strong>Rival Pick</strong> lets you designate a special card as your team's key player. The <strong>Rival Link</strong> system then applies bonus stats and additional deck score to all cards that share the Rival Pick's team and player name.</p>
+          <div class="guide-list"><ul>
+            <li>Example: Selecting PHI Bryce Harper as Rival Pick activates Rival Link bonuses on all PHI Bryce Harper cards across all available seasons, his Signature/Prime/Impact cards, and PHI-affiliated Moment cards</li>
+            <li>FA Cards are <strong>excluded</strong> from Rival Link bonuses</li>
+            <li>The bonus remains active until you change your Rival Pick</li>
+            <li>Building your lineup around your Rival Pick player maximizes the bonus impact</li>
+          </ul></div>
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <p class="tip-text">Choose your Rival Pick based on which player you have the most versions of in your collection. More Rival Linked cards = more bonus deck score across your lineup.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">📋</div>
+          <span class="acc-title">Lineup Settings</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">The Lineup screen gives you full control over your roster configuration. Multiple lineup slots are available — one for league play, one for battle modes.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Auto-lineup:</strong> Automatically builds a lineup using your preferred team's players, or using the highest-OVR players across your collection</li>
+            <li><strong>Copy lineup:</strong> Instantly clone a lineup configuration to another slot</li>
+            <li><strong>Batting order:</strong> Manually set your hitting order for optimal lineup synergy</li>
+            <li><strong>Pitcher strategy:</strong> Set starter/reliever/closer rotation and order</li>
+            <li><strong>Fielding positions:</strong> Assign alternate positions for eligible players</li>
+            <li><strong>Deck score toggle:</strong> Show or hide each player's deck score contribution in the lineup view</li>
+            <li><strong>Live stat adjustments:</strong> Check how current LIVE updates have changed player stats relative to their card</li>
+          </ul></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════════════════════ GAME MODES ═══════════════════════════════ -->
+    <section class="chapter" id="game-modes">
+      <div class="chapter-header">
+        <div class="chapter-icon" style="background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.25)">🎮</div>
+        <h2 class="chapter-title">Game <span>Modes</span></h2>
+      </div>
+
+      <div class="acc open">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🏆</div>
+          <span class="acc-title">League Mode</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">League Mode is the core single-player progression mode. You play through a full MLB season schedule against AI opponents. Each game costs <strong>5 Balls</strong> to enter.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Difficulty levels:</strong> Higher difficulties have more games per season and better rewards</li>
+            <li><strong>Quick Play:</strong> Simulates the entire game automatically. Chain multiple games using Quick Play Tickets</li>
+            <li><strong>Highlight Play:</strong> Simulates the game but lets you intervene manually at decisive moments. You can choose not to intervene for specific at-bats</li>
+          </ul></div>
+          <p class="guide-p" style="margin-top:8px"><strong>Rewards:</strong></p>
+          <div class="guide-list"><ul>
+            <li><strong>League Rank Reward:</strong> Based on your final standing after the season — higher difficulty, better rewards</li>
+            <li><strong>Player Card Rewards:</strong> Season/Live cards earned based on regular season performance. Higher difficulty and final rank = higher OVR cards available</li>
+            <li><strong>Postseason Rewards:</strong> The further you advance in the postseason, the more reward players become selectable</li>
+          </ul></div>
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <p class="tip-text">Push to the highest league difficulty you can sustain. The jump in reward card OVR is significant — even finishing mid-table in a harder league outpaces winning a lower one.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">⚔️</div>
+          <span class="acc-title">Rival Series</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Rival Series is the competitive PvP mode. Your lineup's Potential and skills are applied as an overall value accounting for both development amount and skill level.</p>
+          <div class="guide-list"><ul>
+            <li>Position penalties apply to players used outside their natural position (including pitchers in the wrong role)</li>
+            <li>Players eligible for multiple positions take no penalty for either</li>
+            <li>Stats from Clubhouse Leaders, Position Training, Deck Score, Synergy, and Rival Pick are <strong>not applied</strong> in Rival Series</li>
+            <li>Team Buff — check the Roster tab under Buffs to see how many players from each team are in your lineup vs. what's required to activate the team buff</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🏟️</div>
+          <span class="acc-title">Exhibition Game</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Exhibition lets you set up a one-off game against an AI opponent of your choosing — ideal for practicing your manual play mechanics or trying out different lineup configurations.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Opponent selection:</strong> Choose any MLB team, their starting pitcher, and home/away setting</li>
+            <li>Selecting your preferred team uses your actual league lineup</li>
+            <li>Any other team will use their standard lineup as it appears in League Mode</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">📓</div>
+          <span class="acc-title">Special Match (Potential Game)</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Special Match is the dedicated game mode for earning <strong>Potential Notes</strong> — the 5 types of resources used to develop player Potential.</p>
+          <div class="guide-list"><ul>
+            <li>5 types of Potential Notes are earnable, each tied to different player Potential tracks</li>
+            <li>View your current Potential Note stock and jump directly to the Potential Development screen from this mode</li>
+            <li>Hard mode is available for more challenging (and more rewarding) runs</li>
+            <li>Use Quick Play Tickets to auto-play consecutive games when grinding Notes</li>
+          </ul></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════════════════════ GAMEPLAY ═══════════════════════════════ -->
+    <section class="chapter" id="gameplay">
+      <div class="chapter-header">
+        <div class="chapter-icon" style="background:rgba(230,57,70,.12);border-color:rgba(230,57,70,.25)">⚾</div>
+        <h2 class="chapter-title">Gameplay <span>Mechanics</span></h2>
+      </div>
+
+      <div class="acc open">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🏏</div>
+          <span class="acc-title">Hitting System</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">The hitting system is based on <strong>effective velocity</strong>. The timing window for a [Good] hit shifts depending on where in the strike zone the pitch is located.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Higher &amp; inside pitches:</strong> Require <em>faster</em> hit timing to register [Good]</li>
+            <li><strong>Lower &amp; outside pitches:</strong> Require <em>slower</em> hit timing to register [Good]</li>
+          </ul></div>
+          <p class="guide-p" style="margin-top:8px"><strong>Hit Angle:</strong> The direction the ball travels depends on pitch location, not just timing.</p>
+          <div class="guide-list"><ul>
+            <li>Higher/inside → Pull side (left for right-handed batters)</li>
+            <li>Lower/outside → Push/opposite field side</li>
+            <li><strong>Pull Hitting</strong> and <strong>Push Hitting</strong> skills activate based on the <em>direction</em> of the batted ball, not the timing of the swing</li>
+          </ul></div>
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <p class="tip-text">Master the effective velocity system to maximize [Good] timing on different pitch locations. Building a lineup with both Pull Hitting and Push Hitting skilled batters gives you coverage across the entire strike zone.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">⚡</div>
+          <span class="acc-title">Skills & Position Penalties</span>
+          <div class="acc-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="acc-body">
+          <p class="guide-p">Skills are split into <strong>batter skills</strong> and <strong>pitcher skills</strong>, each graded D through S. Leveling them up through the Skill Index or development screen increases their in-game activation strength.</p>
+          <div class="guide-list"><ul>
+            <li><strong>Skill grades:</strong> S, A, B, C, D — S-grade skills have the highest activation strength and effect</li>
+            <li><strong>Position penalty:</strong> Playing a card out of its natural position incurs a stat penalty. Applies in most modes except where explicitly excluded</li>
+            <li><strong>Multi-position players:</strong> Cards eligible for multiple positions (e.g. 1B/LF) receive no penalty for either registered position</li>
+            <li><strong>Wrong pitcher role:</strong> Using a starter as a closer or vice versa also triggers a penalty — set your pitcher strategy correctly in the Lineup screen</li>
+          </ul></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="fi">
+    <div class="fl">MLB Rivals Hub · 2026</div>
+    <div class="fc">Unofficial fan companion · Content sourced from official MLB Rivals community guide · Not affiliated with Com2uS or MLB</div>
+  </div>
+</footer>
+
+<script>
+function toggleNav() {
+  const ham = document.getElementById('ham');
+  const nav = document.getElementById('mob-nav');
+  ham.classList.toggle('open');
+  nav.classList.toggle('open');
+}
+document.querySelectorAll('#mob-nav a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('ham').classList.remove('open');
+    document.getElementById('mob-nav').classList.remove('open');
+  });
+});
+
+function toggleAcc(head) {
+  const acc = head.closest('.acc');
+  acc.classList.toggle('open');
+}
+
+// Sidebar active link tracking
+const chapters = document.querySelectorAll('.chapter');
+const snavLinks = document.querySelectorAll('.snav-link');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      snavLinks.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+chapters.forEach(c => observer.observe(c));
+</script>
+</body>
+</html>
