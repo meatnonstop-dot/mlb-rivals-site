@@ -2,12 +2,13 @@
 <html>
 <head>
   <title>MLB Rivals – Home</title>
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     body {
-      margin: 0;
+      margin:0;
       background: radial-gradient(circle at top, #0f172a, #000);
     }
 
@@ -28,13 +29,30 @@
       transition: width .3s ease;
     }
 
-    .nav-link:hover {
-      color: white;
+    .nav-link:hover { color: white; }
+    .nav-link:hover::after { width: 100%; }
+
+    .tile {
+      transition: all .3s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(to bottom, rgba(30,30,45,0.95), rgba(10,10,15,0.98));
     }
 
-    .nav-link:hover::after {
-      width: 100%;
+    .tile:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      border-color: rgba(59,130,246,0.6);
     }
+
+    .pulse-glow {
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 15px rgba(59,130,246,0.2); }
+      50% { box-shadow: 0 0 30px rgba(59,130,246,0.5); }
+    }
+
   </style>
 </head>
 
@@ -44,8 +62,8 @@
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
     <a href="index.html" class="flex items-center gap-3 group">
-      <div class="w-3 h-3 rounded-full bg-blue-500 animate-pulse group-hover:scale-110 transition"></div>
-      <h1 class="text-xl font-extrabold tracking-wider text-blue-400 group-hover:text-blue-300 transition">
+      <div class="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></div>
+      <h1 class="text-xl font-extrabold tracking-wider text-blue-400">
         MLB RIVALS
       </h1>
     </a>
@@ -61,12 +79,75 @@
   </div>
 </header>
 
-<section class="max-w-6xl mx-auto px-6 py-20 text-center">
-  <h2 class="text-5xl font-extrabold mb-6">Welcome to MLB Rivals Hub</h2>
-  <p class="text-white/60 text-lg max-w-2xl mx-auto">
-    Browse players, scouting data, updates, and game guides — all in one place.
+<!-- HERO -->
+<section class="max-w-6xl mx-auto px-6 py-24 text-center">
+  <h2 class="text-5xl font-extrabold mb-6">
+    The Ultimate MLB Rivals Companion
+  </h2>
+  <p class="text-white/60 text-lg max-w-2xl mx-auto mb-10">
+    Browse player cards, explore scouting data, track updates, and master the game.
   </p>
+
+  <div class="flex justify-center gap-6">
+    <a href="players.html"
+       class="bg-blue-600 px-6 py-3 rounded font-semibold hover:bg-blue-700 transition pulse-glow">
+      Browse Players
+    </a>
+
+    <a href="updates.html"
+       class="bg-white/10 px-6 py-3 rounded font-semibold hover:bg-white/20 transition">
+      View Updates
+    </a>
+  </div>
 </section>
+
+<!-- SNAPSHOT -->
+<section class="max-w-6xl mx-auto px-6 pb-20 grid md:grid-cols-3 gap-8">
+
+  <div class="tile p-6 rounded-xl">
+    <h3 class="text-lg font-semibold mb-2">Steam Player Count</h3>
+    <p class="text-3xl font-bold text-blue-400">--</p>
+    <p class="text-white/50 text-sm mt-2">Live integration ready</p>
+  </div>
+
+  <div class="tile p-6 rounded-xl">
+    <h3 class="text-lg font-semibold mb-2">Featured Pack</h3>
+    <p class="text-2xl font-bold">Signature Drop</p>
+    <p class="text-white/50 text-sm mt-2">Limited Time</p>
+  </div>
+
+  <div class="tile p-6 rounded-xl">
+    <h3 class="text-lg font-semibold mb-2">Latest Update</h3>
+    <p class="text-2xl font-bold">v2.6.0</p>
+    <p class="text-white/50 text-sm mt-2">Gameplay Improvements</p>
+  </div>
+
+</section>
+
+<!-- QUICK NAV -->
+<section class="max-w-6xl mx-auto px-6 pb-24 grid md:grid-cols-4 gap-8">
+
+  <a href="players.html" class="tile p-10 rounded-xl text-center">
+    <h3 class="text-xl font-bold">Players</h3>
+  </a>
+
+  <a href="scouts.html" class="tile p-10 rounded-xl text-center">
+    <h3 class="text-xl font-bold">Scouts</h3>
+  </a>
+
+  <a href="updates.html" class="tile p-10 rounded-xl text-center">
+    <h3 class="text-xl font-bold">Updates</h3>
+  </a>
+
+  <a href="guide.html" class="tile p-10 rounded-xl text-center">
+    <h3 class="text-xl font-bold">Guide</h3>
+  </a>
+
+</section>
+
+<footer class="text-center text-white/40 pb-10">
+  MLB Rivals Hub © 2026
+</footer>
 
 </body>
 </html>
