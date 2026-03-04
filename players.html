@@ -10,18 +10,17 @@
 
     .card-glow { box-shadow: 0 0 30px rgba(236,72,153,0.35); }
 
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 25px rgba(236,72,153,0.35); }
-      50% { box-shadow: 0 0 45px rgba(236,72,153,0.55); }
-      100% { box-shadow: 0 0 25px rgba(236,72,153,0.35); }
-    }
-
-    .pulse { animation: pulseGlow 3s infinite ease-in-out; }
-
     .stat-bar {
       height: 8px;
       border-radius: 999px;
       background: linear-gradient(to right, #ec4899, #9333ea);
+    }
+
+    .hover-lift {
+      transition: 0.3s;
+    }
+    .hover-lift:hover {
+      transform: translateY(-8px) scale(1.02);
     }
   </style>
 </head>
@@ -47,20 +46,19 @@
 
   <h2 class="text-4xl font-extrabold mb-8">Player Index</h2>
 
-  <!-- Filters -->
   <div class="flex flex-col md:flex-row gap-4 mb-10">
     <input 
       id="searchInput"
       type="text"
       placeholder="Search player..."
       class="bg-white/10 px-4 py-2 rounded w-full md:w-1/2"
-      onkeyup="filterPlayers()"
+      onkeyup="renderPlayers()"
     />
 
     <select 
       id="teamFilter"
       class="bg-white/10 px-4 py-2 rounded w-full md:w-1/4"
-      onchange="filterPlayers()"
+      onchange="renderPlayers()"
     >
       <option value="all">All Teams</option>
       <option value="LAD">LAD</option>
@@ -69,67 +67,87 @@
     </select>
   </div>
 
-  <div id="playerGrid" class="grid md:grid-cols-2 gap-10">
+  <div id="playerGrid" class="grid md:grid-cols-2 gap-10"></div>
 
-    <!-- Player Card -->
-    <details class="player-card card-glow pulse rounded-2xl bg-gradient-to-br from-pink-600 to-fuchsia-600 p-[1px]" data-team="LAD" data-name="Shohei Ohtani">
-      <summary class="bg-black/80 rounded-2xl p-6 cursor-pointer list-none hover:-translate-y-2 hover:scale-[1.02] transition">
-        <div class="flex justify-between text-sm mb-2">
-          <span>SIGNATURE</span>
-          <span>OVR 66</span>
-        </div>
-        <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
-          CARD ART
-        </div>
-        <h3 class="font-semibold">Shohei Ohtani</h3>
-        <p class="text-sm text-white/60">LAD · SP / DH</p>
-      </summary>
-
-      <div class="bg-black/90 p-6 space-y-4">
-        <div><p class="text-sm mb-1">Power</p><div class="bg-white/10 rounded-full"><div class="stat-bar" style="width:92%"></div></div></div>
-        <div><p class="text-sm mb-1">Contact</p><div class="bg-white/10 rounded-full"><div class="stat-bar" style="width:88%"></div></div></div>
-      </div>
-    </details>
-
-    <!-- Second Player -->
-    <details class="player-card rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 p-[1px]" data-team="NYY" data-name="Aaron Judge">
-      <summary class="bg-black/80 rounded-2xl p-6 cursor-pointer list-none hover:-translate-y-2 hover:scale-[1.02] transition">
-        <div class="flex justify-between text-sm mb-2">
-          <span>PRIME</span>
-          <span>OVR 64</span>
-        </div>
-        <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
-          CARD ART
-        </div>
-        <h3 class="font-semibold">Aaron Judge</h3>
-        <p class="text-sm text-white/60">NYY · RF</p>
-      </summary>
-
-      <div class="bg-black/90 p-6 space-y-4">
-        <div><p class="text-sm mb-1">Power</p><div class="bg-white/10 rounded-full"><div class="stat-bar" style="width:95%"></div></div></div>
-        <div><p class="text-sm mb-1">Contact</p><div class="bg-white/10 rounded-full"><div class="stat-bar" style="width:84%"></div></div></div>
-      </div>
-    </details>
-
-  </div>
 </section>
 
 <script>
-function filterPlayers() {
-  let search = document.getElementById("searchInput").value.toLowerCase();
-  let team = document.getElementById("teamFilter").value;
-  let cards = document.getElementsByClassName("player-card");
-
-  for (let card of cards) {
-    let name = card.getAttribute("data-name").toLowerCase();
-    let cardTeam = card.getAttribute("data-team");
-
-    let matchesSearch = name.includes(search);
-    let matchesTeam = team === "all" || team === cardTeam;
-
-    card.style.display = (matchesSearch && matchesTeam) ? "block" : "none";
+const players = [
+  {
+    name: "Shohei Ohtani",
+    team: "LAD",
+    rarity: "SIGNATURE",
+    ovr: 66,
+    stats: { Power: 92, Contact: 88 }
+  },
+  {
+    name: "Aaron Judge",
+    team: "NYY",
+    rarity: "PRIME",
+    ovr: 64,
+    stats: { Power: 95, Contact: 84 }
+  },
+  {
+    name: "Ronald Acuña Jr.",
+    team: "ATL",
+    rarity: "IMPACT",
+    ovr: 65,
+    stats: { Power: 89, Contact: 90 }
   }
+];
+
+function renderPlayers() {
+  const grid = document.getElementById("playerGrid");
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const teamFilter = document.getElementById("teamFilter").value;
+
+  grid.innerHTML = "";
+
+  players
+    .filter(p =>
+      p.name.toLowerCase().includes(search) &&
+      (teamFilter === "all" || p.team === teamFilter)
+    )
+    .forEach(player => {
+
+      const card = document.createElement("details");
+      card.className = "card-glow rounded-2xl bg-gradient-to-br from-pink-600 to-fuchsia-600 p-[1px]";
+
+      let statsHTML = "";
+      for (let stat in player.stats) {
+        statsHTML += `
+          <div>
+            <p class="text-sm mb-1">${stat}</p>
+            <div class="bg-white/10 rounded-full">
+              <div class="stat-bar" style="width:${player.stats[stat]}%"></div>
+            </div>
+          </div>
+        `;
+      }
+
+      card.innerHTML = `
+        <summary class="bg-black/80 rounded-2xl p-6 cursor-pointer list-none hover-lift">
+          <div class="flex justify-between text-sm mb-2">
+            <span>${player.rarity}</span>
+            <span>OVR ${player.ovr}</span>
+          </div>
+          <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
+            CARD ART
+          </div>
+          <h3 class="font-semibold">${player.name}</h3>
+          <p class="text-sm text-white/60">${player.team}</p>
+        </summary>
+
+        <div class="bg-black/90 p-6 space-y-4">
+          ${statsHTML}
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
 }
+
+renderPlayers();
 </script>
 
 </body>
