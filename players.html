@@ -7,130 +7,135 @@
 
   <style>
     body {
-      margin:0;
-      background:
-        radial-gradient(circle at center, rgba(30,41,59,0.6), #000 70%),
-        url("https://images.unsplash.com/photo-1508341591423-4347099e1f19?q=80&w=1920&auto=format&fit=crop");
-      background-size: cover;
-      background-attachment: fixed;
-      background-blend-mode: overlay;
+      background: radial-gradient(circle at top, #111827 0%, #000 70%);
     }
 
     /* ===== CARD STRUCTURE ===== */
-    .flip-card { perspective:1200px; }
+    .flip-card {
+      perspective: 1200px;
+    }
 
     .flip-inner {
-      position:relative;
-      width:100%;
-      height:340px;
-      transform-style:preserve-3d;
-      transition:transform .8s cubic-bezier(.22,.61,.36,1);
+      position: relative;
+      width: 100%;
+      height: 320px;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(.22,.61,.36,1);
     }
 
-    .flipped { transform:rotateY(180deg); }
+    .flipped {
+      transform: rotateY(180deg);
+    }
 
     .face {
-      position:absolute;
-      width:100%;
-      height:100%;
-      border-radius:18px;
-      backface-visibility:hidden;
-      padding:1.5rem;
-      background:rgba(0,0,0,0.9);
-      border:1px solid rgba(255,255,255,0.08);
-      overflow:hidden;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      backface-visibility: hidden;
+      background: rgba(0,0,0,0.9);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 1.5rem;
+      overflow: hidden;
     }
 
-    .back { transform:rotateY(180deg); }
-
-    /* ===== REVEAL ANIMATION ===== */
-    .reveal {
-      animation: revealIn .6s ease-out forwards;
-      transform:scale(.8);
-      opacity:0;
+    .back {
+      transform: rotateY(180deg);
+      background: rgba(0,0,0,0.95);
     }
 
-    @keyframes revealIn {
-      to { transform:scale(1); opacity:1; }
+    /* ===== SUBTLE SHINE ===== */
+    .shine::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        transparent 45%,
+        rgba(255,255,255,0.08),
+        transparent 55%
+      );
+      transform: translateX(-100%);
+      animation: sweep 8s ease-in-out infinite;
+      pointer-events: none;
     }
 
-    /* ===== RARITY BADGE ===== */
-    .badge {
-      position:absolute;
-      top:12px;
-      left:12px;
-      padding:4px 10px;
-      font-size:11px;
-      border-radius:999px;
-      font-weight:bold;
-      letter-spacing:.5px;
-      animation: badgePulse 3s ease-in-out infinite;
+    @keyframes sweep {
+      0% { transform: translateX(-100%); opacity: 0; }
+      40% { opacity: 0.2; }
+      60% { opacity: 0.2; }
+      100% { transform: translateX(100%); opacity: 0; }
     }
 
-    @keyframes badgePulse {
-      0%,100% { box-shadow:0 0 8px rgba(255,255,255,0.1); }
-      50% { box-shadow:0 0 20px rgba(255,255,255,0.4); }
+    /* ===== TILT ===== */
+    .tilt-layer {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.15s ease-out;
     }
 
-    .SIGNATURE .badge {
-      background:linear-gradient(to right,#ec4899,#9333ea);
-    }
-    .PRIME .badge {
-      background:linear-gradient(to right,#3b82f6,#6366f1);
-    }
-    .IMPACT .badge {
-      background:linear-gradient(to right,#10b981,#14b8a6);
-    }
-
-    /* ===== STAT BAR ===== */
+    /* ===== STAT BARS ===== */
     .stat-bar {
-      height:10px;
-      border-radius:999px;
-      width:0%;
-      transition:width .9s cubic-bezier(.22,.61,.36,1);
+      height: 10px;
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.8s cubic-bezier(.22,.61,.36,1);
     }
 
-    .SIGNATURE .stat-bar { background:linear-gradient(to right,#ec4899,#9333ea); }
-    .PRIME .stat-bar { background:linear-gradient(to right,#3b82f6,#6366f1); }
-    .IMPACT .stat-bar { background:linear-gradient(to right,#10b981,#14b8a6); }
-
-    /* ===== PACK OVERLAY ===== */
-    .overlay {
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.8);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      z-index:50;
+    /* ===== RARITY THEMES ===== */
+    .SIGNATURE .stat-bar {
+      background: linear-gradient(to right, #ec4899, #9333ea);
+    }
+    .PRIME .stat-bar {
+      background: linear-gradient(to right, #3b82f6, #6366f1);
+    }
+    .IMPACT .stat-bar {
+      background: linear-gradient(to right, #10b981, #14b8a6);
     }
 
-    .overlay.active { display:flex; }
+    .SIGNATURE { box-shadow: 0 0 20px rgba(236,72,153,0.25); }
+    .PRIME { box-shadow: 0 0 20px rgba(59,130,246,0.25); }
+    .IMPACT { box-shadow: 0 0 20px rgba(16,185,129,0.25); }
 
   </style>
 </head>
 
 <body class="text-white min-h-screen">
 
-<header class="bg-black/70 backdrop-blur border-b border-white/10 p-5 flex justify-between items-center">
+<header class="bg-black/80 backdrop-blur border-b border-white/10 p-5">
   <h1 class="text-2xl font-extrabold text-blue-400">MLB RIVALS</h1>
-  <button onclick="openPack()" class="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 transition">
-    Open Pack
-  </button>
 </header>
 
 <section class="max-w-6xl mx-auto px-6 py-10">
-  <h2 class="text-4xl font-extrabold mb-6">Player Index</h2>
-  <div id="playerGrid" class="grid md:grid-cols-3 gap-10"></div>
-</section>
 
-<div id="packOverlay" class="overlay">
-  <h2 class="text-3xl font-bold mb-6">Pack Opening...</h2>
-  <button onclick="closePack()" class="bg-red-500 px-4 py-2 rounded">
-    Close
-  </button>
-</div>
+  <h2 class="text-4xl font-extrabold mb-6">Player Index</h2>
+
+  <div class="flex flex-col md:flex-row gap-4 mb-8">
+    <input id="searchInput"
+      placeholder="Search player..."
+      class="bg-white/10 px-4 py-2 rounded w-full md:w-1/3"
+      oninput="renderPlayers()">
+
+    <select id="teamFilter"
+      class="bg-white/10 px-4 py-2 rounded w-full md:w-1/4"
+      onchange="renderPlayers()">
+      <option value="all">All Teams</option>
+      <option value="LAD">LAD</option>
+      <option value="NYY">NYY</option>
+      <option value="ATL">ATL</option>
+    </select>
+
+    <select id="sortOVR"
+      class="bg-white/10 px-4 py-2 rounded w-full md:w-1/4"
+      onchange="renderPlayers()">
+      <option value="desc">Sort OVR High → Low</option>
+      <option value="asc">Sort OVR Low → High</option>
+    </select>
+  </div>
+
+  <div id="playerGrid" class="grid md:grid-cols-3 gap-8"></div>
+
+</section>
 
 <script>
 const players = [
@@ -144,12 +149,23 @@ const players = [
     stats:{Power:89,Contact:90,Speed:93} }
 ];
 
-function renderPlayers(reveal=false) {
+function renderPlayers(){
 
   const grid=document.getElementById("playerGrid");
   grid.innerHTML="";
 
-  players.forEach((player,index)=>{
+  const search=document.getElementById("searchInput").value.toLowerCase();
+  const team=document.getElementById("teamFilter").value;
+  const sort=document.getElementById("sortOVR").value;
+
+  let filtered=players.filter(p=>
+    p.name.toLowerCase().includes(search) &&
+    (team==="all" || p.team===team)
+  );
+
+  filtered.sort((a,b)=> sort==="desc"?b.ovr-a.ovr:a.ovr-b.ovr);
+
+  filtered.forEach((player,index)=>{
 
     let statsHTML="";
     for(let stat in player.stats){
@@ -163,41 +179,45 @@ function renderPlayers(reveal=false) {
     }
 
     const card=document.createElement("div");
-    card.className="flip-card "+player.rarity+(reveal?" reveal":"");
+    card.className="flip-card "+player.rarity;
 
     card.innerHTML=`
-      <div class="flip-inner" onclick="flipCard(this,${index})">
+      <div class="flip-inner">
+        <div class="tilt-layer"
+             onclick="flipCard(this.parentElement,${index})"
+             onmousemove="tiltCard(event,this)"
+             onmouseleave="resetTilt(this)">
 
-        <div class="face">
-          <div class="badge">${player.rarity}</div>
+          <div class="face shine">
+            <div class="flex justify-between text-sm mb-2">
+              <span>${player.rarity}</span>
+              <span>OVR ${player.ovr}</span>
+            </div>
 
-          <div class="flex justify-between text-sm mb-2 mt-6">
-            <span>${player.team}</span>
-            <span>OVR ${player.ovr}</span>
+            <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
+              CARD ART
+            </div>
+
+            <h3 class="font-semibold">${player.name}</h3>
+            <p class="text-sm text-white/60">${player.team}</p>
           </div>
 
-          <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
-            CARD ART
+          <div class="face back">
+            <h3 class="font-bold mb-4">${player.name}</h3>
+            ${statsHTML}
           </div>
 
-          <h3 class="font-semibold">${player.name}</h3>
         </div>
-
-        <div class="face back">
-          <h3 class="font-bold mb-4">${player.name}</h3>
-          ${statsHTML}
-        </div>
-
       </div>`;
-
+    
     grid.appendChild(card);
   });
 }
 
-function flipCard(element,index){
-  element.classList.toggle("flipped");
+function flipCard(el,index){
+  el.classList.toggle("flipped");
 
-  if(element.classList.contains("flipped")){
+  if(el.classList.contains("flipped")){
     const player=players[index];
     setTimeout(()=>{
       for(let stat in player.stats){
@@ -208,16 +228,16 @@ function flipCard(element,index){
   }
 }
 
-function openPack(){
-  document.getElementById("packOverlay").classList.add("active");
-  setTimeout(()=>{
-    document.getElementById("packOverlay").classList.remove("active");
-    renderPlayers(true);
-  },1200);
+function tiltCard(e,el){
+  const rect=el.getBoundingClientRect();
+  const x=(e.clientX-rect.left)/rect.width-0.5;
+  const y=(e.clientY-rect.top)/rect.height-0.5;
+
+  el.style.transform=`rotateX(${y*-4}deg) rotateY(${x*4}deg)`;
 }
 
-function closePack(){
-  document.getElementById("packOverlay").classList.remove("active");
+function resetTilt(el){
+  el.style.transform="rotateX(0deg) rotateY(0deg)";
 }
 
 renderPlayers();
