@@ -6,79 +6,85 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body { background: radial-gradient(circle at top, #0f172a, #000); }
+    body {
+      background: radial-gradient(circle at top, #0f172a 0%, #000 70%);
+    }
 
-    /* === CARD STRUCTURE === */
-    .flip-card { perspective: 1200px; }
+    /* ===== CARD WRAPPER ===== */
+    .flip-card {
+      perspective: 1200px;
+    }
 
     .flip-inner {
       position: relative;
       width: 100%;
       height: 320px;
       transform-style: preserve-3d;
-      transition: transform 0.8s ease;
+      transition: transform 0.8s cubic-bezier(.22,.61,.36,1);
     }
 
-    .flipped { transform: rotateY(180deg); }
-
-    .flip-front, .flip-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 1rem;
-      backface-visibility: hidden;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .flip-front {
-      background: rgba(0,0,0,0.92);
-      padding: 1.5rem;
-    }
-
-    .flip-back {
-      background: rgba(0,0,0,0.97);
-      padding: 1.5rem;
+    .flipped {
       transform: rotateY(180deg);
     }
 
-    /* === TILT WRAPPER (separate from flip transform) === */
-    .tilt-wrapper {
+    .face {
+      position: absolute;
       width: 100%;
       height: 100%;
-      transition: transform 0.2s ease;
+      border-radius: 16px;
+      backface-visibility: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.92);
+      overflow: hidden;
+      padding: 1.5rem;
     }
 
-    /* === SHINE === */
-    .shine::after {
+    .back {
+      transform: rotateY(180deg);
+      background: rgba(0,0,0,0.97);
+    }
+
+    /* ===== SUBTLE TILT (very controlled) ===== */
+    .tilt-layer {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.15s ease-out;
+    }
+
+    /* ===== SMOOTH SHINE SWEEP ===== */
+    .shine::before {
       content: "";
       position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        120deg,
-        transparent 45%,
-        rgba(255,255,255,0.12),
-        transparent 55%
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(
+        circle at 50% 50%,
+        rgba(255,255,255,0.15),
+        transparent 60%
       );
-      transform: translateX(-100%);
-      animation: shineMove 6s infinite linear;
+      transform: rotate(25deg);
+      animation: sweep 6s ease-in-out infinite;
       pointer-events: none;
     }
 
-    @keyframes shineMove {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
+    @keyframes sweep {
+      0% { transform: translateX(-60%) rotate(25deg); opacity: 0; }
+      40% { opacity: 0.4; }
+      60% { opacity: 0.4; }
+      100% { transform: translateX(60%) rotate(25deg); opacity: 0; }
     }
 
-    /* === STAT BAR === */
+    /* ===== STAT BARS ===== */
     .stat-bar {
       height: 10px;
       border-radius: 999px;
       width: 0%;
-      transition: width 0.8s ease;
+      transition: width 0.9s cubic-bezier(.22,.61,.36,1);
     }
 
-    /* === RARITY THEMES === */
+    /* ===== RARITY THEMES ===== */
     .SIGNATURE .stat-bar {
       background: linear-gradient(to right, #ec4899, #9333ea);
     }
@@ -89,9 +95,9 @@
       background: linear-gradient(to right, #10b981, #14b8a6);
     }
 
-    .SIGNATURE { box-shadow: 0 0 25px rgba(236,72,153,0.4); }
-    .PRIME { box-shadow: 0 0 25px rgba(59,130,246,0.4); }
-    .IMPACT { box-shadow: 0 0 25px rgba(16,185,129,0.4); }
+    .SIGNATURE { box-shadow: 0 0 20px rgba(236,72,153,0.35); }
+    .PRIME { box-shadow: 0 0 20px rgba(59,130,246,0.35); }
+    .IMPACT { box-shadow: 0 0 20px rgba(16,185,129,0.35); }
 
   </style>
 </head>
@@ -106,7 +112,6 @@
 
   <h2 class="text-4xl font-extrabold mb-6">Player Index</h2>
 
-  <!-- CONTROLS -->
   <div class="flex flex-col md:flex-row gap-4 mb-8">
     <input id="searchInput"
       placeholder="Search player..."
@@ -183,13 +188,12 @@ function renderPlayers() {
 
     card.innerHTML = `
       <div class="flip-inner">
-
-        <div class="tilt-wrapper cursor-pointer"
+        <div class="tilt-layer"
              onclick="flipCard(this.parentElement, ${index})"
              onmousemove="tiltCard(event, this)"
              onmouseleave="resetTilt(this)">
 
-          <div class="flip-front shine relative">
+          <div class="face shine">
             <div class="flex justify-between text-sm mb-2">
               <span>${player.rarity}</span>
               <span>OVR ${player.ovr}</span>
@@ -203,13 +207,12 @@ function renderPlayers() {
             <p class="text-sm text-white/60">${player.team}</p>
           </div>
 
-          <div class="flip-back">
+          <div class="face back">
             <h3 class="font-bold mb-4">${player.name}</h3>
             ${statsHTML}
           </div>
 
         </div>
-
       </div>
     `;
 
@@ -233,14 +236,15 @@ function flipCard(flipInner, index) {
   }
 }
 
+/* Very subtle tilt */
 function tiltCard(event, element) {
 
   const rect = element.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
+  const x = (event.clientX - rect.left) / rect.width - 0.5;
+  const y = (event.clientY - rect.top) / rect.height - 0.5;
 
-  const rotateX = ((y / rect.height) - 0.5) * -10;
-  const rotateY = ((x / rect.width) - 0.5) * 10;
+  const rotateX = y * -6;
+  const rotateY = x * 6;
 
   element.style.transform =
     `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
