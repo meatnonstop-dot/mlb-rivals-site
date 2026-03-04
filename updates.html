@@ -2,14 +2,68 @@
 <html>
 <head>
   <title>MLB Rivals – Updates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: radial-gradient(circle at top, #111827, #000); }
+    .notice-glow { box-shadow: 0 0 30px rgba(16,185,129,0.35); }
+  </style>
 </head>
-<body class="bg-black text-white p-10">
+<body class="text-white min-h-screen">
 
-<h1 class="text-3xl font-bold mb-4">Game Updates</h1>
-<p class="text-white/70">Patch notes and developer updates will go here.</p>
+<header class="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+    <h1 class="text-2xl font-extrabold tracking-wider text-blue-400">
+      MLB RIVALS
+    </h1>
+    <nav class="hidden md:flex gap-6 text-sm text-white/70">
+      <a href="index.html">Home</a>
+      <a href="scouts.html">Scouts</a>
+      <a href="players.html">Players</a>
+      <a href="updates.html" class="text-white">Updates</a>
+      <a href="guide.html">Guide</a>
+    </nav>
+  </div>
+</header>
 
-<a href="index.html" class="text-blue-400 underline mt-6 block">← Back Home</a>
+<section class="max-w-6xl mx-auto px-6 py-16">
+  <h2 class="text-4xl font-extrabold mb-10">Game Updates</h2>
+
+  <div class="space-y-8">
+
+    <!-- Update Card -->
+    <div class="notice-glow rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px]">
+      <div class="bg-black/80 rounded-2xl p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold">v3.09.00</h3>
+          <span class="text-sm text-white/60">Latest Patch</span>
+        </div>
+        <p class="text-white/60 mb-4">
+          Balance adjustments, event changes, and system improvements.
+        </p>
+        <details class="text-sm text-white/70">
+          <summary class="cursor-pointer text-emerald-400">
+            View Developer Notes
+          </summary>
+          <ul class="mt-3 space-y-2">
+            <li>• Added new limited-time events</li>
+            <li>• Adjusted player stat balance</li>
+            <li>• UI improvements and bug fixes</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+
+    <!-- Older Update -->
+    <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
+      <h3 class="text-lg font-bold mb-2">v3.08.00</h3>
+      <p class="text-white/60">
+        Introduced Signature Black Cards and new progression features.
+      </p>
+    </div>
+
+  </div>
+</section>
 
 </body>
 </html>
