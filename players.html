@@ -6,72 +6,24 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body {
-      background: radial-gradient(circle at top, #111827, #000);
-    }
+    body { background: radial-gradient(circle at top, #111827, #000); }
 
-    @keyframes rotateBorder {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .card-wrapper {
-      position: relative;
-      border-radius: 18px;
-      padding: 2px; /* creates visible animated border */
-    }
-
-    .card-wrapper::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 18px;
-      animation: rotateBorder 4s linear infinite;
-      z-index: 0;
-    }
-
-    .card-inner {
-      position: relative;
-      background: rgba(0,0,0,0.9);
-      border-radius: 16px;
-      padding: 1.5rem;
-      z-index: 1;
+    .card {
       transition: 0.3s;
     }
 
-    .card-inner:hover {
+    .card:hover {
       transform: translateY(-8px) scale(1.02);
     }
 
-    /* Rarity Border Themes */
-    .rarity-signature::before {
-      background: conic-gradient(
-        #ec4899,
-        #9333ea,
-        #ec4899
-      );
-    }
-
-    .rarity-prime::before {
-      background: conic-gradient(
-        #3b82f6,
-        #6366f1,
-        #3b82f6
-      );
-    }
-
-    .rarity-impact::before {
-      background: conic-gradient(
-        #10b981,
-        #14b8a6,
-        #10b981
-      );
-    }
-
     .stat-bar {
-      height: 8px;
+      height: 10px;
       border-radius: 999px;
       background: linear-gradient(to right, #ec4899, #9333ea);
+    }
+
+    .modal {
+      backdrop-filter: blur(6px);
     }
   </style>
 </head>
@@ -97,32 +49,45 @@
 
   <h2 class="text-4xl font-extrabold mb-8">Player Index</h2>
 
-  <div id="playerGrid" class="grid md:grid-cols-2 gap-10"></div>
+  <div id="playerGrid" class="grid md:grid-cols-3 gap-8"></div>
 
 </section>
+
+<!-- Modal -->
+<div id="playerModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center modal">
+  <div class="bg-black rounded-2xl p-8 w-full max-w-lg relative">
+
+    <button onclick="closeModal()" class="absolute top-4 right-4 text-white/60 hover:text-white">
+      ✕
+    </button>
+
+    <div id="modalContent"></div>
+
+  </div>
+</div>
 
 <script>
 const players = [
   {
     name: "Shohei Ohtani",
     team: "LAD",
-    rarity: "signature",
+    rarity: "SIGNATURE",
     ovr: 66,
-    stats: { Power: 92, Contact: 88 }
+    stats: { Power: 92, Contact: 88, Speed: 78 }
   },
   {
     name: "Aaron Judge",
     team: "NYY",
-    rarity: "prime",
+    rarity: "PRIME",
     ovr: 64,
-    stats: { Power: 95, Contact: 84 }
+    stats: { Power: 95, Contact: 84, Speed: 60 }
   },
   {
     name: "Ronald Acuña Jr.",
     team: "ATL",
-    rarity: "impact",
+    rarity: "IMPACT",
     ovr: 65,
-    stats: { Power: 89, Contact: 90 }
+    stats: { Power: 89, Contact: 90, Speed: 93 }
   }
 ];
 
@@ -132,41 +97,57 @@ function renderPlayers() {
 
   players.forEach(player => {
 
-    let statsHTML = "";
-    for (let stat in player.stats) {
-      statsHTML += `
-        <div>
-          <p class="text-sm mb-1">${stat}</p>
-          <div class="bg-white/10 rounded-full">
-            <div class="stat-bar" style="width:${player.stats[stat]}%"></div>
-          </div>
-        </div>
-      `;
-    }
-
-    const card = document.createElement("details");
-    card.className = "card-wrapper rarity-" + player.rarity;
+    const card = document.createElement("div");
+    card.className = "card bg-black/80 rounded-2xl p-6 cursor-pointer border border-white/10";
+    card.onclick = () => openModal(player);
 
     card.innerHTML = `
-      <summary class="card-inner cursor-pointer list-none">
-        <div class="flex justify-between text-sm mb-2">
-          <span>${player.rarity.toUpperCase()}</span>
-          <span>OVR ${player.ovr}</span>
-        </div>
-        <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
-          CARD ART
-        </div>
-        <h3 class="font-semibold">${player.name}</h3>
-        <p class="text-sm text-white/60">${player.team}</p>
-      </summary>
-
-      <div class="bg-black/95 p-6 space-y-4">
-        ${statsHTML}
+      <div class="flex justify-between text-sm mb-2">
+        <span>${player.rarity}</span>
+        <span>OVR ${player.ovr}</span>
       </div>
+      <div class="h-32 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
+        CARD ART
+      </div>
+      <h3 class="font-semibold">${player.name}</h3>
+      <p class="text-sm text-white/60">${player.team}</p>
     `;
 
     grid.appendChild(card);
   });
+}
+
+function openModal(player) {
+  const modal = document.getElementById("playerModal");
+  const content = document.getElementById("modalContent");
+
+  let statsHTML = "";
+
+  for (let stat in player.stats) {
+    statsHTML += `
+      <div class="mb-4">
+        <p class="text-sm mb-1">${stat}</p>
+        <div class="bg-white/10 rounded-full">
+          <div class="stat-bar" style="width:${player.stats[stat]}%"></div>
+        </div>
+      </div>
+    `;
+  }
+
+  content.innerHTML = `
+    <h2 class="text-2xl font-bold mb-2">${player.name}</h2>
+    <p class="text-white/60 mb-4">${player.rarity} · ${player.team} · OVR ${player.ovr}</p>
+    ${statsHTML}
+  `;
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeModal() {
+  const modal = document.getElementById("playerModal");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
 }
 
 renderPlayers();
