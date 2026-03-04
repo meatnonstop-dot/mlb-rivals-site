@@ -10,7 +10,6 @@
       background: radial-gradient(circle at top, #111827, #000);
     }
 
-    /* Rotating Sweep Animation */
     @keyframes rotateBorder {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -18,23 +17,23 @@
 
     .card-wrapper {
       position: relative;
-      border-radius: 1rem;
-      overflow: hidden;
+      border-radius: 18px;
+      padding: 2px; /* creates visible animated border */
     }
 
     .card-wrapper::before {
       content: "";
       position: absolute;
-      inset: -2px;
-      border-radius: 1.2rem;
+      inset: 0;
+      border-radius: 18px;
       animation: rotateBorder 4s linear infinite;
       z-index: 0;
     }
 
     .card-inner {
       position: relative;
-      background: rgba(0,0,0,0.85);
-      border-radius: 1rem;
+      background: rgba(0,0,0,0.9);
+      border-radius: 16px;
       padding: 1.5rem;
       z-index: 1;
       transition: 0.3s;
@@ -44,10 +43,9 @@
       transform: translateY(-8px) scale(1.02);
     }
 
-    /* Rarity Themes */
+    /* Rarity Border Themes */
     .rarity-signature::before {
       background: conic-gradient(
-        from 0deg,
         #ec4899,
         #9333ea,
         #ec4899
@@ -56,7 +54,6 @@
 
     .rarity-prime::before {
       background: conic-gradient(
-        from 0deg,
         #3b82f6,
         #6366f1,
         #3b82f6
@@ -65,7 +62,6 @@
 
     .rarity-impact::before {
       background: conic-gradient(
-        from 0deg,
         #10b981,
         #14b8a6,
         #10b981
@@ -101,27 +97,6 @@
 
   <h2 class="text-4xl font-extrabold mb-8">Player Index</h2>
 
-  <div class="flex flex-col md:flex-row gap-4 mb-10">
-    <input 
-      id="searchInput"
-      type="text"
-      placeholder="Search player..."
-      class="bg-white/10 px-4 py-2 rounded w-full md:w-1/2"
-      onkeyup="renderPlayers()"
-    />
-
-    <select 
-      id="teamFilter"
-      class="bg-white/10 px-4 py-2 rounded w-full md:w-1/4"
-      onchange="renderPlayers()"
-    >
-      <option value="all">All Teams</option>
-      <option value="LAD">LAD</option>
-      <option value="NYY">NYY</option>
-      <option value="ATL">ATL</option>
-    </select>
-  </div>
-
   <div id="playerGrid" class="grid md:grid-cols-2 gap-10"></div>
 
 </section>
@@ -153,53 +128,45 @@ const players = [
 
 function renderPlayers() {
   const grid = document.getElementById("playerGrid");
-  const search = document.getElementById("searchInput").value.toLowerCase();
-  const teamFilter = document.getElementById("teamFilter").value;
-
   grid.innerHTML = "";
 
-  players
-    .filter(p =>
-      p.name.toLowerCase().includes(search) &&
-      (teamFilter === "all" || p.team === teamFilter)
-    )
-    .forEach(player => {
+  players.forEach(player => {
 
-      let statsHTML = "";
-      for (let stat in player.stats) {
-        statsHTML += `
-          <div>
-            <p class="text-sm mb-1">${stat}</p>
-            <div class="bg-white/10 rounded-full">
-              <div class="stat-bar" style="width:${player.stats[stat]}%"></div>
-            </div>
+    let statsHTML = "";
+    for (let stat in player.stats) {
+      statsHTML += `
+        <div>
+          <p class="text-sm mb-1">${stat}</p>
+          <div class="bg-white/10 rounded-full">
+            <div class="stat-bar" style="width:${player.stats[stat]}%"></div>
           </div>
-        `;
-      }
-
-      const card = document.createElement("details");
-      card.className = "card-wrapper rarity-" + player.rarity;
-
-      card.innerHTML = `
-        <summary class="card-inner cursor-pointer list-none">
-          <div class="flex justify-between text-sm mb-2">
-            <span>${player.rarity.toUpperCase()}</span>
-            <span>OVR ${player.ovr}</span>
-          </div>
-          <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
-            CARD ART
-          </div>
-          <h3 class="font-semibold">${player.name}</h3>
-          <p class="text-sm text-white/60">${player.team}</p>
-        </summary>
-
-        <div class="bg-black/90 p-6 space-y-4">
-          ${statsHTML}
         </div>
       `;
+    }
 
-      grid.appendChild(card);
-    });
+    const card = document.createElement("details");
+    card.className = "card-wrapper rarity-" + player.rarity;
+
+    card.innerHTML = `
+      <summary class="card-inner cursor-pointer list-none">
+        <div class="flex justify-between text-sm mb-2">
+          <span>${player.rarity.toUpperCase()}</span>
+          <span>OVR ${player.ovr}</span>
+        </div>
+        <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
+          CARD ART
+        </div>
+        <h3 class="font-semibold">${player.name}</h3>
+        <p class="text-sm text-white/60">${player.team}</p>
+      </summary>
+
+      <div class="bg-black/95 p-6 space-y-4">
+        ${statsHTML}
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
 }
 
 renderPlayers();
