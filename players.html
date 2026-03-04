@@ -188,87 +188,74 @@ nav{display:flex;gap:2px}
 /* ===== RARITY BACKGROUNDS ===== */
 
 /* ══════════════════════════════════════════
-   HOF — Premium gold treatment
-   Multiple layers: animated border, rotating
-   shimmer, pulsing outer glow, sparkle dots
+   HOF — Dark marble base + gold fire burst
+   Matches actual in-game HOF card aesthetic:
+   black cracked bg, gold corner explosion,
+   clean gold border with outer glow
 ══════════════════════════════════════════ */
-@keyframes hofGlow{
-  0%,100%{box-shadow:0 0 22px rgba(244,185,66,.5),0 0 50px rgba(244,185,66,.25),inset 0 0 18px rgba(244,185,66,.08)}
-  50%{box-shadow:0 0 35px rgba(244,185,66,.8),0 0 75px rgba(244,185,66,.45),0 0 110px rgba(255,200,50,.2),inset 0 0 28px rgba(244,185,66,.15)}
+@keyframes hofFireShift{
+  0%  {opacity:.85; background-position: 100% 0%, 80% 20%, 60% 5%, 95% 50%}
+  25% {opacity:1;   background-position: 95%  5%, 85% 15%, 55% 0%,  90% 45%}
+  50% {opacity:.9;  background-position: 100% 2%, 75% 25%, 65% 8%,  98% 55%}
+  75% {opacity:.95; background-position: 92%  0%, 82% 18%, 58% 3%,  93% 48%}
+  100%{opacity:.85; background-position: 100% 0%, 80% 20%, 60% 5%,  95% 50%}
 }
-@keyframes hofBorder{
-  0%{border-color:rgba(244,185,66,.6)}
-  25%{border-color:rgba(255,236,100,.95)}
-  50%{border-color:rgba(244,185,66,.6)}
-  75%{border-color:rgba(255,210,60,.9)}
-  100%{border-color:rgba(244,185,66,.6)}
-}
-@keyframes hofRotate{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-@keyframes hofPulse{
-  0%,100%{opacity:.55;transform:scale(1)}
-  50%{opacity:1;transform:scale(1.06)}
-}
-@keyframes hofSparkle{
-  0%,100%{opacity:0;transform:scale(0)}
-  50%{opacity:1;transform:scale(1)}
+@keyframes hofGlowPulse{
+  0%,100%{box-shadow:0 0 18px rgba(244,185,66,.5), 0 0 40px rgba(244,185,66,.2)}
+  50%     {box-shadow:0 0 28px rgba(244,185,66,.75),0 0 60px rgba(244,185,66,.35)}
 }
 
-.r-HOF .flip-card,.r-HOF{position:relative}
-
-/* Animated outer glow on the card wrapper */
+/* Card border + outer glow */
 .r-HOF .face.cf{
-  border:2px solid rgba(244,185,66,.7);
-  animation:hofBorder 3s ease-in-out infinite, hofGlow 3s ease-in-out infinite;
+  border:2px solid rgba(244,185,66,.85);
+  animation:hofGlowPulse 3s ease-in-out infinite;
 }
 
-/* Dark amber base */
-.r-HOF .ab{background:radial-gradient(circle at 65% 25%,#8b4500,#3a1800 55%,#0f0800 100%)}
+/* Dark marble/cracked base */
+.r-HOF .ab{
+  background:
+    /* marble crack veins — subtle lighter streaks */
+    repeating-linear-gradient(
+      128deg,
+      transparent 0px, transparent 18px,
+      rgba(60,40,0,.35) 18px, rgba(60,40,0,.35) 19px,
+      transparent 19px, transparent 38px
+    ),
+    repeating-linear-gradient(
+      52deg,
+      transparent 0px, transparent 28px,
+      rgba(40,25,0,.25) 28px, rgba(40,25,0,.25) 29px,
+      transparent 29px, transparent 55px
+    ),
+    /* dark base */
+    radial-gradient(circle at 50% 50%, #1a1208, #0a0804 60%, #050402 100%);
+}
 
-/* Main gold radial bloom */
+/* Gold fire particle burst — layered radial spots */
 .r-HOF .ab::after{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 70% 70% at 60% 35%,rgba(255,200,50,.75),rgba(244,155,10,.3) 45%,transparent 70%),
-    radial-gradient(ellipse 40% 40% at 30% 70%,rgba(244,185,66,.3),transparent 60%);
-  animation:hofPulse 3s ease-in-out infinite;
-}
-
-/* Rotating diagonal gold shimmer strip (extra layer via a pseudo on .ca) */
-.r-HOF .ca::after{
-  content:'';position:absolute;inset:-50%;width:200%;height:200%;z-index:3;
-  background:conic-gradient(
-    from 0deg,
-    transparent 0deg, transparent 75deg,
-    rgba(255,230,80,.18) 80deg, rgba(255,245,150,.55) 90deg, rgba(255,230,80,.18) 100deg,
-    transparent 105deg, transparent 255deg,
-    rgba(255,220,60,.1) 260deg, rgba(255,240,120,.28) 270deg, rgba(255,220,60,.1) 280deg,
-    transparent 285deg
-  );
-  animation:hofRotate 6s linear infinite;
-  pointer-events:none;
+    /* main top-right blaze */
+    radial-gradient(ellipse 65% 55% at 95% 5%,  rgba(255,180,20,.85), rgba(220,120,5,.55) 35%, transparent 65%),
+    /* secondary burst upper right */
+    radial-gradient(ellipse 40% 35% at 82% 18%, rgba(255,210,60,.7),  rgba(200,100,0,.4)  40%, transparent 65%),
+    /* ember scatter top center */
+    radial-gradient(ellipse 30% 22% at 62% 8%,  rgba(255,160,10,.5),  transparent 60%),
+    /* bottom-right edge ember */
+    radial-gradient(ellipse 35% 28% at 98% 55%, rgba(220,140,10,.45), transparent 60%),
+    /* left edge subtle warmth */
+    radial-gradient(ellipse 25% 40% at 2%  40%,  rgba(180,100,5,.25),  transparent 65%),
+    /* bottom glow */
+    radial-gradient(ellipse 70% 20% at 50% 100%, rgba(160,90,5,.3),   transparent 70%);
+  animation:hofFireShift 4s ease-in-out infinite;
   mix-blend-mode:screen;
 }
 
-/* Sparkle dots */
-.r-HOF .ca::before{
-  content:'✦ ✦ ✦';
-  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
-  z-index:5;font-size:.55rem;letter-spacing:6px;
-  color:rgba(255,230,80,.9);
-  text-shadow:0 0 8px rgba(255,200,50,.8),0 0 18px rgba(255,180,30,.5);
-  animation:hofSparkle 2.5s ease-in-out infinite;
-  pointer-events:none;white-space:nowrap;
-}
-
-.r-HOF .ao{color:#ffe066;text-shadow:0 0 12px rgba(255,200,50,.9),0 2px 8px rgba(0,0,0,.9)}
-.r-HOF .crl{color:var(--hof);text-shadow:0 0 8px rgba(244,185,66,.5)}
-.r-HOF .sf{background:linear-gradient(to right,#f4b942,#fde68a)}
-/* Gold border on card back too */
-.r-HOF .cbk{border-color:rgba(244,185,66,.35)}
-.r-HOF .bh{border-color:rgba(244,185,66,.2)}
+.r-HOF .ao {color:#ffe066; text-shadow:0 0 10px rgba(255,200,50,.8), 0 2px 8px rgba(0,0,0,.9)}
+.r-HOF .crl{color:var(--hof)}
+.r-HOF .sf {background:linear-gradient(to right,#f4b942,#fde68a)}
+.r-HOF .cbk{border-color:rgba(244,185,66,.3)}
+.r-HOF .bh {border-color:rgba(244,185,66,.18)}
 /* SIGNATURE_BLACK / FA_SIGNATURE_BLACK / WBC_SIGNATURE_BLACK */
 .r-SIGNATURE_BLACK .face.cf,.r-FA_SIGNATURE_BLACK .face.cf,.r-WBC_SIGNATURE_BLACK .face.cf{border:2px solid rgba(192,192,192,.65);box-shadow:0 0 28px rgba(192,192,192,.3)}
 .r-SIGNATURE_BLACK .ab,.r-FA_SIGNATURE_BLACK .ab,.r-WBC_SIGNATURE_BLACK .ab{background:radial-gradient(circle at 70% 30%,#1e1e1e,#050505 70%)}
