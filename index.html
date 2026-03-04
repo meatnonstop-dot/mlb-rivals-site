@@ -1,361 +1,723 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-<title>MLB Rivals – Home</title>
+<title>MLB Rivals – Companion Hub</title>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<script src="https://cdn.tailwindcss.com"></script>
-
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ================= BACKGROUND ================= */
-
-body{
-margin:0;
-background: radial-gradient(circle at top,#0f172a,#000);
-overflow-x:hidden;
+:root {
+  --bg:        #050810;
+  --surface:   #0d1220;
+  --surface2:  #141a2e;
+  --border:    rgba(255,255,255,.07);
+  --blue:      #2f7cf6;
+  --blue-glow: rgba(47,124,246,.45);
+  --red:       #e63946;
+  --gold:      #f4b942;
+  --text:      #e8ecf5;
+  --muted:     rgba(232,236,245,.45);
+  --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  --font-ui:     'Barlow Condensed', sans-serif;
+  --font-body:   'Barlow', sans-serif;
 }
 
-/* animated particles */
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; }
 
-.particles{
-position:fixed;
-inset:0;
-z-index:-1;
-
-background-image:
-radial-gradient(rgba(255,255,255,.1) 1px,transparent 1px);
-
-background-size:40px 40px;
-
-animation:drift 40s linear infinite;
+/* BG GRID */
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(47,124,246,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47,124,246,.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridScroll 25s linear infinite;
+  pointer-events: none;
+}
+.bg-grid::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(47,124,246,.12), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(230,57,70,.08), transparent 60%);
+}
+@keyframes gridScroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(60px); }
 }
 
-@keyframes drift{
-from{transform:translateY(0)}
-to{transform:translateY(-200px)}
+/* NAV */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(5,8,16,.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 24px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display);
+  font-size: 1.4rem; letter-spacing: .08em;
+}
+.nav-logo .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--blue);
+  animation: pulse 2s ease-in-out infinite; flex-shrink: 0;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 var(--blue-glow); }
+  50%      { box-shadow: 0 0 0 6px rgba(47,124,246,0); }
+}
+nav { display: flex; gap: 2px; }
+.nav-link {
+  font-family: var(--font-ui); font-size: .875rem;
+  font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); padding: 6px 14px; border-radius: 6px;
+  transition: color .2s, background .2s;
+}
+.nav-link:hover, .nav-link.active { color: var(--text); background: rgba(255,255,255,.06); }
+.nav-link.active { color: var(--blue); }
+
+/* HERO */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 80vh;
+  display: flex; align-items: flex-end; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2025/03/18/20250318_131728_bfUJRSnYn6.jpg');
+  background-size: cover; background-position: center top;
+  animation: heroZoom 20s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+  from { transform: scale(1.04) translateY(0); }
+  to   { transform: scale(1.08) translateY(-12px); }
+}
+.hero-fade {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, var(--bg) 0%, rgba(5,8,16,.82) 32%, rgba(5,8,16,.18) 65%, transparent 100%),
+    linear-gradient(to right, rgba(5,8,16,.7) 0%, transparent 55%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 24px 72px; width: 100%;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-ui); font-size: .75rem;
+  font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--blue); background: rgba(47,124,246,.12);
+  border: 1px solid rgba(47,124,246,.3);
+  padding: 5px 12px; border-radius: 4px; margin-bottom: 20px;
+  animation: fadeUp .6s ease both;
+}
+.hero-eyebrow::before { content: '⚾'; font-size: .7rem; }
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  line-height: .95; letter-spacing: .02em; text-transform: uppercase;
+  margin-bottom: 8px; animation: fadeUp .6s .1s ease both;
+}
+.hero-title .accent { color: var(--blue); }
+.hero-title .line2 {
+  display: block;
+  -webkit-text-stroke: 1px rgba(255,255,255,.2); color: transparent;
+}
+.hero-sub {
+  font-family: var(--font-ui); font-size: 1.1rem; font-weight: 400;
+  color: var(--muted); max-width: 480px; line-height: 1.5;
+  margin-bottom: 36px; animation: fadeUp .6s .2s ease both;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; animation: fadeUp .6s .3s ease both; }
+.btn-primary {
+  font-family: var(--font-ui); font-size: .9rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  background: var(--blue); color: #fff;
+  padding: 13px 28px; border-radius: 6px;
+  transition: transform .2s, box-shadow .2s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px var(--blue-glow); }
+.btn-secondary {
+  font-family: var(--font-ui); font-size: .9rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text); background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+  padding: 13px 28px; border-radius: 6px;
+  transition: background .2s, border-color .2s;
+}
+.btn-secondary:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ================= NAV ================= */
+/* STATS BAR */
+.stats-bar {
+  position: relative; z-index: 2;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stats-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 24px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+}
+.stat-item {
+  padding: 22px 24px;
+  display: flex; align-items: center; gap: 14px;
+  border-right: 1px solid var(--border);
+  transition: background .2s;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: rgba(255,255,255,.03); }
+.stat-icon {
+  font-size: 1.4rem; width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface2); border-radius: 10px; flex-shrink: 0;
+}
+.stat-label {
+  font-family: var(--font-ui); font-size: .7rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px;
+}
+.stat-value {
+  font-family: var(--font-display); font-size: 1.5rem;
+  letter-spacing: .04em; line-height: 1;
+}
+.stat-value.blue { color: var(--blue); }
+.stat-value.gold { color: var(--gold); }
+.stat-meta { font-family: var(--font-ui); font-size: .7rem; color: var(--muted); margin-top: 2px; }
 
-.nav-link{
-position:relative;
-padding:6px 0;
-transition:.3s;
+/* SECTION */
+.section {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto; padding: 64px 24px;
+}
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 32px; gap: 16px;
+}
+.section-title {
+  font-family: var(--font-display); font-size: 2rem;
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.section-title span { color: var(--blue); }
+.section-link {
+  font-family: var(--font-ui); font-size: .75rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--blue); opacity: .8; transition: opacity .2s; white-space: nowrap;
+}
+.section-link:hover { opacity: 1; }
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent);
+  position: relative; z-index: 1;
 }
 
-.nav-link::after{
-content:"";
-position:absolute;
-bottom:-6px;
-left:0;
-width:0%;
-height:2px;
-background:#3b82f6;
-transition:.3s;
+/* FEATURED EVENT */
+.featured-event {
+  position: relative; border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--border); min-height: 320px;
+  display: flex; align-items: flex-end; margin-bottom: 64px;
+}
+.featured-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/27/20260227_135508_jz9Ml6iljx.jpg');
+  background-size: cover; background-position: center;
+  transition: transform .4s ease;
+}
+.featured-event:hover .featured-bg { transform: scale(1.03); }
+.featured-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(5,8,16,.98) 0%, rgba(5,8,16,.6) 40%, rgba(5,8,16,.1) 100%);
+}
+.featured-content {
+  position: relative; z-index: 2; padding: 32px;
+  width: 100%; max-width: 680px;
+}
+.featured-eyebrow {
+  font-family: var(--font-ui); font-size: .7rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.featured-eyebrow::before { content: '★'; }
+.featured-title {
+  font-family: var(--font-display); font-size: 2.4rem;
+  letter-spacing: .03em; line-height: 1; margin-bottom: 10px;
+}
+.featured-desc {
+  font-family: var(--font-ui); font-size: .9rem;
+  color: var(--muted); line-height: 1.5;
+  margin-bottom: 20px; max-width: 520px;
+}
+.featured-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.tag-wbc {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--font-ui); font-size: .65rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  background: rgba(244,185,66,.15); border: 1px solid rgba(244,185,66,.35);
+  color: var(--gold); padding: 4px 10px; border-radius: 4px;
 }
 
-.nav-link:hover{color:white}
-.nav-link:hover::after{width:100%}
-
-/* ================= GAME PANELS ================= */
-
-.panel{
-background:rgba(15,23,42,.6);
-border:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(8px);
-border-radius:14px;
+/* EVENTS GRID */
+.events-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;
 }
-
-.panel:hover{
-border-color:#3b82f6;
-box-shadow:0 0 20px rgba(59,130,246,.4);
+.event-card {
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--border); background: var(--surface);
+  transition: transform .25s, border-color .25s, box-shadow .25s; cursor: pointer;
 }
-
-/* ================= TILES ================= */
-
-.tile{
-transition:.35s;
-border:1px solid rgba(255,255,255,.08);
-
-background:linear-gradient(
-to bottom,
-rgba(30,30,45,.95),
-rgba(10,10,15,.98));
+.event-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(47,124,246,.5);
+  box-shadow: 0 16px 40px rgba(0,0,0,.5), 0 0 20px var(--blue-glow);
 }
-
-.tile:hover{
-transform:translateY(-8px) scale(1.02);
-box-shadow:0 15px 35px rgba(0,0,0,.7);
-border-color:#3b82f6;
+.event-img-wrap {
+  position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--surface2);
 }
-
-/* ================= CARD PREVIEW ================= */
-
-.flip-card{perspective:1200px}
-
-.flip-inner{
-position:relative;
-width:260px;
-height:360px;
-transform-style:preserve-3d;
-transition:transform .8s;
+.event-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease;
 }
-
-.flip-card:hover .flip-inner{
-transform:rotateY(180deg)
+.event-card:hover .event-img-wrap img { transform: scale(1.06); }
+.event-badge {
+  position: absolute; top: 10px; left: 10px;
+  font-family: var(--font-ui); font-size: .65rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 4px; backdrop-filter: blur(8px);
 }
-
-.face{
-position:absolute;
-inset:0;
-border-radius:18px;
-backface-visibility:hidden;
-padding:1rem;
-
-border:2px solid rgba(255,255,255,.08);
-
-background:
-radial-gradient(circle at top left,
-rgba(236,72,153,.15),
-transparent 60%),
-
-linear-gradient(to bottom,
-rgba(30,20,35,.95),
-rgba(10,10,15,.98));
+.badge-live  { background: rgba(230,57,70,.85);  color: #fff; }
+.badge-wbc   { background: rgba(244,185,66,.85);  color: #000; }
+.badge-event { background: rgba(47,124,246,.85);  color: #fff; }
+.event-body { padding: 16px; }
+.event-name {
+  font-family: var(--font-ui); font-size: 1rem; font-weight: 700;
+  line-height: 1.3; margin-bottom: 6px;
 }
-
-.back{
-transform:rotateY(180deg)
+.event-meta {
+  font-family: var(--font-ui); font-size: .75rem;
+  color: var(--muted); display: flex; align-items: center; gap: 6px;
 }
-
-/* ================= HERO STADIUM LIGHT ================= */
-
-.hero-stadium{
-position:relative;
-overflow:hidden;
+.event-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--red); animation: pulse 1.5s ease-in-out infinite; flex-shrink: 0;
 }
+.event-dot.off { background: var(--muted); animation: none; }
 
-.hero-stadium::before{
-content:"";
-position:absolute;
-inset:0;
-
-background:
-radial-gradient(circle at center bottom,
-rgba(59,130,246,.35),
-transparent 60%);
-
-filter:blur(80px);
-opacity:.6;
-
-animation:stadiumGlow 8s ease-in-out infinite;
+/* QUICK NAV */
+.quick-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;
 }
-
-@keyframes stadiumGlow{
-
-0%,100%{
-transform:scale(1);
-opacity:.4;
+.quick-tile {
+  border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); padding: 24px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: transform .25s, border-color .25s, box-shadow .25s; cursor: pointer;
 }
-
-50%{
-transform:scale(1.2);
-opacity:.8;
+.quick-tile:hover {
+  transform: translateY(-4px);
+  border-color: rgba(47,124,246,.4);
+  box-shadow: 0 12px 32px rgba(0,0,0,.4);
 }
-
+.quick-icon {
+  font-size: 1.8rem; width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface2); border-radius: 12px; border: 1px solid var(--border);
 }
-
-/* ================= BUTTON ================= */
-
-.glow-btn{
-background:#2563eb;
-transition:.3s;
+.quick-label {
+  font-family: var(--font-display); font-size: 1.2rem;
+  letter-spacing: .04em; text-transform: uppercase;
 }
-
-.glow-btn:hover{
-box-shadow:0 0 20px rgba(59,130,246,.7);
-transform:translateY(-2px);
+.quick-desc {
+  font-family: var(--font-ui); font-size: .8rem; color: var(--muted); line-height: 1.4;
 }
-
-/* ================= PAGE FADE ================= */
-
-body{
-animation:fadein .6s ease;
+.quick-arrow {
+  font-size: .8rem; color: var(--blue);
+  font-family: var(--font-ui); font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; margin-top: auto;
+  display: flex; align-items: center; gap: 6px; transition: gap .2s;
 }
+.quick-tile:hover .quick-arrow { gap: 10px; }
 
-@keyframes fadein{
-from{opacity:0}
-to{opacity:1}
+/* NEWS */
+.news-list { display: flex; flex-direction: column; gap: 1px; }
+.news-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px; background: var(--surface);
+  border-radius: 8px; transition: background .2s; cursor: pointer;
 }
+.news-item:hover { background: var(--surface2); }
+.news-tag {
+  font-family: var(--font-ui); font-size: .65rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 4px;
+  white-space: nowrap; flex-shrink: 0;
+  min-width: 68px; text-align: center;
+}
+.tag-notice { background: rgba(47,124,246,.15); color: #6ea8fe; border: 1px solid rgba(47,124,246,.2); }
+.tag-update { background: rgba(52,211,153,.15); color: #6ee7b7; border: 1px solid rgba(52,211,153,.2); }
+.tag-scout  { background: rgba(244,185,66,.15); color: #fcd34d; border: 1px solid rgba(244,185,66,.2); }
+.news-title { font-family: var(--font-ui); font-size: .9rem; font-weight: 600; flex: 1; line-height: 1.3; }
+.news-date { font-family: var(--font-ui); font-size: .72rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+.news-chevron { color: var(--muted); font-size: .7rem; flex-shrink: 0; }
 
+/* FOOTER */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border); background: var(--surface);
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto; padding: 32px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.footer-logo { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: .08em; color: var(--muted); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a {
+  font-family: var(--font-ui); font-size: .75rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); transition: color .2s;
+}
+.footer-links a:hover { color: var(--text); }
+.footer-copy { font-family: var(--font-ui); font-size: .72rem; color: rgba(232,236,245,.25); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .stats-inner { grid-template-columns: 1fr; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .stat-item:last-child { border-bottom: none; }
+  .hero-title { font-size: 3rem; }
+  .section-header { flex-direction: column; gap: 4px; }
+  nav { display: none; }
+  .featured-title { font-size: 1.8rem; }
+}
 </style>
-
 </head>
-
-<body class="text-white min-h-screen">
-
-<div class="particles"></div>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
 
 <!-- HEADER -->
-
-<header class="bg-black/85 backdrop-blur border-b border-white/10 sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-<a href="index.html" class="flex items-center gap-3">
-<div class="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></div>
-<h1 class="text-xl font-extrabold tracking-wider text-blue-400">
-MLB RIVALS
-</h1>
-</a>
-
-<nav class="flex gap-8 text-sm text-white/70">
-<a href="index.html" class="nav-link text-white">Home</a>
-<a href="scouts.html" class="nav-link">Scouts</a>
-<a href="players.html" class="nav-link">Players</a>
-<a href="updates.html" class="nav-link">Updates</a>
-<a href="guide.html" class="nav-link">Guide</a>
-</nav>
-
-</div>
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="dot"></span>MLB Rivals
+    </a>
+    <nav>
+      <a href="index.html"   class="nav-link active">Home</a>
+      <a href="scouts.html"  class="nav-link">Scouts</a>
+      <a href="players.html" class="nav-link">Players</a>
+      <a href="updates.html" class="nav-link">Updates</a>
+      <a href="guide.html"   class="nav-link">Guide</a>
+    </nav>
+  </div>
 </header>
 
 <!-- HERO -->
-
-<section class="hero-stadium max-w-6xl mx-auto px-6 py-24 text-center">
-
-<h2 class="text-5xl font-extrabold mb-6">
-MLB Rivals Companion Hub
-</h2>
-
-<p class="text-white/60 text-lg max-w-2xl mx-auto mb-10">
-Explore player cards, scout probabilities, game updates and strategy guides for MLB Rivals.
-</p>
-
-<div class="flex justify-center gap-6">
-
-<a href="players.html"
-class="glow-btn px-7 py-3 rounded font-semibold">
-Browse Players </a>
-
-<a href="updates.html"
-class="bg-white/10 px-7 py-3 rounded font-semibold hover:bg-white/20 transition">
-Game Updates </a>
-
-</div>
-
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Companion Hub · Season 3</div>
+    <h1 class="hero-title">
+      MLB<span class="accent"> Rivals</span>
+      <span class="line2">Hub</span>
+    </h1>
+    <p class="hero-sub">Player cards, scout odds, live events &amp; strategy — everything you need to build the perfect roster.</p>
+    <div class="hero-actions">
+      <a href="players.html" class="btn-primary">Browse Players</a>
+      <a href="scouts.html"  class="btn-secondary">Scout Rates</a>
+      <a href="updates.html" class="btn-secondary">v3.10.00 Patch →</a>
+    </div>
+  </div>
 </section>
 
-<!-- SNAPSHOT PANEL -->
-<!-- FEATURED PLAYER -->
-
-<section class="max-w-6xl mx-auto px-6 pb-24 text-center">
-
-<h3 class="text-3xl font-bold mb-12">Featured Player</h3>
-
-<div class="flex justify-center">
-
-<div class="flip-card">
-
-<div class="flip-inner">
-
-<!-- FRONT -->
-
-<div class="face flex flex-col items-center justify-center text-center">
-
-<img src="https://img.mlbstatic.com/mlb-images/image/private/t_16x9/t_w1024/mlb/players/660271.jpg"
-class="rounded-xl mb-4 w-full object-cover">
-
-<h4 class="text-xl font-bold">Shohei Ohtani</h4>
-<p class="text-white/50 text-sm">Signature Card</p>
-
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-icon">🎮</div>
+      <div>
+        <div class="stat-label">Steam Players</div>
+        <div class="stat-value blue" id="playerCount">Loading…</div>
+        <div class="stat-meta">Live data</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">⚾</div>
+      <div>
+        <div class="stat-label">Latest Update</div>
+        <div class="stat-value gold">v3.10.00</div>
+        <div class="stat-meta">WBC Special · Feb 27, 2026</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">🌍</div>
+      <div>
+        <div class="stat-label">Active Season</div>
+        <div class="stat-value">Season 3</div>
+        <div class="stat-meta">2026 World Baseball Classic</div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- BACK -->
-
-<div class="face back flex flex-col justify-center text-center">
-
-<h4 class="text-xl font-bold mb-3">Card Stats</h4>
-
-<p class="text-white/60">Power: 95</p>
-<p class="text-white/60">Contact: 93</p>
-<p class="text-white/60">Pitching: 97</p>
-<p class="text-white/60">Speed: 85</p>
-
+<!-- FEATURED EVENT -->
+<div class="section" style="padding-bottom:0;">
+  <div class="section-header">
+    <h2 class="section-title">Featured <span>Event</span></h2>
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14" target="_blank" class="section-link">All Events →</a>
+  </div>
+  <div class="featured-event">
+    <div class="featured-bg"></div>
+    <div class="featured-overlay"></div>
+    <div class="featured-content">
+      <div class="featured-eyebrow">Now Live · Through Mar 23, 2026</div>
+      <h3 class="featured-title">2026 World Baseball Classic Special Promotion Pt. 2</h3>
+      <p class="featured-desc">Player Upgrade Event, RBI Battle, Daily Missions, Lucky Wheel, Pick 'em &amp; Purchase Rewards — tied directly to real WBC game results.</p>
+      <div class="featured-actions">
+        <span class="tag-wbc">🌐 WBC 2026</span>
+        <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14421" target="_blank" class="btn-primary" style="font-size:.8rem;padding:10px 20px;">View Details</a>
+      </div>
+    </div>
+  </div>
 </div>
 
+<!-- ACTIVE EVENTS -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">Active <span>Events</span></h2>
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14" target="_blank" class="section-link">View All →</a>
+  </div>
+  <div class="events-grid">
+
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14392" target="_blank" class="event-card">
+      <div class="event-img-wrap">
+        <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/26/20260226_105752_xzWm02ZrYQ.jpeg" alt="30th Trade Event" loading="lazy"/>
+        <span class="event-badge badge-event">Trade Event</span>
+      </div>
+      <div class="event-body">
+        <div class="event-name">30th Trade Event — Preferred Team Prime Card</div>
+        <div class="event-meta"><span class="event-dot"></span> Mar 2 – Apr 1</div>
+      </div>
+    </a>
+
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14352" target="_blank" class="event-card">
+      <div class="event-img-wrap">
+        <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/25/20260225_120847_GejDKfN18z.jpg" alt="WBC Event Match" loading="lazy"/>
+        <span class="event-badge badge-wbc">WBC 2026</span>
+      </div>
+      <div class="event-body">
+        <div class="event-name">WBC Special Event Match — Tokyo, San Juan, Houston, Miami</div>
+        <div class="event-meta"><span class="event-dot"></span> Feb 25 – Mar 23</div>
+      </div>
+    </a>
+
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14347" target="_blank" class="event-card">
+      <div class="event-img-wrap">
+        <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/25/20260225_103619_54wm6WBET1.jpg" alt="WBC Special Promotion Part 1" loading="lazy"/>
+        <span class="event-badge badge-wbc">WBC 2026</span>
+      </div>
+      <div class="event-body">
+        <div class="event-name">WBC Special Promotion Part 1 — Scout, Event Pass &amp; Shop</div>
+        <div class="event-meta"><span class="event-dot"></span> Feb 25 – Mar 23</div>
+      </div>
+    </a>
+
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14175" target="_blank" class="event-card">
+      <div class="event-img-wrap">
+        <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/11/20260211_152932_LW0OSkRCGO.jpeg" alt="Spring Training Event" loading="lazy"/>
+        <span class="event-badge badge-event">Spring Training</span>
+      </div>
+      <div class="event-body">
+        <div class="event-name">2026 Spring Training — Daily Missions &amp; Event Pass</div>
+        <div class="event-meta"><span class="event-dot"></span> Feb 19 – Mar 24</div>
+      </div>
+    </a>
+
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14170" target="_blank" class="event-card">
+      <div class="event-img-wrap">
+        <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/12/20260212_172034_rhX03xE71u.jpeg" alt="Spring Training Special Event Game" loading="lazy"/>
+        <span class="event-badge badge-event">Event Game</span>
+      </div>
+      <div class="event-body">
+        <div class="event-name">Spring Training Special Event Game — 4 Stages</div>
+        <div class="event-meta"><span class="event-dot"></span> Feb 9 – Mar 23</div>
+      </div>
+    </a>
+
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14378" target="_blank" class="event-card">
+      <div class="event-img-wrap">
+        <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/25/20260225_192032_zaL19Y6P2x.jpeg" alt="RBI Battle Event Pass" loading="lazy"/>
+        <span class="event-badge badge-event">Event Pass</span>
+      </div>
+      <div class="event-body">
+        <div class="event-name">RBI Battle Event Pass — Milestones &amp; Premium Rewards</div>
+        <div class="event-meta"><span class="event-dot"></span> Feb 26 – Mar 26</div>
+      </div>
+    </a>
+
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14148" target="_blank" class="event-card">
+      <div class="event-img-wrap">
+        <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/09/20260209_155651_1Yoqh2u89S.png" alt="Showdown Event" loading="lazy"/>
+        <span class="event-badge badge-live">Showdown</span>
+      </div>
+      <div class="event-body">
+        <div class="event-name">Showdown Event — Daily Missions, Game &amp; Event Pass</div>
+        <div class="event-meta"><span class="event-dot"></span> Feb 10 – Feb 28</div>
+      </div>
+    </a>
+
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14062" target="_blank" class="event-card">
+      <div class="event-img-wrap">
+        <img src="https://hive-fn.qpyou.cn/webdev/hive_community/MLB9IRIVALS/image/2026/02/04/20260204_192102_Ndc05AGkQ5.jpg" alt="Tiebreaker Ace Showdown" loading="lazy"/>
+        <span class="event-badge badge-live">Competitive</span>
+      </div>
+      <div class="event-body">
+        <div class="event-name">Tiebreaker Ace Showdown — 1v1 Real-Time Matches</div>
+        <div class="event-meta"><span class="event-dot off"></span> Feb 5 – Feb 18</div>
+      </div>
+    </a>
+
+  </div>
 </div>
 
-</div>
-
-</div>
-
-</section>
-<section class="max-w-6xl mx-auto px-6 pb-20 grid md:grid-cols-3 gap-8">
-
-<div class="tile p-6 rounded-xl">
-<h3 class="text-lg font-semibold mb-2">Steam Players</h3>
-<p id="playerCount" class="text-3xl font-bold text-blue-400">Loading...</p>
-<p class="text-white/40 text-sm mt-2">Live Steam data</p>
-</div>
-
-<div class="tile p-6 rounded-xl">
-<h3 class="text-lg font-semibold mb-2">Current Featured Pack</h3>
-<p class="text-2xl font-bold">Signature Drop</p>
-<p class="text-white/40 text-sm mt-2">Limited Time</p>
-</div>
-
-<div class="tile p-6 rounded-xl">
-<h3 class="text-lg font-semibold mb-2">Latest Update</h3>
-<p class="text-2xl font-bold">v2.6.0</p>
-<p class="text-white/40 text-sm mt-2">Gameplay Improvements</p>
-</div>
-
-</section>
-
-<!-- FEATURED CARD -->
-
-<!-- (unchanged) -->
+<div class="divider"></div>
 
 <!-- QUICK NAV -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">Hub <span>Navigation</span></h2>
+  </div>
+  <div class="quick-grid">
+    <a href="players.html" class="quick-tile">
+      <div class="quick-icon">🃏</div>
+      <div class="quick-label">Players</div>
+      <div class="quick-desc">Full card database — Season, Signature, HOF, WBC, and more.</div>
+      <div class="quick-arrow">Browse <span>→</span></div>
+    </a>
+    <a href="scouts.html" class="quick-tile">
+      <div class="quick-icon">🔭</div>
+      <div class="quick-label">Scouts</div>
+      <div class="quick-desc">Pull rates, scout pool breakdowns, and optimal scouting strategies.</div>
+      <div class="quick-arrow">Explore <span>→</span></div>
+    </a>
+    <a href="updates.html" class="quick-tile">
+      <div class="quick-icon">📋</div>
+      <div class="quick-label">Updates</div>
+      <div class="quick-desc">Every patch note from v1.x to v3.10.00 — fully detailed.</div>
+      <div class="quick-arrow">Read <span>→</span></div>
+    </a>
+    <a href="guide.html" class="quick-tile">
+      <div class="quick-icon">📖</div>
+      <div class="quick-label">Guide</div>
+      <div class="quick-desc">Beginner tips, Signature Black mechanics, Rival Link &amp; advanced strategy.</div>
+      <div class="quick-arrow">Learn <span>→</span></div>
+    </a>
+  </div>
+</div>
 
-<!-- (unchanged) -->
+<div class="divider"></div>
 
-<footer class="text-center text-white/40 pb-12">
-MLB Rivals Hub © 2026
+<!-- RECENT NOTICES -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">Recent <span>Notices</span></h2>
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/2" target="_blank" class="section-link">Official Board →</a>
+  </div>
+  <div class="news-list">
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/2/14467" target="_blank" class="news-item">
+      <span class="news-tag tag-notice">Notice</span>
+      <span class="news-title">Server Patch Notice</span>
+      <span class="news-date">Mar 3, 2026</span>
+      <span class="news-chevron">›</span>
+    </a>
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/2/14456" target="_blank" class="news-item">
+      <span class="news-tag tag-notice">Notice</span>
+      <span class="news-title">Potential Reset Premium Package Sale Notice</span>
+      <span class="news-date">Mar 2, 2026</span>
+      <span class="news-chevron">›</span>
+    </a>
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/2/14447" target="_blank" class="news-item">
+      <span class="news-tag tag-notice">Notice</span>
+      <span class="news-title">Special Skill Package Sale Notice</span>
+      <span class="news-date">Mar 1, 2026</span>
+      <span class="news-chevron">›</span>
+    </a>
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/14/14421" target="_blank" class="news-item">
+      <span class="news-tag tag-scout">Event</span>
+      <span class="news-title">2026 World Baseball Classic Special Promotion Part 2</span>
+      <span class="news-date">Feb 28, 2026</span>
+      <span class="news-chevron">›</span>
+    </a>
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/9" target="_blank" class="news-item">
+      <span class="news-tag tag-update">Update</span>
+      <span class="news-title">v3.10.00 Version Update — World Baseball Classic 2026</span>
+      <span class="news-date">Feb 27, 2026</span>
+      <span class="news-chevron">›</span>
+    </a>
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/2/14411" target="_blank" class="news-item">
+      <span class="news-tag tag-scout">Scout</span>
+      <span class="news-title">Prime Pick-Up Scout Schedule Notice</span>
+      <span class="news-date">Feb 27, 2026</span>
+      <span class="news-chevron">›</span>
+    </a>
+    <a href="https://community.withhive.com/MLB9IRIVALS/en/board/2/14363" target="_blank" class="news-item">
+      <span class="news-tag tag-notice">Notice</span>
+      <span class="news-title">Known Issues Notice (Fixed)</span>
+      <span class="news-date">Feb 24, 2026</span>
+      <span class="news-chevron">›</span>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">MLB Rivals Hub · 2026</div>
+    <div class="footer-links">
+      <a href="https://community.withhive.com/MLB9IRIVALS" target="_blank">Community</a>
+      <a href="https://twitter.com/MLBrivalsus" target="_blank">X / Twitter</a>
+      <a href="https://www.facebook.com/mlbrivals.us" target="_blank">Facebook</a>
+      <a href="https://store.steampowered.com/app/2568430" target="_blank">Steam</a>
+    </div>
+    <div class="footer-copy">Unofficial fan companion · Not affiliated with Com2uS or MLB</div>
+  </div>
 </footer>
 
 <script>
-
-/* ================= STEAM PLAYER COUNT ================= */
-
-async function loadPlayerCount(){
-
-try{
-
-const res = await fetch(
-"https://api.allorigins.win/raw?url=https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=2568430"
-);
-
-const data = await res.json();
-
-document.getElementById("playerCount").textContent =
-data.response.player_count.toLocaleString();
-
-}catch{
-
-document.getElementById("playerCount").textContent="Unavailable";
-
+async function loadPlayerCount() {
+  try {
+    const res  = await fetch("https://api.allorigins.win/raw?url=https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=2568430");
+    const data = await res.json();
+    const count = data?.response?.player_count;
+    document.getElementById("playerCount").textContent =
+      count != null ? count.toLocaleString() : "Unavailable";
+  } catch {
+    document.getElementById("playerCount").textContent = "Unavailable";
+  }
 }
-
-}
-
 loadPlayerCount();
-
 </script>
-
 </body>
 </html>
-
-
