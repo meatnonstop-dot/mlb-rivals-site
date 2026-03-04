@@ -6,21 +6,76 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body { background: radial-gradient(circle at top, #111827, #000); }
+    body {
+      background: radial-gradient(circle at top, #111827, #000);
+    }
 
-    .card-glow { box-shadow: 0 0 30px rgba(236,72,153,0.35); }
+    /* Rotating Sweep Animation */
+    @keyframes rotateBorder {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .card-wrapper {
+      position: relative;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .card-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 1.2rem;
+      animation: rotateBorder 4s linear infinite;
+      z-index: 0;
+    }
+
+    .card-inner {
+      position: relative;
+      background: rgba(0,0,0,0.85);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      z-index: 1;
+      transition: 0.3s;
+    }
+
+    .card-inner:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+
+    /* Rarity Themes */
+    .rarity-signature::before {
+      background: conic-gradient(
+        from 0deg,
+        #ec4899,
+        #9333ea,
+        #ec4899
+      );
+    }
+
+    .rarity-prime::before {
+      background: conic-gradient(
+        from 0deg,
+        #3b82f6,
+        #6366f1,
+        #3b82f6
+      );
+    }
+
+    .rarity-impact::before {
+      background: conic-gradient(
+        from 0deg,
+        #10b981,
+        #14b8a6,
+        #10b981
+      );
+    }
 
     .stat-bar {
       height: 8px;
       border-radius: 999px;
       background: linear-gradient(to right, #ec4899, #9333ea);
-    }
-
-    .hover-lift {
-      transition: 0.3s;
-    }
-    .hover-lift:hover {
-      transform: translateY(-8px) scale(1.02);
     }
   </style>
 </head>
@@ -76,21 +131,21 @@ const players = [
   {
     name: "Shohei Ohtani",
     team: "LAD",
-    rarity: "SIGNATURE",
+    rarity: "signature",
     ovr: 66,
     stats: { Power: 92, Contact: 88 }
   },
   {
     name: "Aaron Judge",
     team: "NYY",
-    rarity: "PRIME",
+    rarity: "prime",
     ovr: 64,
     stats: { Power: 95, Contact: 84 }
   },
   {
     name: "Ronald Acuña Jr.",
     team: "ATL",
-    rarity: "IMPACT",
+    rarity: "impact",
     ovr: 65,
     stats: { Power: 89, Contact: 90 }
   }
@@ -110,9 +165,6 @@ function renderPlayers() {
     )
     .forEach(player => {
 
-      const card = document.createElement("details");
-      card.className = "card-glow rounded-2xl bg-gradient-to-br from-pink-600 to-fuchsia-600 p-[1px]";
-
       let statsHTML = "";
       for (let stat in player.stats) {
         statsHTML += `
@@ -125,10 +177,13 @@ function renderPlayers() {
         `;
       }
 
+      const card = document.createElement("details");
+      card.className = "card-wrapper rarity-" + player.rarity;
+
       card.innerHTML = `
-        <summary class="bg-black/80 rounded-2xl p-6 cursor-pointer list-none hover-lift">
+        <summary class="card-inner cursor-pointer list-none">
           <div class="flex justify-between text-sm mb-2">
-            <span>${player.rarity}</span>
+            <span>${player.rarity.toUpperCase()}</span>
             <span>OVR ${player.ovr}</span>
           </div>
           <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
