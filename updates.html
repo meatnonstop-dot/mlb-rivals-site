@@ -7,6 +7,27 @@
   <style>
     body { background: radial-gradient(circle at top, #111827, #000); }
     .glow { box-shadow: 0 0 35px rgba(16,185,129,0.35); }
+    .glow-blue { box-shadow: 0 0 35px rgba(59,130,246,0.35); }
+    .glow-purple { box-shadow: 0 0 35px rgba(168,85,247,0.35); }
+    .glow-gold { box-shadow: 0 0 35px rgba(234,179,8,0.35); }
+    .glow-red { box-shadow: 0 0 35px rgba(239,68,68,0.3); }
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-right: 6px;
+      margin-bottom: 4px;
+    }
+    details > summary { cursor: pointer; list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .chevron { transform: rotate(180deg); }
+    .chevron { transition: transform 0.2s; }
+    details[open] > .update-body { animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body class="text-white min-h-screen">
@@ -15,27 +36,822 @@
   <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
     <h1 class="text-2xl font-extrabold tracking-wider text-blue-400">MLB RIVALS</h1>
     <nav class="hidden md:flex gap-6 text-sm text-white/70">
-      <a href="index.html">Home</a>
-      <a href="scouts.html">Scouts</a>
-      <a href="players.html">Players</a>
+      <a href="index.html" class="hover:text-white transition">Home</a>
+      <a href="scouts.html" class="hover:text-white transition">Scouts</a>
+      <a href="players.html" class="hover:text-white transition">Players</a>
       <a href="updates.html" class="text-white">Updates</a>
-      <a href="guide.html">Guide</a>
+      <a href="guide.html" class="hover:text-white transition">Guide</a>
     </nav>
   </div>
 </header>
 
 <section class="max-w-6xl mx-auto px-6 py-16">
-  <h2 class="text-4xl font-extrabold mb-10">Game Updates</h2>
+  <div class="mb-12">
+    <h2 class="text-4xl font-extrabold mb-3">Game Updates</h2>
+    <p class="text-white/50 text-sm">All version update notices sourced from the <a href="https://community.withhive.com/MLB9IRIVALS/en/board/9" target="_blank" class="text-blue-400 hover:underline">official MLB Rivals community</a>. Click any update to expand details.</p>
+  </div>
 
-  <div class="glow rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px] mb-8">
-    <div class="bg-black/80 rounded-2xl p-8 transition duration-300 hover:-translate-y-2 hover:scale-[1.02]">
-      <h3 class="text-2xl font-bold mb-4">v3.09.00</h3>
-      <p class="text-white/60 mb-4">
-        Balance adjustments, event changes, and system improvements.
-      </p>
+  <!-- VERSION FILTER PILLS -->
+  <div class="flex flex-wrap gap-2 mb-10 text-xs font-bold">
+    <span class="tag bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">🏆 Latest</span>
+    <span class="tag bg-blue-500/20 text-blue-400 border border-blue-500/30">v3.x Series</span>
+    <span class="tag bg-white/10 text-white/50 border border-white/10">v2.x Archive</span>
+  </div>
+
+  <!-- ===================== v3.10.00 ===================== -->
+  <div class="glow-gold rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-600 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.10.00</h3>
+                <span class="tag bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">🏆 Latest</span>
+                <span class="tag bg-amber-500/20 text-amber-300 border border-amber-500/20">New Content</span>
+                <span class="tag bg-green-500/20 text-green-400 border border-green-500/20">Balance</span>
+              </div>
+              <p class="text-white/60 text-sm">Feb 27, 2026 &nbsp;·&nbsp; World Baseball Classic Commemorative Update</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-6 border-t border-white/10 pt-6">
+          <div>
+            <h4 class="text-yellow-400 font-bold text-sm uppercase tracking-widest mb-3">🌍 World Baseball Classic Cards</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>A new set of exclusive Special Cards featuring players participating in the 2026 World Baseball Classic has been added.</li>
+              <li>WBC Cards can be added to any team regardless of team affiliation.</li>
+              <li>Cards receive <strong>performance-based bonus effects</strong> tied directly to real-life tournament results — stat boosts increase as the player performs well in actual WBC games.</li>
+              <li>WBC Cards have reduced growth requirements, making lineup upgrades more accessible.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-yellow-400 font-bold text-sm uppercase tracking-widest mb-3">🎫 World Baseball Classic Call-Up & Events</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Complete <strong>Daily Missions</strong> to earn event rewards tied to the real-world WBC schedule.</li>
+              <li>Advance through milestone tiers via the <strong>Event Pass</strong>.</li>
+              <li>Use Event Scout Tickets to recruit from the WBC-themed scout pool.</li>
+              <li>Interactive events are added as actual WBC games are played, keeping in-game content synchronized with the real tournament.</li>
+              <li>New stadiums recreating WBC venues have been added for increased immersion.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-yellow-400 font-bold text-sm uppercase tracking-widest mb-3">🌟 World Baseball Classic Ambassador</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>A new <strong>WBC Ambassador</strong> feature has been added, highlighting global cover athletes including Jung Hoo Lee, Bryce Harper, and Yoshinobu Yamamoto.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-yellow-400 font-bold text-sm uppercase tracking-widest mb-3">⚙️ Improvements</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li><strong>(FA) Signature & Impact Cards:</strong> The first skill slot can now be locked to prevent unintended changes when using Skill Change Tickets.</li>
+              <li><strong>Synergy Balance Revamp:</strong> Team synergy effects have been rebalanced for improved competitive fairness.</li>
+              <li><strong>Senior Mission UI Improvements:</strong> The Senior Mission interface has been updated for clearer progression tracking.</li>
+              <li><strong>Live Match (Amateur):</strong> The number of innings played in the Amateur Channel has been adjusted.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 
+  <!-- ===================== v3.09.00 ===================== -->
+  <div class="glow rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.09.00</h3>
+                <span class="tag bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">Signature Black</span>
+                <span class="tag bg-green-500/20 text-green-400 border border-green-500/20">Balance</span>
+              </div>
+              <p class="text-white/60 text-sm">Jan 28, 2026 &nbsp;·&nbsp; Signature Black Outfield Expansion & Balance Adjustments</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-6 border-t border-white/10 pt-6">
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">⚫ Signature Black Card Expansion</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Outfield positions <strong>(LF / CF / RF)</strong> have been added to the list of eligible Signature Black Card positions.</li>
+              <li>Multi-position outfield players can now be recruited as Signature Black Cards if both positions are available.</li>
+              <li><strong>Position-specific stat boosts</strong> have been added to the Upgrade system — upon reaching certain Upgrade levels, position-relevant stats receive targeted increases in addition to the existing all-stat +2 OVR bonus at Lv. 10.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">⚙️ Event Changes</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Ranked Battle Season 49–51 benefits active: opponent list refresh costs discounted by 50%, and Ranked Coins earned for losses increased across all tiers.</li>
+              <li>The Live Support Event is active during this period — check Main Screen &gt; Inbox &gt; Notification for current event details.</li>
+              <li>The Ranked Battle Support Box can be purchased once per account during Seasons 49, 50, and 51.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🐛 Bug Fixes</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Potential items used on player cards affected by the Rarity Boost issue (where additional Potential unlocked unexpectedly) have been returned.</li>
+              <li>Potential Notes used excessively due to a display issue on leveling up Moment Card Potentials beyond S+ have been returned.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.08.10 ===================== -->
+  <div class="glow-blue rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-700 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.08.10</h3>
+                <span class="tag bg-blue-500/20 text-blue-400 border border-blue-500/20">AOS / iOS</span>
+                <span class="tag bg-white/10 text-white/50 border border-white/10">Hotfix</span>
+              </div>
+              <p class="text-white/60 text-sm">Dec 23, 2025 &nbsp;·&nbsp; Recommended Update (Android & iOS)</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-4 border-t border-white/10 pt-6">
+          <p class="text-white/70 text-sm">A recommended stability and bug-fix update for Android and iOS platforms following the v3.08.00 release. Players are encouraged to update via the Google Play Store or App Store to ensure the best experience.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.08.00 ===================== -->
+  <div class="glow rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.08.00</h3>
+                <span class="tag bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">New Content</span>
+                <span class="tag bg-purple-500/20 text-purple-400 border border-purple-500/20">Signature Black</span>
+              </div>
+              <p class="text-white/60 text-sm">Dec 16, 2025 &nbsp;·&nbsp; New Signature Black Cards & New Special Cards</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-6 border-t border-white/10 pt-6">
+          <p class="text-white/50 text-xs italic">This update was split into two parts. Part 1 covers Signature Black Cards; Part 2 covers new Special Cards and content improvements.</p>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">⚫ Part 1 — New Signature Black Cards</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Signature Black Cards are a new top-tier card type recruited by upgrading eligible Signature Cards that meet growth requirements.</li>
+              <li>FA Signature Cards can become <strong>FA Signature Black Cards</strong> under the same system.</li>
+              <li>Upon reaching <strong>Upgrade Lv. 10</strong>, a +2 boost is applied to all stats, for a maximum +2 OVR from Upgrades. (Position-specific boosts added in v3.09.00.)</li>
+              <li>Signature Black Upgrade requires 5 material cards to activate; can proceed with fewer if 100% success rate is achieved via items like Upgrade Success Guarantee Badge.</li>
+              <li>Upgrading from Lv. 0 to Lv. 1 requires a material card with OVR 120 or higher.</li>
+              <li><strong>Special Training</strong> is available using Impact-grade or higher Special Cards. Each level boosts one chosen stat by +1 and raises Deck Score by +1.</li>
+              <li><strong>Signature Black Special Training Retrain</strong> allows selecting a completed Special Training level to redo.</li>
+              <li>Training starts at Lv. 25 and can be developed up to Lv. 33. Training Boost starts at Lv. 10 and expands up to Lv. 18 using Advanced Training Boost Tickets and Points.</li>
+              <li>Signature Black Recruitment is available <strong>once per month</strong>; resets on the 1st. One discounted recruitment is also available, limited to once per account.</li>
+              <li>Transcendence system: Lv. 1–9 materials unchanged; Lv. 10+ material costs increase. Reaching Transcendence Lv. 9 allows expanding one base Potential to Lv. 15.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🃏 Part 2 — New Special Cards & Content Improvements</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>New 2025 Season end-of-year Special Cards added featuring standout performers.</li>
+              <li>Various content improvements and system quality-of-life changes implemented across card management and gameplay interfaces.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.07.10 ===================== -->
+  <div class="glow-blue rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-700 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.07.10</h3>
+                <span class="tag bg-white/10 text-white/50 border border-white/10">Hotfix</span>
+              </div>
+              <p class="text-white/60 text-sm">Nov 17, 2025 &nbsp;·&nbsp; Minor Fixes & Stability Update</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 border-t border-white/10 pt-6">
+          <p class="text-white/70 text-sm">Minor stability fixes and known issue corrections following the v3.07.00 release. Addressed edge-case bugs reported by the community after the November update deployment.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.07.00 ===================== -->
+  <div class="glow rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.07.00</h3>
+                <span class="tag bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">New Content</span>
+                <span class="tag bg-orange-500/20 text-orange-300 border border-orange-500/20">2025 Special Cards</span>
+              </div>
+              <p class="text-white/60 text-sm">Nov 11, 2025 &nbsp;·&nbsp; New 2025 Season Special Cards</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-6 border-t border-white/10 pt-6">
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🃏 New 2025 Season Special Cards</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>New Special Cards featuring standout players from the 2025 MLB season have been added, spotlighting major regular-season performers.</li>
+              <li>A new <strong>[Maestro]</strong> theme Moment Cards added, featuring select players from the 2025 season.</li>
+              <li>A new <strong>[2025 Performer Trio]</strong> theme Moment Cards added, featuring players selected from the 2025 MLB Season Top Player Vote Event.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">⚙️ Improvements</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>A new <strong>Live Match Amateur Channel</strong> has been introduced for newcomers still learning the game. Matchups are restricted to similarly leveled players and run on a 1-week season cycle (vs 2 weeks for the Master Channel).</li>
+              <li>A new option lets players <strong>choose between pre- and post-reallocation results</strong> when using a Training Reallocation Ticket.</li>
+              <li>Outfield diving catch animations and replays improved.</li>
+              <li>Running motions for baserunners and fielders refined.</li>
+              <li>Ranked Battle matchmaking conditions now refresh based on midnight of the previous day, removing playtime-based matchmaking advantages.</li>
+              <li>League Mode UI improved to make it easier to check HOF Coins earned per week.</li>
+              <li>After a HOF Normal Recruit, players can now <strong>pre-register materials</strong> for the next recruitment period during the waiting window.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.06.20 ===================== -->
+  <div class="glow-blue rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-700 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.06.20</h3>
+                <span class="tag bg-sky-500/20 text-sky-400 border border-sky-500/20">Steam Only</span>
+                <span class="tag bg-white/10 text-white/50 border border-white/10">Hotfix</span>
+              </div>
+              <p class="text-white/60 text-sm">Oct 23, 2025 &nbsp;·&nbsp; Steam-Exclusive Stability Update</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 border-t border-white/10 pt-6">
+          <p class="text-white/70 text-sm">A Steam-exclusive patch addressing platform-specific bugs and stability issues, including fixes for game-launch failures under certain input conditions.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.06.10 ===================== -->
+  <div class="glow-blue rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-700 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.06.10</h3>
+                <span class="tag bg-sky-500/20 text-sky-400 border border-sky-500/20">Steam Only</span>
+                <span class="tag bg-white/10 text-white/50 border border-white/10">Hotfix</span>
+              </div>
+              <p class="text-white/60 text-sm">Sep 30, 2025 &nbsp;·&nbsp; Steam-Exclusive Bug Fix</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 border-t border-white/10 pt-6">
+          <p class="text-white/70 text-sm">Steam-exclusive hotfix addressing critical bugs reported after the v3.06.00 update on PC.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.06.00 ===================== -->
+  <div class="glow rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.06.00</h3>
+                <span class="tag bg-red-500/20 text-red-400 border border-red-500/20">Postseason</span>
+                <span class="tag bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">New Content</span>
+              </div>
+              <p class="text-white/60 text-sm">Sep 23, 2025 &nbsp;·&nbsp; 2025 Postseason Update</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-6 border-t border-white/10 pt-6">
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🏆 Playoff Hero Moment Cards</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>New <strong>Playoff Hero Moment Cards</strong> added, spotlighting players who delivered memorable performances in real 2025 MLB postseason games.</li>
+              <li>Beginning October 16, players can recruit a Playoff Hero Moment Card from their favorite team.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">⚾ Revamped Club Battle System</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>The Club Battle system has been revamped with new strategy features and improved matchmaking.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🎉 Postseason Events (Starting Sep 29)</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Earn up to <strong>200 Postseason Scout Tickets</strong> and claim high-value items such as the FA Signature Pack.</li>
+              <li>Daily Mission Rewards include Team Selective Prime Pack, Superior Skill Change Ticket, and Limit Break Card.</li>
+              <li>Free Scouts and rewards available throughout the postseason period.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.05.00 ===================== -->
+  <div class="glow rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.05.00</h3>
+                <span class="tag bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">New Feature</span>
+                <span class="tag bg-green-500/20 text-green-400 border border-green-500/20">Balance</span>
+              </div>
+              <p class="text-white/60 text-sm">Aug 26, 2025 &nbsp;·&nbsp; Rival Link, Called Game Rules & Senior Mission STEP 6</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-6 border-t border-white/10 pt-6">
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🔗 Rival Link</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>New <strong>[Rival Link]</strong> effect added — grants stat and Deck Score boosts to Season/Special Cards of the same team and same player as the selected Rival Pick.</li>
+              <li>When Rival Link is active, all stats increase by <strong>+2</strong>.</li>
+              <li>For Special Cards, an additional effect applies: <strong>+2 to maximum Deck Score</strong> based on card rarity (e.g., a Signature Card reaches Deck Score 28 with Rival Link).</li>
+              <li>Rival Link does not apply to FA Cards or Season/Special Cards from other teams.</li>
+              <li>Cards with Rival Link display a dedicated icon; check stat and Deck Score bonuses in the Player Card's Info tab.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🏟️ Called Game Rules (Live Match)</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Live Matches can now end early when a team leads by 10+ runs in the 7th, 8th, or 9th inning (mercy rule).</li>
+              <li><strong>Visiting team leading:</strong> Game ends if ahead by 10+ at the end of the bottom of the 7th, 8th, or 9th inning.</li>
+              <li><strong>Home team leading:</strong> Game ends immediately if ahead by 10+ at any point during the bottom of the 7th, 8th, or 9th inning.</li>
+              <li><strong>Opponent forfeits:</strong> Game ends if the leading team is ahead by 10+ runs at time of forfeit.</li>
+              <li>In-game notifications alert players when they are at risk of losing or in a position to win due to the score gap.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">📋 Senior Mission STEP 6</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Senior Mission STEP 6 has been added to help players understand gameplay mechanics and strengthen their team more quickly.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.04.10 ===================== -->
+  <div class="glow-blue rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-700 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.04.10</h3>
+                <span class="tag bg-white/10 text-white/50 border border-white/10">Hotfix</span>
+              </div>
+              <p class="text-white/60 text-sm">Jul 24, 2025 &nbsp;·&nbsp; Minor Bug Fixes</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 border-t border-white/10 pt-6">
+          <p class="text-white/70 text-sm">Minor bug fixes and stability improvements following the v3.04.00 update. Addressed various issues reported by the community after the July major update.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.04.00 ===================== -->
+  <div class="glow rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.04.00</h3>
+                <span class="tag bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">New Mode</span>
+                <span class="tag bg-orange-500/20 text-orange-300 border border-orange-500/20">5-Tool Player</span>
+              </div>
+              <p class="text-white/60 text-sm">Jul 22, 2025 &nbsp;·&nbsp; Tiebreaker Ace Showdown & 5-Tool Player Moment Cards</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-6 border-t border-white/10 pt-6">
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">⭐ 5-Tool Player Moment Cards</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>New <strong>[5-Tool Player]</strong> theme Moment Cards added, featuring elite players with standout hitting, defense, and baserunning tools.</li>
+              <li>Can be obtained as rewards from <strong>Tiebreaker Ace Showdown</strong> or through Moment Scout.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🆕 Swingman Moment Cards</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>New <strong>[Swingman]</strong> theme Moment Cards added alongside the 5-Tool Player set.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🏟️ Tiebreaker Ace Showdown Mode</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>A new competitive game mode introduced — Tiebreaker Ace Showdown.</li>
+              <li>Clubhouse Leader, Rival Pick, Deck Score, Synergy, and Position Training effects do not apply in this mode.</li>
+              <li>Boosted players have Upgrade Level fixed at 20; penalties to FLD or CTRL stats are reduced by half.</li>
+              <li>Penalty values vary by the difference between a player's primary and assigned position. Multi-position eligible players receive no positional penalties.</li>
+              <li>Two-way players can only be assigned as either Batter or Pitcher, not both simultaneously.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">⚾ Extra Innings Rules Added</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li><strong>10th inning:</strong> #1 batter leads off; #8 batter starts on 2nd and #9 batter on 1st.</li>
+              <li><strong>11th & 12th innings:</strong> The next batter in order leads off; the previous two batters are placed on 2nd and 1st respectively.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.03.10 ===================== -->
+  <div class="glow-blue rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-700 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.03.10</h3>
+                <span class="tag bg-white/10 text-white/50 border border-white/10">Hotfix</span>
+              </div>
+              <p class="text-white/60 text-sm">Jun 26, 2025 &nbsp;·&nbsp; Minor Fixes</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 border-t border-white/10 pt-6">
+          <p class="text-white/70 text-sm">Minor fixes and corrections addressing issues identified following the v3.03.00 release.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.03.00 ===================== -->
+  <div class="glow rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.03.00</h3>
+                <span class="tag bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">New Content</span>
+                <span class="tag bg-yellow-500/20 text-yellow-400 border border-yellow-500/20">All-Star Event</span>
+              </div>
+              <p class="text-white/60 text-sm">Jun 24, 2025 &nbsp;·&nbsp; Hot Start Moment Cards & Ranked Slugger World Championship</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-6 border-t border-white/10 pt-6">
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🔥 Hot Start Moment Cards</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>New <strong>[Hot Start]</strong> Moment Cards added, featuring players who made a strong impact in the first half of the 2025 MLB season.</li>
+              <li>Cards unlock extra Potential levels at Transcendence Lv. 3, 6, and 9.</li>
+              <li>Moment Tier Skills can be obtained in the first skill slot at a certain rate when using Superior Skill Change Tickets.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🏆 Ranked Slugger World Championship</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>A special event celebrating the 2025 MLB All-Star Game — held in weekly rounds with up to 30 games per round.</li>
+              <li>Each player can only be used in one game per round (maximum 30 players total per week).</li>
+              <li>Rankings determined by the combined score of each player's top 3 game records in a given round.</li>
+              <li>Only Silver, Gold, and Platinum Balls appear — Normal Balls are excluded.</li>
+              <li>Players selected for the 2025 All-Star Game receive a Boost effect during the event.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">🗓️ All-Star Lobby</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Main Lobby for all teams updated to ATL's <strong>Truist Park</strong> to commemorate the 2025 MLB All-Star Game.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-3">⚙️ Free Position Training Reset</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>A new <strong>Free Position Training Reset</strong> system has been added, allowing players to reallocate position training at no cost under specific conditions.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.02.00 ===================== -->
+  <div class="glow-purple rounded-2xl bg-gradient-to-br from-purple-700 to-violet-800 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.02.00</h3>
+                <span class="tag bg-purple-500/20 text-purple-400 border border-purple-500/20">Hall of Fame</span>
+                <span class="tag bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">New Content</span>
+              </div>
+              <p class="text-white/60 text-sm">May 27, 2025 &nbsp;·&nbsp; Hall of Fame Cards & MLB Broadcast Commentary</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-6 border-t border-white/10 pt-6">
+          <div>
+            <h4 class="text-purple-400 font-bold text-sm uppercase tracking-widest mb-3">🏛️ New Hall of Fame Cards</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>HOF Cards feature legendary players officially inducted into the MLB Hall of Fame — ranked above Signature Cards in rarity and prestige.</li>
+              <li>HOF Cards are <strong>not tied to a specific season</strong>; stats reflect full career performance.</li>
+              <li>Base team set to the team the player was inducted with. Players with multi-team legacies can use the Team Switch feature.</li>
+              <li>Up to <strong>8 HOF Cards</strong> can be included in a lineup; one HOF Card from the Preferred Team is excluded from the limit.</li>
+              <li>Two-way HOF players count as one card even when in both pitcher and batter lineups.</li>
+              <li>Synergy effects scale with number of HOF Cards in the lineup.</li>
+              <li>HOF Cards are <strong>not eligible</strong> for FA Contracts or Rarity Boosts.</li>
+              <li>Legendary players available include Jackie Robinson, Derek Jeter, Greg Maddux, Don Sutton, Cal Ripken Jr., and Jim Thome.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-purple-400 font-bold text-sm uppercase tracking-widest mb-3">🎙️ MLB Broadcast Commentary</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Full TV broadcast commentary added with authentic MLB play-by-play. Caster <strong>Joe Davis</strong> and analyst <strong>Orel Hershiser</strong> provide commentary.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-purple-400 font-bold text-sm uppercase tracking-widest mb-3">📋 Expert Mission STEP 5 & Other Improvements</h4>
+            <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+              <li>Expert Mission STEP 5 added — complete STEP 4 to unlock. Earn HOF Coins, Ultimate Coins, and a <strong>Position Selective FA Signature Pack</strong> upon final completion.</li>
+              <li><strong>Iron Tier skills no longer appear</strong> when using a Superior Skill Change Ticket.</li>
+              <li>Some Live Player Cards added to the default starter cards given to new teams.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.01.x ===================== -->
+  <div class="glow-blue rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-700 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.01.00 – v3.01.20</h3>
+                <span class="tag bg-white/10 text-white/50 border border-white/10">Hotfix Series</span>
+              </div>
+              <p class="text-white/60 text-sm">Apr 22–25, 2025 &nbsp;·&nbsp; Bug Fixes Following v3.01.00</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 space-y-4 border-t border-white/10 pt-6">
+          <h4 class="text-blue-400 font-bold text-sm uppercase tracking-widest mb-3">🐛 v3.01.10 & v3.01.20 — Known Issue Fixes</h4>
+          <ul class="text-white/75 text-sm space-y-2 list-disc list-inside">
+            <li>Fixed an issue causing force-reconnects when re-entering a Triple or Double Player Pack after placing a selection On Hold.</li>
+            <li>Fixed an issue where, in League Mode, the Ultimate Coin icon incorrectly displayed a buff effect after advancing to the postseason when the League Heat-Up Event was inactive.</li>
+            <li>Fixed an issue where Auto Scout did not function under certain conditions.</li>
+            <li>(Steam Only) Fixed an issue where the game failed to launch as intended if inputs were made during the loading screen.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v3.00.00 ===================== -->
+  <div class="glow rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 p-[1px] mb-6">
+    <div class="bg-black/90 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-8 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-2 flex-wrap">
+                <h3 class="text-2xl font-bold">v3.00.00</h3>
+                <span class="tag bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">Season 3 Launch</span>
+                <span class="tag bg-red-500/20 text-red-400 border border-red-500/20">Major Update</span>
+              </div>
+              <p class="text-white/60 text-sm">Mar 17, 2025 &nbsp;·&nbsp; 2025 Season 3 Launch</p>
+            </div>
+            <svg class="chevron w-5 h-5 text-white/40 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-8 pb-8 border-t border-white/10 pt-6">
+          <p class="text-white/70 text-sm">The v3.00.00 update launched the full <strong>2025 Season (Season 3)</strong> of MLB Rivals, introducing all-new season card pools, refreshed Live Player stats reflecting 2025 MLB rosters, new content systems, and a range of quality-of-life improvements as part of the new season kickoff. A minor v3.00.20 recommended update followed on Mar 20, 2025.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===== ARCHIVE DIVIDER ===== -->
+  <div class="flex items-center gap-4 my-10">
+    <div class="flex-1 h-px bg-white/10"></div>
+    <span class="text-white/30 text-xs font-bold uppercase tracking-widest">v2.x Archive</span>
+    <div class="flex-1 h-px bg-white/10"></div>
+  </div>
+
+  <!-- ===================== v2.09.00 ===================== -->
+  <div class="rounded-2xl bg-white/5 border border-white/10 p-[1px] mb-4">
+    <div class="bg-black/60 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-6 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-1 flex-wrap">
+                <h3 class="text-lg font-bold text-white/80">v2.09.00</h3>
+                <span class="tag bg-white/10 text-white/40 border border-white/10">Archive</span>
+              </div>
+              <p class="text-white/40 text-xs">Jan 22, 2025</p>
+            </div>
+            <svg class="chevron w-4 h-4 text-white/30 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-6 pb-6 border-t border-white/10 pt-4">
+          <p class="text-white/60 text-sm">Late 2024/early 2025 seasonal content update. New Special Cards, balance adjustments, and content improvements ahead of the 2025 season launch.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v2.08.x ===================== -->
+  <div class="rounded-2xl bg-white/5 border border-white/10 p-[1px] mb-4">
+    <div class="bg-black/60 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-6 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-1 flex-wrap">
+                <h3 class="text-lg font-bold text-white/80">v2.08.00 – v2.08.10</h3>
+                <span class="tag bg-white/10 text-white/40 border border-white/10">Archive</span>
+              </div>
+              <p class="text-white/40 text-xs">Dec 10–20, 2024</p>
+            </div>
+            <svg class="chevron w-4 h-4 text-white/30 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-6 pb-6 border-t border-white/10 pt-4">
+          <p class="text-white/60 text-sm">December 2024 content update with new Special Cards and system improvements. v2.08.10 was a recommended stability update for Android and iOS.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v2.07.x ===================== -->
+  <div class="rounded-2xl bg-white/5 border border-white/10 p-[1px] mb-4">
+    <div class="bg-black/60 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-6 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-1 flex-wrap">
+                <h3 class="text-lg font-bold text-white/80">v2.07.00 – v2.07.10</h3>
+                <span class="tag bg-white/10 text-white/40 border border-white/10">Archive</span>
+              </div>
+              <p class="text-white/40 text-xs">Nov 5–12, 2024</p>
+            </div>
+            <svg class="chevron w-4 h-4 text-white/30 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-6 pb-6 border-t border-white/10 pt-4">
+          <p class="text-white/60 text-sm">November 2024 update with new content and system changes. v2.07.10 was a recommended update for Android and iOS.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v2.06.00 and earlier ===================== -->
+  <div class="rounded-2xl bg-white/5 border border-white/10 p-[1px] mb-4">
+    <div class="bg-black/60 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-6 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-1 flex-wrap">
+                <h3 class="text-lg font-bold text-white/80">v2.01.00 – v2.06.00</h3>
+                <span class="tag bg-white/10 text-white/40 border border-white/10">Archive</span>
+              </div>
+              <p class="text-white/40 text-xs">Apr 2024 – Sep 2024</p>
+            </div>
+            <svg class="chevron w-4 h-4 text-white/30 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-6 pb-6 border-t border-white/10 pt-4">
+          <ul class="text-white/60 text-sm space-y-1 list-disc list-inside">
+            <li><strong>v2.06.00</strong> (Sep 26, 2024) — New Special Cards, seasonal content.</li>
+            <li><strong>v2.05.00 / v2.05.10</strong> (Aug 22–30, 2024) — Content update + Android hotfix.</li>
+            <li><strong>v2.04.00 / v2.04.10</strong> (Jul 23–26, 2024) — Content update + iOS hotfix.</li>
+            <li><strong>v2.03.00</strong> (Jun 27, 2024) — Summer seasonal content update.</li>
+            <li><strong>v2.02.00</strong> (May 21, 2024) — Content update with system improvements.</li>
+            <li><strong>v2.01.00</strong> (Apr 23, 2024) — Ranked Battle overhaul: removed ticket system, introduced opponent lists with a refresh limit. Winning earns Ranked Points; losses do not deduct points. Rematches available.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v2.00.00 ===================== -->
+  <div class="rounded-2xl bg-white/5 border border-white/10 p-[1px] mb-4">
+    <div class="bg-black/60 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-6 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-1 flex-wrap">
+                <h3 class="text-lg font-bold text-white/80">v2.00.00</h3>
+                <span class="tag bg-white/10 text-white/40 border border-white/10">Archive</span>
+                <span class="tag bg-red-500/20 text-red-400/60 border border-red-500/10">Season 2 Launch</span>
+              </div>
+              <p class="text-white/40 text-xs">Mar 20, 2024</p>
+            </div>
+            <svg class="chevron w-4 h-4 text-white/30 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-6 pb-6 border-t border-white/10 pt-4">
+          <p class="text-white/60 text-sm">The Season 2 launch update for MLB Rivals, bringing the full 2024 MLB season card roster, new systems, and major content expansions at the start of the 2024 season.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== v1.x Archive ===================== -->
+  <div class="rounded-2xl bg-white/5 border border-white/10 p-[1px] mb-4">
+    <div class="bg-black/60 rounded-2xl overflow-hidden">
+      <details>
+        <summary class="p-6 hover:bg-white/5 transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-1 flex-wrap">
+                <h3 class="text-lg font-bold text-white/80">v1.x Series</h3>
+                <span class="tag bg-white/10 text-white/40 border border-white/10">Archive</span>
+                <span class="tag bg-white/5 text-white/30 border border-white/5">Season 1</span>
+              </div>
+              <p class="text-white/40 text-xs">2023 – Feb 2024 &nbsp;·&nbsp; Original MLB 9 Innings Rivals era</p>
+            </div>
+            <svg class="chevron w-4 h-4 text-white/30 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </summary>
+        <div class="update-body px-6 pb-6 border-t border-white/10 pt-4">
+          <ul class="text-white/60 text-sm space-y-1 list-disc list-inside">
+            <li><strong>v1.08.00</strong> (Feb 27, 2024) — Game renamed from MLB 9 Innings Rivals to <strong>MLB RIVALS</strong>. New 2023 Special Cards, Campaign Mode added.</li>
+            <li><strong>v1.07.00</strong> and earlier — Original Season 1 updates, core gameplay foundations, initial card systems, and early competitive modes.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <p class="text-white/30 text-xs mt-10 text-center">For the full official update archive, visit the <a href="https://community.withhive.com/MLB9IRIVALS/en/board/9" target="_blank" class="text-blue-400/60 hover:text-blue-400 transition">MLB Rivals Community Board</a>.</p>
 </section>
 
 </body>
