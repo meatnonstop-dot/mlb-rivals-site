@@ -2,74 +2,93 @@
 <html>
 <head>
   <title>MLB Rivals – Players</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body { background: radial-gradient(circle at top, #111827, #000); }
+    body { background: radial-gradient(circle at top, #0f172a, #000); }
 
-    .flip-card {
-      perspective: 1000px;
-    }
-
+    /* 3D Flip */
+    .flip-card { perspective: 1200px; }
     .flip-inner {
       position: relative;
       width: 100%;
-      height: 280px;
-      transition: transform 0.8s;
+      height: 320px;
       transform-style: preserve-3d;
+      transition: transform 0.8s;
     }
-
-    .flipped {
-      transform: rotateY(180deg);
-    }
+    .flipped { transform: rotateY(180deg); }
 
     .flip-front, .flip-back {
       position: absolute;
       width: 100%;
       height: 100%;
-      backface-visibility: hidden;
       border-radius: 1rem;
+      backface-visibility: hidden;
+      overflow: hidden;
     }
 
     .flip-front {
-      background: rgba(0,0,0,0.85);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.9);
+      border: 1px solid rgba(255,255,255,0.08);
       padding: 1.5rem;
     }
 
     .flip-back {
       background: rgba(0,0,0,0.95);
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.08);
       padding: 1.5rem;
       transform: rotateY(180deg);
     }
 
+    /* Shine Sweep */
+    .shine::after {
+      content: "";
+      position: absolute;
+      top: -100%;
+      left: -100%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        120deg,
+        transparent 40%,
+        rgba(255,255,255,0.15),
+        transparent 60%
+      );
+      transform: rotate(25deg);
+      animation: shineMove 4s infinite;
+    }
+
+    @keyframes shineMove {
+      0% { transform: translateX(-100%) rotate(25deg); }
+      100% { transform: translateX(100%) rotate(25deg); }
+    }
+
+    /* Hover Lift */
     .card-hover {
-      transition: 0.3s;
+      transition: transform 0.3s;
     }
 
     .card-hover:hover {
-      transform: translateY(-8px) scale(1.02);
+      transform: translateY(-8px);
     }
 
+    /* Stat Bar */
     .stat-bar {
       height: 10px;
       border-radius: 999px;
       transition: width 0.8s ease;
     }
 
-    .rarity-SIGNATURE .stat-bar {
-      background: linear-gradient(to right, #ec4899, #9333ea);
-    }
+    /* Rarity Themes */
+    .SIGNATURE .stat-bar { background: linear-gradient(to right, #ec4899, #9333ea); }
+    .PRIME .stat-bar { background: linear-gradient(to right, #3b82f6, #6366f1); }
+    .IMPACT .stat-bar { background: linear-gradient(to right, #10b981, #14b8a6); }
 
-    .rarity-PRIME .stat-bar {
-      background: linear-gradient(to right, #3b82f6, #6366f1);
-    }
+    .SIGNATURE { box-shadow: 0 0 30px rgba(236,72,153,0.5); }
+    .PRIME { box-shadow: 0 0 30px rgba(59,130,246,0.5); }
+    .IMPACT { box-shadow: 0 0 30px rgba(16,185,129,0.5); }
 
-    .rarity-IMPACT .stat-bar {
-      background: linear-gradient(to right, #10b981, #14b8a6);
-    }
   </style>
 </head>
 
@@ -80,19 +99,38 @@
     <h1 class="text-2xl font-extrabold tracking-wider text-blue-400">
       MLB RIVALS
     </h1>
-    <nav class="hidden md:flex gap-6 text-sm text-white/70">
-      <a href="index.html">Home</a>
-      <a href="scouts.html">Scouts</a>
-      <a href="players.html" class="text-white">Players</a>
-      <a href="updates.html">Updates</a>
-      <a href="guide.html">Guide</a>
-    </nav>
   </div>
 </header>
 
-<section class="max-w-6xl mx-auto px-6 py-12">
-  <h2 class="text-4xl font-extrabold mb-8">Player Index</h2>
-  <div id="playerGrid" class="grid md:grid-cols-3 gap-10"></div>
+<section class="max-w-6xl mx-auto px-6 py-10">
+
+  <h2 class="text-4xl font-extrabold mb-6">Player Index</h2>
+
+  <!-- Controls -->
+  <div class="flex flex-col md:flex-row gap-4 mb-8">
+    <input id="searchInput" placeholder="Search Player..."
+      class="bg-white/10 px-4 py-2 rounded w-full md:w-1/3"
+      oninput="renderPlayers()">
+
+    <select id="teamFilter"
+      class="bg-white/10 px-4 py-2 rounded w-full md:w-1/4"
+      onchange="renderPlayers()">
+      <option value="all">All Teams</option>
+      <option value="LAD">LAD</option>
+      <option value="NYY">NYY</option>
+      <option value="ATL">ATL</option>
+    </select>
+
+    <select id="sortOVR"
+      class="bg-white/10 px-4 py-2 rounded w-full md:w-1/4"
+      onchange="renderPlayers()">
+      <option value="desc">Sort OVR High → Low</option>
+      <option value="asc">Sort OVR Low → High</option>
+    </select>
+  </div>
+
+  <div id="playerGrid" class="grid md:grid-cols-3 gap-8"></div>
+
 </section>
 
 <script>
@@ -102,6 +140,7 @@ const players = [
     team: "LAD",
     rarity: "SIGNATURE",
     ovr: 66,
+    image: "",
     stats: { Power: 92, Contact: 88, Speed: 78 }
   },
   {
@@ -109,6 +148,7 @@ const players = [
     team: "NYY",
     rarity: "PRIME",
     ovr: 64,
+    image: "",
     stats: { Power: 95, Contact: 84, Speed: 60 }
   },
   {
@@ -116,6 +156,7 @@ const players = [
     team: "ATL",
     rarity: "IMPACT",
     ovr: 65,
+    image: "",
     stats: { Power: 89, Contact: 90, Speed: 93 }
   }
 ];
@@ -124,7 +165,18 @@ function renderPlayers() {
   const grid = document.getElementById("playerGrid");
   grid.innerHTML = "";
 
-  players.forEach((player, index) => {
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const team = document.getElementById("teamFilter").value;
+  const sort = document.getElementById("sortOVR").value;
+
+  let filtered = players.filter(p =>
+    p.name.toLowerCase().includes(search) &&
+    (team === "all" || p.team === team)
+  );
+
+  filtered.sort((a,b) => sort === "desc" ? b.ovr - a.ovr : a.ovr - b.ovr);
+
+  filtered.forEach((player, index) => {
 
     let statsHTML = "";
     for (let stat in player.stats) {
@@ -139,19 +191,21 @@ function renderPlayers() {
     }
 
     const card = document.createElement("div");
-    card.className = "flip-card rarity-" + player.rarity;
+    card.className = "flip-card " + player.rarity;
 
     card.innerHTML = `
       <div class="flip-inner card-hover cursor-pointer" onclick="flipCard(this, ${index})">
-        
-        <div class="flip-front">
+
+        <div class="flip-front shine relative">
           <div class="flex justify-between text-sm mb-2">
             <span>${player.rarity}</span>
             <span>OVR ${player.ovr}</span>
           </div>
-          <div class="h-32 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40">
-            CARD ART
+
+          <div class="h-40 bg-white/5 rounded mb-4 flex items-center justify-center text-white/40 overflow-hidden">
+            ${player.image ? `<img src="${player.image}" class="h-full">` : "CARD ART"}
           </div>
+
           <h3 class="font-semibold">${player.name}</h3>
           <p class="text-sm text-white/60">${player.team}</p>
         </div>
@@ -175,7 +229,8 @@ function flipCard(element, index) {
     const player = players[index];
     setTimeout(() => {
       for (let stat in player.stats) {
-        document.getElementById(`stat-${index}-${stat}`).style.width = player.stats[stat] + "%";
+        document.getElementById(`stat-${index}-${stat}`).style.width =
+          player.stats[stat] + "%";
       }
     }, 200);
   }
