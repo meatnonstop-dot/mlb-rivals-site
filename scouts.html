@@ -99,20 +99,108 @@ nav{display:flex;gap:2px}
 .no-results{grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--fu);color:var(--muted);font-size:1.1rem}
 
 /* SCOUT CARD */
-.scout-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .25s,box-shadow .25s;cursor:pointer}
-.scout-card:hover{border-color:rgba(47,124,246,.4);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.scout-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .25s,box-shadow .25s,background .25s;cursor:pointer;border-left-width:3px}
+.scout-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.4)}
 .scout-card.expanded .sc-body{display:flex}
 .sc-head{padding:18px 20px;display:flex;align-items:center;gap:14px;user-select:none}
-.sc-icon{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;background:var(--surface2);border:1px solid var(--border)}
+.sc-icon{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;border:1px solid var(--border);transition:box-shadow .25s}
 .sc-info{flex:1;min-width:0}
 .sc-name{font-family:var(--fu);font-size:1.05rem;font-weight:800;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sc-cat{font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
 .sc-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
 .sc-tag{font-family:var(--fu);font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:3px}
 .sc-toggle{display:flex;align-items:center;gap:6px;font-family:var(--fu);font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);flex-shrink:0;transition:color .2s}
-.scout-card:hover .sc-toggle{color:var(--blue)}
 .sc-chevron{width:16px;height:16px;display:flex;align-items:center;justify-content:center;transition:transform .3s}
 .scout-card.expanded .sc-chevron{transform:rotate(180deg)}
+
+/* ── Per-rarity card theming ── */
+/* HOF */
+.card-hof{border-left-color:var(--c-hof)}
+.card-hof .sc-icon{background:rgba(244,185,66,.12);border-color:rgba(244,185,66,.3)}
+.card-hof .sc-name{color:var(--c-hof)}
+.card-hof:hover{border-color:rgba(244,185,66,.55);box-shadow:0 8px 32px rgba(244,185,66,.15)}
+.card-hof:hover .sc-toggle{color:var(--c-hof)}
+.card-hof .sc-body{border-top-color:rgba(244,185,66,.15)}
+
+/* Signature Black */
+.card-sigblack{border-left-color:var(--c-sigblack)}
+.card-sigblack .sc-icon{background:rgba(192,192,192,.1);border-color:rgba(192,192,192,.25)}
+.card-sigblack .sc-name{color:var(--c-sigblack)}
+.card-sigblack:hover{border-color:rgba(192,192,192,.5);box-shadow:0 8px 32px rgba(192,192,192,.1)}
+.card-sigblack:hover .sc-toggle{color:var(--c-sigblack)}
+.card-sigblack .sc-body{border-top-color:rgba(192,192,192,.12)}
+
+/* Signature */
+.card-sig{border-left-color:var(--c-sig)}
+.card-sig .sc-icon{background:rgba(236,72,153,.12);border-color:rgba(236,72,153,.3)}
+.card-sig .sc-name{color:var(--c-sig)}
+.card-sig:hover{border-color:rgba(236,72,153,.55);box-shadow:0 8px 32px rgba(236,72,153,.18)}
+.card-sig:hover .sc-toggle{color:var(--c-sig)}
+.card-sig .sc-body{border-top-color:rgba(236,72,153,.15)}
+
+/* Moment */
+.card-moment{border-left-color:var(--c-moment)}
+.card-moment .sc-icon{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3)}
+.card-moment .sc-name{color:var(--c-moment)}
+.card-moment:hover{border-color:rgba(16,185,129,.55);box-shadow:0 8px 32px rgba(16,185,129,.18)}
+.card-moment:hover .sc-toggle{color:var(--c-moment)}
+.card-moment .sc-body{border-top-color:rgba(16,185,129,.15)}
+
+/* WBC */
+.card-wbc{border-left-color:var(--c-wbc)}
+.card-wbc .sc-icon{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.3)}
+.card-wbc .sc-name{color:var(--c-wbc)}
+.card-wbc:hover{border-color:rgba(56,189,248,.55);box-shadow:0 8px 32px rgba(56,189,248,.18)}
+.card-wbc:hover .sc-toggle{color:var(--c-wbc)}
+.card-wbc .sc-body{border-top-color:rgba(56,189,248,.15)}
+
+/* Prime */
+.card-prime{border-left-color:var(--c-prime)}
+.card-prime .sc-icon{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.3)}
+.card-prime .sc-name{color:var(--c-prime)}
+.card-prime:hover{border-color:rgba(59,130,246,.55);box-shadow:0 8px 32px rgba(59,130,246,.18)}
+.card-prime:hover .sc-toggle{color:var(--c-prime)}
+.card-prime .sc-body{border-top-color:rgba(59,130,246,.15)}
+
+/* Impact */
+.card-impact{border-left-color:var(--c-impact)}
+.card-impact .sc-icon{background:rgba(234,179,8,.12);border-color:rgba(234,179,8,.3)}
+.card-impact .sc-name{color:var(--c-impact)}
+.card-impact:hover{border-color:rgba(234,179,8,.55);box-shadow:0 8px 32px rgba(234,179,8,.15)}
+.card-impact:hover .sc-toggle{color:var(--c-impact)}
+.card-impact .sc-body{border-top-color:rgba(234,179,8,.12)}
+
+/* Season */
+.card-season{border-left-color:var(--c-season)}
+.card-season .sc-icon{background:rgba(107,114,128,.12);border-color:rgba(107,114,128,.25)}
+.card-season .sc-name{color:#9ca3af}
+.card-season:hover{border-color:rgba(107,114,128,.45);box-shadow:0 8px 32px rgba(107,114,128,.1)}
+.card-season:hover .sc-toggle{color:#9ca3af}
+.card-season .sc-body{border-top-color:rgba(107,114,128,.12)}
+
+/* Live */
+.card-live{border-left-color:var(--c-live)}
+.card-live .sc-icon{background:rgba(148,163,184,.1);border-color:rgba(148,163,184,.2)}
+.card-live .sc-name{color:var(--c-live)}
+.card-live:hover{border-color:rgba(148,163,184,.4);box-shadow:0 8px 32px rgba(148,163,184,.08)}
+.card-live:hover .sc-toggle{color:var(--c-live)}
+.card-live .sc-body{border-top-color:rgba(148,163,184,.1)}
+
+/* FA */
+.card-fa{border-left-color:#64748b}
+.card-fa .sc-icon{background:rgba(100,116,139,.12);border-color:rgba(100,116,139,.25)}
+.card-fa .sc-name{color:#94a3b8}
+.card-fa:hover{border-color:rgba(100,116,139,.45);box-shadow:0 8px 32px rgba(100,116,139,.1)}
+.card-fa:hover .sc-toggle{color:#94a3b8}
+.card-fa .sc-body{border-top-color:rgba(100,116,139,.12)}
+
+/* Mixed / multi-rarity */
+.card-mixed{border-left-color:var(--blue)}
+.card-mixed .sc-icon{background:rgba(47,124,246,.1);border-color:rgba(47,124,246,.25)}
+.card-mixed .sc-name{color:var(--blue)}
+.card-mixed:hover{border-color:rgba(47,124,246,.5);box-shadow:0 8px 32px rgba(47,124,246,.15)}
+.card-mixed:hover .sc-toggle{color:var(--blue)}
+.card-mixed .sc-body{border-top-color:rgba(47,124,246,.12)}
 
 /* TOP RATES strip — always visible */
 .sc-peek{padding:0 20px 14px;display:flex;gap:8px;flex-wrap:wrap}
@@ -257,19 +345,19 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
 const SCOUTS = [
 
   /* ── CORE SCOUTS ── */
-  {id:'normal',name:'Normal Scout',icon:'🎯',category:'scout',tags:['Basic','Always Available'],notes:'',rates:[
+  {id:'normal',name:'Normal Scout',icon:'🎯',color:'live',category:'scout',tags:['Basic','Always Available'],notes:'',rates:[
     {grade:'Grade B Live',pct:23.30,rarity:'live'},
     {grade:'Grade B Season',pct:43.30,rarity:'season'},
     {grade:'Grade C Live',pct:10.70,rarity:'live'},
     {grade:'Grade C Season',pct:22.70,rarity:'season'},
   ]},
-  {id:'live',name:'Live Scout',icon:'⚡',category:'scout',tags:['Live Focus'],notes:'',rates:[
+  {id:'live',name:'Live Scout',icon:'⚡',color:'live',category:'scout',tags:['Live Focus'],notes:'',rates:[
     {grade:'Impact',pct:1.00,rarity:'impact'},
     {grade:'Grade S Live',pct:3.70,rarity:'live'},
     {grade:'Grade A Live',pct:27.60,rarity:'live'},
     {grade:'Grade B Live',pct:67.70,rarity:'live'},
   ]},
-  {id:'advanced',name:'Advanced Scout',icon:'🔬',category:'scout',tags:['Mid-Tier'],notes:'',rates:[
+  {id:'advanced',name:'Advanced Scout',icon:'🔬',color:'impact',category:'scout',tags:['Mid-Tier'],notes:'',rates:[
     {grade:'Impact',pct:1.00,rarity:'impact'},
     {grade:'Grade S Live',pct:1.20,rarity:'live'},
     {grade:'Grade S Season',pct:2.50,rarity:'season'},
@@ -278,7 +366,7 @@ const SCOUTS = [
     {grade:'Grade B Live',pct:22.50,rarity:'live'},
     {grade:'Grade B Season',pct:45.90,rarity:'season'},
   ]},
-  {id:'premium',name:'Premium Scout',icon:'💎',category:'scout',tags:['Signature','Prime','Top Pool'],notes:'Best regular scout for Signature and Prime pulls.',rates:[
+  {id:'premium',name:'Premium Scout',icon:'💎',color:'sig',category:'scout',tags:['Signature','Prime','Top Pool'],notes:'Best regular scout for Signature and Prime pulls.',rates:[
     {grade:'Signature',pct:0.05,rarity:'sig'},
     {grade:'Prime',pct:0.50,rarity:'prime'},
     {grade:'Grade S Live',pct:1.20,rarity:'live'},
@@ -288,7 +376,7 @@ const SCOUTS = [
     {grade:'Grade B Live',pct:22.50,rarity:'live'},
     {grade:'Grade B Season',pct:46.15,rarity:'season'},
   ]},
-  {id:'prefteam',name:'Preferred Team Support Scout',icon:'🏟️',category:'scout',tags:['Team Specific'],notes:'Same pool as Advanced Scout but filtered to your preferred team.',rates:[
+  {id:'prefteam',name:'Preferred Team Support Scout',icon:'🏟️',color:'impact',category:'scout',tags:['Team Specific'],notes:'Same pool as Advanced Scout but filtered to your preferred team.',rates:[
     {grade:'Impact',pct:1.00,rarity:'impact'},
     {grade:'Grade S Live',pct:1.20,rarity:'live'},
     {grade:'Grade S Season',pct:2.50,rarity:'season'},
@@ -297,7 +385,7 @@ const SCOUTS = [
     {grade:'Grade B Live',pct:22.50,rarity:'live'},
     {grade:'Grade B Season',pct:45.90,rarity:'season'},
   ]},
-  {id:'moment',name:'Moment Scout',icon:'✨',category:'scout',tags:['Moment','Limited'],notes:'Features Moment-tier cards alongside the standard pool.',rates:[
+  {id:'moment',name:'Moment Scout',icon:'✨',color:'moment',category:'scout',tags:['Moment','Limited'],notes:'Features Moment-tier cards alongside the standard pool.',rates:[
     {grade:'Moment',pct:1.00,rarity:'moment'},
     {grade:'Grade S Live',pct:1.20,rarity:'live'},
     {grade:'Grade S Season',pct:2.50,rarity:'season'},
@@ -306,7 +394,7 @@ const SCOUTS = [
     {grade:'Grade B Live',pct:22.50,rarity:'live'},
     {grade:'Grade B Season',pct:45.90,rarity:'season'},
   ]},
-  {id:'premium-player',name:'Premium Player Pack',icon:'🎴',category:'scout',tags:['Pack','Mid-Tier'],notes:'',rates:[
+  {id:'premium-player',name:'Premium Player Pack',icon:'🎴',color:'impact',category:'scout',tags:['Pack','Mid-Tier'],notes:'',rates:[
     {grade:'Impact',pct:1.00,rarity:'impact'},
     {grade:'Grade S Live',pct:1.20,rarity:'live'},
     {grade:'Grade S Season',pct:2.50,rarity:'season'},
@@ -317,7 +405,7 @@ const SCOUTS = [
   ]},
 
   /* ── PICK UP SCOUTS ── */
-  {id:'pickup',name:'Pick Up Scout',icon:'🎯',category:'pickup',tags:['Pick Up','Team Select','Rate Up'],
+  {id:'pickup',name:'Pick Up Scout',icon:'🎯',color:'prime',category:'pickup',tags:['Pick Up','Team Select','Rate Up'],
     notes:'30 Focus Players (1 per team). Your chosen team\'s player becomes the Pick Up with boosted rate.',rates:[
     {grade:'Pick Up Focus Player',pct:0.30,rarity:'prime'},
     {grade:'Focus Player (Excl. Pick Up)',pct:0.70,rarity:'prime'},
@@ -328,7 +416,7 @@ const SCOUTS = [
     {grade:'Grade B Live',pct:22.50,rarity:'live'},
     {grade:'Grade B Season',pct:45.70,rarity:'season'},
   ]},
-  {id:'faprime-pickup',name:'FA Prime Pick Up Scout',icon:'🌟',category:'pickup',tags:['FA','Pick Up','Signature','Rate Up'],
+  {id:'faprime-pickup',name:'FA Prime Pick Up Scout',icon:'🌟',color:'sig',category:'pickup',tags:['FA','Pick Up','Signature','Rate Up'],
     notes:'One player designated as Pick Up Focus Player with boosted rates. Includes FA Signature at the top tier.',rates:[
     {grade:'Pick Up (FA Signature)',pct:0.50,rarity:'sig'},
     {grade:'Pick Up (FA Prime)',pct:1.50,rarity:'prime'},
@@ -340,7 +428,7 @@ const SCOUTS = [
     {grade:'Grade B Live',pct:22.50,rarity:'live'},
     {grade:'Grade B Season',pct:43.20,rarity:'season'},
   ]},
-  {id:'moment-pickup',name:'Moment Pick Up Scout',icon:'⭐',category:'pickup',tags:['Moment','Pick Up','Team Select','Rate Up'],
+  {id:'moment-pickup',name:'Moment Pick Up Scout',icon:'⭐',color:'moment',category:'pickup',tags:['Moment','Pick Up','Team Select','Rate Up'],
     notes:'30 Moment Focus Players (1 per team). Your chosen team\'s player becomes the Pick Up.',rates:[
     {grade:'Pick Up Focus Player',pct:0.30,rarity:'moment'},
     {grade:'Focus Player (Excl. Pick Up)',pct:0.70,rarity:'moment'},
@@ -351,7 +439,7 @@ const SCOUTS = [
     {grade:'Grade B Live',pct:22.50,rarity:'live'},
     {grade:'Grade B Season',pct:45.70,rarity:'season'},
   ]},
-  {id:'fa-pickup',name:'FA Pick Up Scout',icon:'🏷️',category:'pickup',tags:['FA','Signature','Rate Up'],
+  {id:'fa-pickup',name:'FA Pick Up Scout',icon:'🏷️',color:'sig',category:'pickup',tags:['FA','Signature','Rate Up'],
     notes:'Boosted FA Signature / FA Prime with Pick Up designation.',rates:[
     {grade:'Pick Up (FA Signature)',pct:0.50,rarity:'sig'},
     {grade:'Pick Up (FA Prime)',pct:1.50,rarity:'prime'},
@@ -363,7 +451,7 @@ const SCOUTS = [
     {grade:'Grade B Live',pct:22.50,rarity:'live'},
     {grade:'Grade B Season',pct:43.20,rarity:'season'},
   ]},
-  {id:'fa-pickup-2026',name:'FA Pick Up (2026)',icon:'🆕',category:'pickup',tags:['FA','Signature Black','2026'],
+  {id:'fa-pickup-2026',name:'FA Pick Up (2026)',icon:'🆕',color:'sigblack',category:'pickup',tags:['FA','Signature Black','2026'],
     notes:'2026 version includes FA Signature Black at the top. Double the Signature floor.',rates:[
     {grade:'Pick Up (FA Signature)',pct:0.25,rarity:'sigblack'},
     {grade:'FA Signature',pct:0.25,rarity:'sig'},
@@ -378,44 +466,44 @@ const SCOUTS = [
   ]},
 
   /* ── EVENT SCOUTS ── */
-  {id:'spring',name:'Spring Training Scout',icon:'🌸',category:'event',tags:['Event','Spring Training'],notes:'',rates:[
+  {id:'spring',name:'Spring Training Scout',icon:'🌸',color:'prime',category:'event',tags:['Event','Spring Training'],notes:'',rates:[
     {grade:'Prime',pct:1.00,rarity:'prime'},
     {grade:'Impact',pct:10.00,rarity:'impact'},
     {grade:'Live',pct:25.00,rarity:'live'},
     {grade:'Season',pct:64.00,rarity:'season'},
   ]},
-  {id:'tokyo',name:'Tokyo Series Scout',icon:'⛩️',category:'event',tags:['Event','FA','Tokyo'],notes:'Features FA-tier cards — Free Agent Prime and Impact.',rates:[
+  {id:'tokyo',name:'Tokyo Series Scout',icon:'⛩️',color:'fa',category:'event',tags:['Event','FA','Tokyo'],notes:'Features FA-tier cards — Free Agent Prime and Impact.',rates:[
     {grade:'FA Prime',pct:1.00,rarity:'prime'},
     {grade:'FA Impact',pct:10.00,rarity:'impact'},
     {grade:'Live',pct:25.00,rarity:'live'},
     {grade:'Season',pct:64.00,rarity:'season'},
   ]},
-  {id:'pennant',name:'Pennant Race Event Scout',icon:'🏁',category:'event',tags:['Event','Pennant Race'],notes:'',rates:[
+  {id:'pennant',name:'Pennant Race Event Scout',icon:'🏁',color:'prime',category:'event',tags:['Event','Pennant Race'],notes:'',rates:[
     {grade:'Prime',pct:0.50,rarity:'prime'},
     {grade:'Impact',pct:2.00,rarity:'impact'},
     {grade:'Live',pct:30.00,rarity:'live'},
     {grade:'Season',pct:67.50,rarity:'season'},
   ]},
-  {id:'allstar',name:'2025 All-Star Event Scout',icon:'⭐',category:'event',tags:['Event','All-Star','2025'],notes:'',rates:[
+  {id:'allstar',name:'2025 All-Star Event Scout',icon:'⭐',color:'prime',category:'event',tags:['Event','All-Star','2025'],notes:'',rates:[
     {grade:'Prime',pct:1.00,rarity:'prime'},
     {grade:'Impact',pct:10.00,rarity:'impact'},
     {grade:'Live',pct:25.00,rarity:'live'},
     {grade:'Season',pct:64.00,rarity:'season'},
   ]},
-  {id:'postseason24',name:'2024 Postseason Scout',icon:'🏆',category:'event',tags:['Event','Postseason','2024'],notes:'',rates:[
+  {id:'postseason24',name:'2024 Postseason Scout',icon:'🏆',color:'prime',category:'event',tags:['Event','Postseason','2024'],notes:'',rates:[
     {grade:'Prime',pct:0.50,rarity:'prime'},
     {grade:'Impact',pct:2.00,rarity:'impact'},
     {grade:'Live',pct:30.00,rarity:'live'},
     {grade:'Season',pct:67.50,rarity:'season'},
   ]},
-  {id:'postseason25',name:'2025 Postseason Scout',icon:'🏆',category:'event',tags:['Event','Postseason','FA','2025'],notes:'Features FA Signature at the top of the pool.',rates:[
+  {id:'postseason25',name:'2025 Postseason Scout',icon:'🏆',color:'sig',category:'event',tags:['Event','Postseason','FA','2025'],notes:'Features FA Signature at the top of the pool.',rates:[
     {grade:'FA Signature',pct:0.05,rarity:'sig'},
     {grade:'FA Prime',pct:1.00,rarity:'prime'},
     {grade:'FA Impact',pct:10.00,rarity:'impact'},
     {grade:'Live',pct:25.00,rarity:'live'},
     {grade:'Season',pct:63.95,rarity:'season'},
   ]},
-  {id:'wrapup',name:'Regular Season Wrap-Up Scout',icon:'📅',category:'event',tags:['Event','Signature','Seasonal'],notes:'One of the richer event pools — Signature included alongside Prime and Impact.',rates:[
+  {id:'wrapup',name:'Regular Season Wrap-Up Scout',icon:'📅',color:'sig',category:'event',tags:['Event','Signature','Seasonal'],notes:'One of the richer event pools — Signature included alongside Prime and Impact.',rates:[
     {grade:'Signature',pct:0.05,rarity:'sig'},
     {grade:'Prime',pct:0.80,rarity:'prime'},
     {grade:'Impact',pct:3.00,rarity:'impact'},
@@ -426,7 +514,7 @@ const SCOUTS = [
     {grade:'Grade B Live',pct:22.50,rarity:'live'},
     {grade:'Grade B Season',pct:42.85,rarity:'season'},
   ]},
-  {id:'wbc2026',name:'WBC 2026 Event Scout',icon:'🌐',category:'event',tags:['WBC','Event','2026','Signature'],notes:'World Baseball Classic 2026 scout — Signature and Prime in the pool.',rates:[
+  {id:'wbc2026',name:'WBC 2026 Event Scout',icon:'🌐',color:'wbc',category:'event',tags:['WBC','Event','2026','Signature'],notes:'World Baseball Classic 2026 scout — Signature and Prime in the pool.',rates:[
     {grade:'Signature',pct:0.05,rarity:'sig'},
     {grade:'Prime',pct:0.50,rarity:'prime'},
     {grade:'Grade S Live',pct:1.20,rarity:'live'},
@@ -438,185 +526,185 @@ const SCOUTS = [
   ]},
 
   /* ── PACKS — GUARANTEED ── */
-  {id:'sig-pack',name:'Signature Pack',icon:'💫',category:'pack',tags:['Guaranteed','Signature'],
+  {id:'sig-pack',name:'Signature Pack',icon:'💫',color:'sig',category:'pack',tags:['Guaranteed','Signature'],
     notes:'Same rate as League Selective, Team Selective, Position Selective, and (Year) Signature Pack. Guarantees one Signature — equal chance across all cards in pool.',rates:[
     {grade:'Signature',pct:100,rarity:'sig'},
   ]},
-  {id:'prime-pack',name:'Prime Pack',icon:'🔵',category:'pack',tags:['Guaranteed','Prime'],
+  {id:'prime-pack',name:'Prime Pack',icon:'🔵',color:'prime',category:'pack',tags:['Guaranteed','Prime'],
     notes:'Same rate as Position Selective, Team Selective, (Year) Prime Pack, Fixed Skill Prime Pack, Infielder/Catcher and Outfielder/DH variants.',rates:[
     {grade:'Prime',pct:100,rarity:'prime'},
   ]},
-  {id:'impact-pack',name:'Impact Pack',icon:'🟡',category:'pack',tags:['Guaranteed','Impact'],
+  {id:'impact-pack',name:'Impact Pack',icon:'🟡',color:'impact',category:'pack',tags:['Guaranteed','Impact'],
     notes:'Same rate as League Selective, Team Selective, Position Selective, Preferred Team, and (Year) Impact Pack.',rates:[
     {grade:'Impact',pct:100,rarity:'impact'},
   ]},
-  {id:'cp-impact-pack',name:'CP Impact Pack',icon:'🟠',category:'pack',tags:['Guaranteed','Closer','Impact'],
+  {id:'cp-impact-pack',name:'CP Impact Pack',icon:'🟠',color:'impact',category:'pack',tags:['Guaranteed','Closer','Impact'],
     notes:'Guarantees one Closer-Position Impact player.',rates:[
     {grade:'CP Impact',pct:100,rarity:'impact'},
   ]},
-  {id:'live-pack',name:'Live Pack',icon:'📺',category:'pack',tags:['Live','Guaranteed'],notes:'',rates:[
+  {id:'live-pack',name:'Live Pack',icon:'📺',color:'live',category:'pack',tags:['Live','Guaranteed'],notes:'',rates:[
     {grade:'Grade S Live',pct:2.80,rarity:'live'},
     {grade:'Grade A Live',pct:21.00,rarity:'live'},
     {grade:'Grade B Live',pct:51.50,rarity:'live'},
     {grade:'Grade C Live',pct:24.70,rarity:'live'},
   ]},
-  {id:'season-pack',name:'Season Pack',icon:'📅',category:'pack',tags:['Season','Guaranteed'],notes:'',rates:[
+  {id:'season-pack',name:'Season Pack',icon:'📅',color:'season',category:'pack',tags:['Season','Guaranteed'],notes:'',rates:[
     {grade:'Grade S Season',pct:2.70,rarity:'season'},
     {grade:'Grade A Season',pct:19.50,rarity:'season'},
     {grade:'Grade B Season',pct:50.30,rarity:'season'},
     {grade:'Grade C Season',pct:27.50,rarity:'season'},
   ]},
-  {id:'sig-prime-pack',name:'Signature/Prime Pack',icon:'💠',category:'pack',tags:['Signature','Prime','Combo'],
+  {id:'sig-prime-pack',name:'Signature/Prime Pack',icon:'💠',color:'sig',category:'pack',tags:['Signature','Prime','Combo'],
     notes:'Same rate as Position Selective and Team Selective Signature/Prime Pack.',rates:[
     {grade:'Signature',pct:5,rarity:'sig'},
     {grade:'Prime',pct:95,rarity:'prime'},
   ]},
-  {id:'sig-prime-impact-pack',name:'Signature/Prime/Impact Pack',icon:'🔮',category:'pack',tags:['Signature','Prime','Impact','Combo'],
+  {id:'sig-prime-impact-pack',name:'Signature/Prime/Impact Pack',icon:'🔮',color:'sig',category:'pack',tags:['Signature','Prime','Impact','Combo'],
     notes:'Same rate as Position Selective and Team Selective variants.',rates:[
     {grade:'Signature',pct:5.00,rarity:'sig'},
     {grade:'Prime',pct:30.00,rarity:'prime'},
     {grade:'Impact',pct:65.00,rarity:'impact'},
   ]},
-  {id:'live-s-pack',name:'Live S Pack',icon:'📡',category:'pack',tags:['Guaranteed','Live S'],
+  {id:'live-s-pack',name:'Live S Pack',icon:'📡',color:'live',category:'pack',tags:['Guaranteed','Live S'],
     notes:'Same rate as Position Selective Live S Pack. Guarantees Grade S Live player.',rates:[
     {grade:'Grade S Live',pct:100,rarity:'live'},
   ]},
-  {id:'season-s-pack',name:'Season S Pack',icon:'🗓️',category:'pack',tags:['Guaranteed','Season S'],
+  {id:'season-s-pack',name:'Season S Pack',icon:'🗓️',color:'season',category:'pack',tags:['Guaranteed','Season S'],
     notes:'Same rate as Position Selective Season S Pack.',rates:[
     {grade:'Grade S Season',pct:100,rarity:'season'},
   ]},
-  {id:'live-s-a-pack',name:'Live S–A Pack',icon:'📶',category:'pack',tags:['Live S','Live A'],
+  {id:'live-s-a-pack',name:'Live S–A Pack',icon:'📶',color:'live',category:'pack',tags:['Live S','Live A'],
     notes:'Same rate as Team Selective Live S–A Pack.',rates:[
     {grade:'Grade S Live',pct:11.80,rarity:'live'},
     {grade:'Grade A Live',pct:88.20,rarity:'live'},
   ]},
-  {id:'season-s-a-pack',name:'Season S–A Pack',icon:'📆',category:'pack',tags:['Season S','Season A'],notes:'',rates:[
+  {id:'season-s-a-pack',name:'Season S–A Pack',icon:'📆',color:'season',category:'pack',tags:['Season S','Season A'],notes:'',rates:[
     {grade:'Grade S Season',pct:12.30,rarity:'season'},
     {grade:'Grade A Season',pct:87.70,rarity:'season'},
   ]},
-  {id:'live-season-s',name:'Live/Season S Pack',icon:'🎲',category:'pack',tags:['Live S','Season S','Combo'],
+  {id:'live-season-s',name:'Live/Season S Pack',icon:'🎲',color:'live',category:'pack',tags:['Live S','Season S','Combo'],
     notes:'Same rate as Position Selective and Team Selective Live/Season S Pack.',rates:[
     {grade:'Grade S Live',pct:33.00,rarity:'live'},
     {grade:'Grade S Season',pct:67.00,rarity:'season'},
   ]},
-  {id:'live-season-s-a',name:'Live/Season S–A Pack',icon:'🎰',category:'pack',tags:['Live','Season','Combo'],
+  {id:'live-season-s-a',name:'Live/Season S–A Pack',icon:'🎰',color:'mixed',category:'pack',tags:['Live','Season','Combo'],
     notes:'Same rate as Team Selective Live/Season S–A Pack.',rates:[
     {grade:'Grade S Live',pct:3.90,rarity:'live'},
     {grade:'Grade S Season',pct:8.20,rarity:'season'},
     {grade:'Grade A Live',pct:29.10,rarity:'live'},
     {grade:'Grade A Season',pct:58.80,rarity:'season'},
   ]},
-  {id:'team-live',name:'Team Selective Live Pack',icon:'👕',category:'pack',tags:['Team Specific','Live'],
+  {id:'team-live',name:'Team Selective Live Pack',icon:'👕',color:'live',category:'pack',tags:['Team Specific','Live'],
     notes:'Select a team and get 1 Live Player from that roster.',rates:[
     {grade:'Live',pct:100,rarity:'live'},
   ]},
-  {id:'team-season',name:'Team Selective Season Pack',icon:'🧢',category:'pack',tags:['Team Specific','Season'],
+  {id:'team-season',name:'Team Selective Season Pack',icon:'🧢',color:'season',category:'pack',tags:['Team Specific','Season'],
     notes:'Select a team and get 1 Season Player from that roster.',rates:[
     {grade:'Season',pct:100,rarity:'season'},
   ]},
-  {id:'pos-live',name:'Position Selective Live Pack',icon:'🧤',category:'pack',tags:['Position Specific','Live'],
+  {id:'pos-live',name:'Position Selective Live Pack',icon:'🧤',color:'live',category:'pack',tags:['Position Specific','Live'],
     notes:'Select a position and get 1 Live Player at that position.',rates:[
     {grade:'Live',pct:100,rarity:'live'},
   ]},
-  {id:'pos-player',name:'Position Selective Player Pack',icon:'🎽',category:'pack',tags:['Position Specific','Mixed'],notes:'',rates:[
+  {id:'pos-player',name:'Position Selective Player Pack',icon:'🎽',color:'impact',category:'pack',tags:['Position Specific','Mixed'],notes:'',rates:[
     {grade:'Impact',pct:1.00,rarity:'impact'},
     {grade:'Live',pct:33.00,rarity:'live'},
     {grade:'Season',pct:66.00,rarity:'season'},
   ]},
-  {id:'team-player',name:'Team Selective Player Pack',icon:'🏟️',category:'pack',tags:['Team Specific','Mixed'],notes:'',rates:[
+  {id:'team-player',name:'Team Selective Player Pack',icon:'🏟️',color:'impact',category:'pack',tags:['Team Specific','Mixed'],notes:'',rates:[
     {grade:'Impact',pct:1.00,rarity:'impact'},
     {grade:'Live',pct:33.00,rarity:'live'},
     {grade:'Season',pct:66.00,rarity:'season'},
   ]},
-  {id:'team-adv',name:'Team Selective Advanced Player Pack',icon:'🔧',category:'pack',tags:['Team Specific','OVR 60+'],
+  {id:'team-adv',name:'Team Selective Advanced Player Pack',icon:'🔧',color:'impact',category:'pack',tags:['Team Specific','OVR 60+'],
     notes:'Same rate as Preferred Team Advanced Player Pack. Filters to OVR 60+ cards only.',rates:[
     {grade:'Impact',pct:1.00,rarity:'impact'},
     {grade:'OVR 60+ Live',pct:33.00,rarity:'live'},
     {grade:'OVR 60+ Season',pct:66.00,rarity:'season'},
   ]},
-  {id:'pos-adv',name:'Position Selective Advanced Player Pack',icon:'📐',category:'pack',tags:['Position Specific','OVR 60+'],notes:'Filters to OVR 60+ cards at selected position.',rates:[
+  {id:'pos-adv',name:'Position Selective Advanced Player Pack',icon:'📐',color:'impact',category:'pack',tags:['Position Specific','OVR 60+'],notes:'Filters to OVR 60+ cards at selected position.',rates:[
     {grade:'Impact',pct:1.00,rarity:'impact'},
     {grade:'OVR 60+ Live',pct:33.00,rarity:'live'},
     {grade:'OVR 60+ Season',pct:66.00,rarity:'season'},
   ]},
-  {id:'trade-prime',name:'Trade Prime Pack',icon:'🔄',category:'pack',tags:['Trade','Prime','Guaranteed'],notes:'',rates:[
+  {id:'trade-prime',name:'Trade Prime Pack',icon:'🔄',color:'prime',category:'pack',tags:['Trade','Prime','Guaranteed'],notes:'',rates:[
     {grade:'Prime',pct:100,rarity:'prime'},
   ]},
-  {id:'trade-fa-prime',name:'Trade FA Prime Pack',icon:'🔁',category:'pack',tags:['Trade','FA','Prime','Guaranteed'],notes:'',rates:[
+  {id:'trade-fa-prime',name:'Trade FA Prime Pack',icon:'🔁',color:'prime',category:'pack',tags:['Trade','FA','Prime','Guaranteed'],notes:'',rates:[
     {grade:'FA Prime',pct:100,rarity:'prime'},
   ]},
-  {id:'double-sig',name:'Double Signature Pack',icon:'✌️',category:'pack',tags:['Signature','x2'],
+  {id:'double-sig',name:'Double Signature Pack',icon:'✌️',color:'sig',category:'pack',tags:['Signature','x2'],
     notes:'Same rate as Team Selective Double Signature Pack. Pull 1 Sig, then a second Sig excluding cards matching your first pull.',rates:[
     {grade:'Signature (Pull 1)',pct:100,rarity:'sig'},
     {grade:'Signature (Pull 2 — unique player)',pct:100,rarity:'sig'},
   ]},
-  {id:'double-prime',name:'Double Prime Pack',icon:'2️⃣',category:'pack',tags:['Prime','x2'],
+  {id:'double-prime',name:'Double Prime Pack',icon:'2️⃣',color:'prime',category:'pack',tags:['Prime','x2'],
     notes:'Same as Team Selective Double Prime Pack. Two unique Prime pulls.',rates:[
     {grade:'Prime (Pull 1)',pct:100,rarity:'prime'},
     {grade:'Prime (Pull 2 — unique player)',pct:100,rarity:'prime'},
   ]},
-  {id:'triple-sig',name:'Triple Signature Pack',icon:'3️⃣',category:'pack',tags:['Signature','x3','All Teams'],
+  {id:'triple-sig',name:'Triple Signature Pack',icon:'3️⃣',color:'sig',category:'pack',tags:['Signature','x3','All Teams'],
     notes:'Available for all 30 teams. Three Signature pulls, each excluding previously pulled players.',rates:[
     {grade:'Signature (Pull 1)',pct:100,rarity:'sig'},
     {grade:'Signature (Pull 2)',pct:100,rarity:'sig'},
     {grade:'Signature (Pull 3)',pct:100,rarity:'sig'},
   ]},
-  {id:'triple-prime',name:'Triple Prime Pack',icon:'🔺',category:'pack',tags:['Prime','x3','All Teams'],
+  {id:'triple-prime',name:'Triple Prime Pack',icon:'🔺',color:'prime',category:'pack',tags:['Prime','x3','All Teams'],
     notes:'Available for all 30 teams. Three Prime pulls, each excluding previously pulled players.',rates:[
     {grade:'Prime (Pull 1)',pct:100,rarity:'prime'},
     {grade:'Prime (Pull 2)',pct:100,rarity:'prime'},
     {grade:'Prime (Pull 3)',pct:100,rarity:'prime'},
   ]},
-  {id:'excl-sig',name:'Exclusive Signature Pack',icon:'👑',category:'pack',tags:['Signature','Exclusive','No Dupes'],
+  {id:'excl-sig',name:'Exclusive Signature Pack',icon:'👑',color:'sig',category:'pack',tags:['Signature','Exclusive','No Dupes'],
     notes:'Only offers cards you do NOT already own — equal rate across remaining pool.',rates:[
     {grade:'Signature (unowned)',pct:100,rarity:'sig'},
   ]},
-  {id:'excl-prime',name:'Exclusive Prime Pack',icon:'🥇',category:'pack',tags:['Prime','Exclusive','No Dupes'],
+  {id:'excl-prime',name:'Exclusive Prime Pack',icon:'🥇',color:'prime',category:'pack',tags:['Prime','Exclusive','No Dupes'],
     notes:'Only offers Prime cards you do NOT already own.',rates:[
     {grade:'Prime (unowned)',pct:100,rarity:'prime'},
   ]},
   /* FA Packs */
-  {id:'fa-sig',name:'FA Signature Pack',icon:'🌟',category:'pack',tags:['FA','Signature','Guaranteed'],
+  {id:'fa-sig',name:'FA Signature Pack',icon:'🌟',color:'sig',category:'pack',tags:['FA','Signature','Guaranteed'],
     notes:'Same rate as Position Selective FA Signature Pack and [2025 FA] FA SIGNATURE PACK.',rates:[
     {grade:'FA Signature',pct:100,rarity:'sig'},
   ]},
-  {id:'fa-prime',name:'FA Prime Pack',icon:'🌠',category:'pack',tags:['FA','Prime','Guaranteed'],
+  {id:'fa-prime',name:'FA Prime Pack',icon:'🌠',color:'prime',category:'pack',tags:['FA','Prime','Guaranteed'],
     notes:'Same rate as Position Selective FA Prime Pack and Tokyo Series FA Prime Pack.',rates:[
     {grade:'FA Prime',pct:100,rarity:'prime'},
   ]},
-  {id:'fa-impact',name:'FA Impact Pack',icon:'💥',category:'pack',tags:['FA','Impact','Guaranteed'],
+  {id:'fa-impact',name:'FA Impact Pack',icon:'💥',color:'impact',category:'pack',tags:['FA','Impact','Guaranteed'],
     notes:'Same rate as Position Selective FA Impact Pack.',rates:[
     {grade:'FA Impact',pct:100,rarity:'impact'},
   ]},
-  {id:'fa-sig-prime',name:'FA Signature/Prime Pack',icon:'🎖️',category:'pack',tags:['FA','Signature','Prime','Combo'],
+  {id:'fa-sig-prime',name:'FA Signature/Prime Pack',icon:'🎖️',color:'sig',category:'pack',tags:['FA','Signature','Prime','Combo'],
     notes:'Same rates as Position Selective and (Team) FA Player Pack. Also matches [2025 FA] FA SIG/PRIME PACK.',rates:[
     {grade:'FA Signature',pct:20.00,rarity:'sig'},
     {grade:'FA Prime',pct:80.00,rarity:'prime'},
   ]},
-  {id:'fa-sig-prime-impact',name:'FA Sig/Prime/Impact Pack',icon:'🏅',category:'pack',tags:['FA','Signature','Prime','Impact','Combo'],
+  {id:'fa-sig-prime-impact',name:'FA Sig/Prime/Impact Pack',icon:'🏅',color:'sig',category:'pack',tags:['FA','Signature','Prime','Impact','Combo'],
     notes:'Same as Position Selective FA Sig/Prime/Impact Pack and 2024 Postseason FA Pack.',rates:[
     {grade:'FA Signature',pct:5.00,rarity:'sig'},
     {grade:'FA Prime',pct:30.00,rarity:'prime'},
     {grade:'FA Impact',pct:65.00,rarity:'impact'},
   ]},
   /* Preferred Team Packs */
-  {id:'pref-b-season',name:'Pref. Team Season B Pack',icon:'📦',category:'pack',tags:['Team Specific','Season B'],
+  {id:'pref-b-season',name:'Pref. Team Season B Pack',icon:'📦',color:'season',category:'pack',tags:['Team Specific','Season B'],
     notes:'Acquires 1 Grade B Season Player from your preferred team.',rates:[
     {grade:'Grade B Season',pct:100,rarity:'season'},
   ]},
-  {id:'pref-b-live',name:'Pref. Team Live B Pack',icon:'📦',category:'pack',tags:['Team Specific','Live B'],
+  {id:'pref-b-live',name:'Pref. Team Live B Pack',icon:'📦',color:'live',category:'pack',tags:['Team Specific','Live B'],
     notes:'Acquires 1 Grade B Live Player from your preferred team.',rates:[
     {grade:'Grade B Live',pct:100,rarity:'live'},
   ]},
-  {id:'pref-a-season',name:'Pref. Team Season A Pack',icon:'📦',category:'pack',tags:['Team Specific','Season A'],
+  {id:'pref-a-season',name:'Pref. Team Season A Pack',icon:'📦',color:'season',category:'pack',tags:['Team Specific','Season A'],
     notes:'Acquires 1 Grade A Season Player from your preferred team.',rates:[
     {grade:'Grade A Season',pct:100,rarity:'season'},
   ]},
-  {id:'pref-a-live',name:'Pref. Team Live A Pack',icon:'📦',category:'pack',tags:['Team Specific','Live A'],
+  {id:'pref-a-live',name:'Pref. Team Live A Pack',icon:'📦',color:'live',category:'pack',tags:['Team Specific','Live A'],
     notes:'Acquires 1 Grade A Live Player from your preferred team.',rates:[
     {grade:'Grade A Live',pct:100,rarity:'live'},
   ]},
-  {id:'league-focus',name:'League Selective Focus Pack',icon:'🏆',category:'pack',tags:['League Specific','Focus','Guaranteed'],
+  {id:'league-focus',name:'League Selective Focus Pack',icon:'🏆',color:'prime',category:'pack',tags:['League Specific','Focus','Guaranteed'],
     notes:'Applies to League Selective Focus (Prime) Pack and League Selective Focus (Impact) Pack. Select a league and get a Focus Player from that league\'s pool.',rates:[
     {grade:'Focus Player',pct:100,rarity:'prime'},
   ]},
@@ -679,7 +767,7 @@ function buildCard(s) {
 
   const notesHtml = s.notes ? `<div class="sc-notes">${s.notes}</div>` : '';
 
-  return `<div class="scout-card" data-id="${s.id}" data-cat="${s.category}" data-name="${s.name.toLowerCase()}" data-tags="${s.tags.join(' ').toLowerCase()}">
+  return `<div class="scout-card card-${s.color||'mixed'}" data-id="${s.id}" data-cat="${s.category}" data-name="${s.name.toLowerCase()}" data-tags="${s.tags.join(' ').toLowerCase()}">
     <div class="sc-head" onclick="toggleCard('${s.id}')">
       <div class="sc-icon">${s.icon}</div>
       <div class="sc-info">
