@@ -88,10 +88,70 @@ nav{display:flex;gap:2px}
 .cf{display:flex;flex-direction:column}
 .ca{flex:0 0 62%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .ab{position:absolute;inset:0;overflow:hidden}
-.ab::before{content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
-  background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);
-  animation:sheen 4s linear infinite}
+
+/* Base sheen removed — each rarity defines its own color below */
 @keyframes sheen{from{transform:translateX(-100%)skewX(-15deg)}to{transform:translateX(400%)skewX(-15deg)}}
+@keyframes sheen-slow{from{transform:translateX(-100%)skewX(-15deg)}to{transform:translateX(400%)skewX(-15deg)}}
+
+/* ── Per-rarity colored sheens ── */
+/* HOF — rich gold, handled separately with extra layers below */
+.r-HOF .ab::before{content:'';position:absolute;top:0;bottom:0;left:-60%;width:45%;
+  background:linear-gradient(to right,transparent,rgba(255,215,80,.55),rgba(255,245,150,.7),rgba(255,215,80,.55),transparent);
+  animation:sheen-slow 2.8s linear infinite;z-index:4}
+
+/* Sig Black — silver-chrome */
+.r-SIGNATURE_BLACK .ab::before,.r-FA_SIGNATURE_BLACK .ab::before,.r-WBC_SIGNATURE_BLACK .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(220,220,230,.18),rgba(255,255,255,.38),rgba(220,220,230,.18),transparent);
+  animation:sheen 3.5s linear infinite;z-index:4}
+
+/* Signature — pink-purple */
+.r-SIGNATURE .ab::before,.r-FA_SIGNATURE .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(236,72,153,.2),rgba(249,168,212,.45),rgba(236,72,153,.2),transparent);
+  animation:sheen 4s linear infinite;z-index:4}
+
+/* WBC Signature — sky blue */
+.r-WBC_SIGNATURE .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(56,189,248,.2),rgba(186,230,253,.45),rgba(56,189,248,.2),transparent);
+  animation:sheen 4s linear infinite;z-index:4}
+
+/* Moment — emerald green */
+.r-MOMENT .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(16,185,129,.2),rgba(110,231,183,.45),rgba(16,185,129,.2),transparent);
+  animation:sheen 4s linear infinite;z-index:4}
+
+/* Prime — blue */
+.r-PRIME .ab::before,.r-FA_PRIME .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(59,130,246,.2),rgba(147,197,253,.42),rgba(59,130,246,.2),transparent);
+  animation:sheen 4.5s linear infinite;z-index:4}
+
+/* WBC Prime — sky blue (lighter) */
+.r-WBC_PRIME .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(56,189,248,.18),rgba(186,230,253,.38),rgba(56,189,248,.18),transparent);
+  animation:sheen 4.5s linear infinite;z-index:4}
+
+/* Impact — amber/gold */
+.r-IMPACT .ab::before,.r-FA_IMPACT .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(234,179,8,.2),rgba(253,230,138,.42),rgba(234,179,8,.2),transparent);
+  animation:sheen 5s linear infinite;z-index:4}
+
+/* Season — cool gray */
+.r-SEASON .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(156,163,175,.1),rgba(209,213,219,.22),rgba(156,163,175,.1),transparent);
+  animation:sheen 6s linear infinite;z-index:4}
+
+/* Live — very subtle gray */
+.r-LIVE .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(156,163,175,.07),rgba(229,231,235,.16),rgba(156,163,175,.07),transparent);
+  animation:sheen 7s linear infinite;z-index:4}
 .ai{position:relative;z-index:2;font-family:var(--fd);font-size:4.5rem;letter-spacing:.02em;opacity:.18;user-select:none;pointer-events:none;line-height:1}
 .ao{position:absolute;top:9px;left:11px;z-index:3;font-family:var(--fd);font-size:2rem;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.9);letter-spacing:.02em}
 .aps{position:absolute;top:9px;right:9px;z-index:3;display:flex;flex-direction:column;gap:2px;align-items:flex-end}
@@ -126,13 +186,89 @@ nav{display:flex;gap:2px}
 .hint{font-family:var(--fu);font-size:.58rem;color:var(--muted);text-align:center;margin-top:auto;padding-top:8px;opacity:.45}
 
 /* ===== RARITY BACKGROUNDS ===== */
-/* HOF */
-.r-HOF .face.cf{border:2px solid rgba(244,185,66,.75);box-shadow:0 0 30px rgba(244,185,66,.4)}
-.r-HOF .ab{background:radial-gradient(circle at 70% 30%,#7a3e00,#1a0e00 70%)}
-.r-HOF .ab::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 60% 40%,rgba(244,185,66,.65),transparent 60%)}
-.r-HOF .ao{color:var(--hof)}
-.r-HOF .crl{color:var(--hof)}
+
+/* ══════════════════════════════════════════
+   HOF — Premium gold treatment
+   Multiple layers: animated border, rotating
+   shimmer, pulsing outer glow, sparkle dots
+══════════════════════════════════════════ */
+@keyframes hofGlow{
+  0%,100%{box-shadow:0 0 22px rgba(244,185,66,.5),0 0 50px rgba(244,185,66,.25),inset 0 0 18px rgba(244,185,66,.08)}
+  50%{box-shadow:0 0 35px rgba(244,185,66,.8),0 0 75px rgba(244,185,66,.45),0 0 110px rgba(255,200,50,.2),inset 0 0 28px rgba(244,185,66,.15)}
+}
+@keyframes hofBorder{
+  0%{border-color:rgba(244,185,66,.6)}
+  25%{border-color:rgba(255,236,100,.95)}
+  50%{border-color:rgba(244,185,66,.6)}
+  75%{border-color:rgba(255,210,60,.9)}
+  100%{border-color:rgba(244,185,66,.6)}
+}
+@keyframes hofRotate{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+@keyframes hofPulse{
+  0%,100%{opacity:.55;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.06)}
+}
+@keyframes hofSparkle{
+  0%,100%{opacity:0;transform:scale(0)}
+  50%{opacity:1;transform:scale(1)}
+}
+
+.r-HOF .flip-card,.r-HOF{position:relative}
+
+/* Animated outer glow on the card wrapper */
+.r-HOF .face.cf{
+  border:2px solid rgba(244,185,66,.7);
+  animation:hofBorder 3s ease-in-out infinite, hofGlow 3s ease-in-out infinite;
+}
+
+/* Dark amber base */
+.r-HOF .ab{background:radial-gradient(circle at 65% 25%,#8b4500,#3a1800 55%,#0f0800 100%)}
+
+/* Main gold radial bloom */
+.r-HOF .ab::after{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 70% at 60% 35%,rgba(255,200,50,.75),rgba(244,155,10,.3) 45%,transparent 70%),
+    radial-gradient(ellipse 40% 40% at 30% 70%,rgba(244,185,66,.3),transparent 60%);
+  animation:hofPulse 3s ease-in-out infinite;
+}
+
+/* Rotating diagonal gold shimmer strip (extra layer via a pseudo on .ca) */
+.r-HOF .ca::after{
+  content:'';position:absolute;inset:-50%;width:200%;height:200%;z-index:3;
+  background:conic-gradient(
+    from 0deg,
+    transparent 0deg, transparent 75deg,
+    rgba(255,230,80,.18) 80deg, rgba(255,245,150,.55) 90deg, rgba(255,230,80,.18) 100deg,
+    transparent 105deg, transparent 255deg,
+    rgba(255,220,60,.1) 260deg, rgba(255,240,120,.28) 270deg, rgba(255,220,60,.1) 280deg,
+    transparent 285deg
+  );
+  animation:hofRotate 6s linear infinite;
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
+
+/* Sparkle dots */
+.r-HOF .ca::before{
+  content:'✦ ✦ ✦';
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  z-index:5;font-size:.55rem;letter-spacing:6px;
+  color:rgba(255,230,80,.9);
+  text-shadow:0 0 8px rgba(255,200,50,.8),0 0 18px rgba(255,180,30,.5);
+  animation:hofSparkle 2.5s ease-in-out infinite;
+  pointer-events:none;white-space:nowrap;
+}
+
+.r-HOF .ao{color:#ffe066;text-shadow:0 0 12px rgba(255,200,50,.9),0 2px 8px rgba(0,0,0,.9)}
+.r-HOF .crl{color:var(--hof);text-shadow:0 0 8px rgba(244,185,66,.5)}
 .r-HOF .sf{background:linear-gradient(to right,#f4b942,#fde68a)}
+/* Gold border on card back too */
+.r-HOF .cbk{border-color:rgba(244,185,66,.35)}
+.r-HOF .bh{border-color:rgba(244,185,66,.2)}
 /* SIGNATURE_BLACK / FA_SIGNATURE_BLACK / WBC_SIGNATURE_BLACK */
 .r-SIGNATURE_BLACK .face.cf,.r-FA_SIGNATURE_BLACK .face.cf,.r-WBC_SIGNATURE_BLACK .face.cf{border:2px solid rgba(192,192,192,.65);box-shadow:0 0 28px rgba(192,192,192,.3)}
 .r-SIGNATURE_BLACK .ab,.r-FA_SIGNATURE_BLACK .ab,.r-WBC_SIGNATURE_BLACK .ab{background:radial-gradient(circle at 70% 30%,#1e1e1e,#050505 70%)}
@@ -197,14 +333,110 @@ nav{display:flex;gap:2px}
 .r-LIVE .crl{color:#9ca3af}
 .r-LIVE .sf{background:linear-gradient(to right,#9ca3af,#d1d5db)}
 
+/* When real card photo is present — keep rarity tint very subtle so photo shows clearly */
+.has-photo .ab{background-size:600% 200%!important;background-repeat:no-repeat!important}
+.has-photo .ab::after{opacity:.15!important}
+
+/* HAMBURGER */
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:40px;height:40px;padding:8px;border-radius:8px;cursor:pointer;
+  background:rgba(255,255,255,.06);border:1px solid var(--border);flex-shrink:0}
+.ham span{display:block;height:2px;background:var(--text);border-radius:2px;transition:transform .3s,opacity .3s,width .3s}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0;width:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* MOBILE NAV DRAWER */
+.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;
+  background:rgba(5,8,16,.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  flex-direction:column;padding:12px 16px 20px}
+.mob-nav.open{display:flex}
+.mob-nav a{font-family:var(--fu);font-size:1.1rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);padding:13px 12px;border-radius:8px;
+  transition:color .2s,background .2s;border-bottom:1px solid var(--border)}
+.mob-nav a:last-child{border-bottom:none}
+.mob-nav a:hover,.mob-nav a.active{color:var(--text);background:rgba(255,255,255,.06)}
+.mob-nav a.active{color:var(--blue)}
+
+/* FILTER TOGGLE (mobile) */
+.filter-toggle{display:none;width:100%;font-family:var(--fu);font-size:.85rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;background:var(--surface);
+  border:1px solid var(--border);color:var(--text);padding:12px 16px;border-radius:10px;
+  cursor:pointer;text-align:left;align-items:center;justify-content:space-between;
+  transition:background .2s;margin-bottom:10px}
+.filter-toggle .ft-arrow{transition:transform .3s;font-size:.7rem}
+.filter-toggle.open .ft-arrow{transform:rotate(180deg)}
+
 /* FOOTER */
 footer{position:relative;z-index:1;border-top:1px solid var(--border);background:var(--surface)}
-.fi3{max-width:1280px;margin:0 auto;padding:28px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.fi3{max-width:1280px;margin:0 auto;padding:28px 24px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;flex-wrap:wrap}
 .fl2{font-family:var(--fd);font-size:1.1rem;letter-spacing:.08em;color:var(--muted)}
 .fc{font-family:var(--fu);font-size:.72rem;color:rgba(232,236,245,.25)}
 
-@media(max-width:900px){nav{display:none}.pg{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}}
-@media(max-width:600px){.frow{flex-direction:column}}
+/* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media(max-width:900px){
+  nav{display:none}
+  .ham{display:flex}
+  .pg{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+}
+
+/* Mobile */
+@media(max-width:600px){
+  /* layout */
+  .nav-inner{padding:0 14px}
+  .ph{padding:24px 14px 16px}
+  .ph-title{font-size:2rem}
+  .fw{padding:0 14px 18px}
+  .pg{padding:0 14px 80px;grid-template-columns:repeat(2,1fr);gap:10px}
+
+  /* prevent iOS auto-zoom on inputs */
+  .fi,.fs{font-size:16px!important}
+
+  /* filter panel */
+  .filter-toggle{display:flex}
+  .fp{padding:14px;border-radius:10px}
+  .fp.collapsed{display:none}
+  .frow{flex-direction:column;gap:8px}
+  .fg,.fg.wide,.fg.narrow{flex:1 1 100%;min-width:0;width:100%}
+  .btn-clear{width:100%;height:44px;font-size:.85rem}
+
+  /* results bar */
+  .rb{padding:0 14px 12px;flex-direction:column;align-items:flex-start;gap:8px}
+  .legend{gap:6px}
+  .li{font-size:.55rem}
+  .ld{width:7px;height:7px}
+
+  /* cards — slightly larger tap target */
+  .flip-card{cursor:pointer}
+  .ao{font-size:1.6rem}
+  .pb{font-size:.5rem;padding:2px 5px}
+  .rl-badge,.emb-badge,.wbc-badge,.hof-crown,.live-badge{font-size:.45rem;padding:2px 5px}
+  .ci{padding:7px 8px}
+  .cn{font-size:.85rem}
+  .cm{font-size:.62rem;gap:3px}
+
+  /* card back */
+  .cbk{padding:10px}
+  .bn{font-size:.9rem}
+  .bs{font-size:.58rem}
+  .sn{font-size:.58rem}
+  .sv{font-size:.8rem}
+  .hint{font-size:.52rem}
+
+  /* footer */
+  .fi3{flex-direction:column;align-items:flex-start;padding:20px 14px;gap:8px}
+  .fc{font-size:.65rem}
+}
+
+/* Very small phones */
+@media(max-width:360px){
+  .pg{grid-template-columns:repeat(2,1fr);gap:8px}
+  .ao{font-size:1.4rem}
+}
 </style>
 </head>
 <body>
@@ -220,8 +452,18 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
       <a href="updates.html" class="nl">Updates</a>
       <a href="guide.html" class="nl">Guide</a>
     </nav>
+    <button class="ham" id="ham" aria-label="Menu" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+<div class="mob-nav" id="mob-nav">
+  <a href="index.html">Home</a>
+  <a href="scouts.html">Scouts</a>
+  <a href="players.html" class="active">Players</a>
+  <a href="updates.html">Updates</a>
+  <a href="guide.html">Guide</a>
+</div>
 
 <div class="ph">
   <h1 class="ph-title">Player <span>Index</span></h1>
@@ -229,7 +471,11 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
 </div>
 
 <div class="fw">
-  <div class="fp">
+  <button class="filter-toggle" id="filter-toggle" onclick="toggleFilters()">
+    <span>⚙ Filters &amp; Search</span>
+    <span class="ft-arrow">▼</span>
+  </button>
+  <div class="fp" id="fp">
     <div class="frow">
       <div class="fg wide"><label class="fl">Search</label><input class="fi" id="q" placeholder="Player name or team…" oninput="render()"/></div>
       <div class="fg"><label class="fl">League</label>
@@ -389,6 +635,73 @@ const EMBLEM_COLORS = {
   'Up the Middle':'#14b8a6','Power Hitter':'#dc2626','5-Tool Player':'#22c55e',
   'Swingman':'#8b5cf6','Hit Machine':'#f97316','Bullpen Ace':'#1d4ed8',
   '2025 Performer Trio':'#d946ef','Free Agent':'#475569','Commander':'#1e3a5f',
+};
+
+/* ========== SPRITE MAP ========== */
+// Each sprite sheet is a 6-col × 2-row grid
+// background-size: 600% 200%
+// bgX = (col/5)*100%, bgY = row*100%
+const SPRITES = {
+  1:{src:'../uploads/1772595938231_image.png',bx:0,by:0},
+  2:{src:'../uploads/1772595938231_image.png',bx:20,by:0},
+  3:{src:'../uploads/1772595938231_image.png',bx:40,by:0},
+  4:{src:'../uploads/1772595938231_image.png',bx:60,by:0},
+  5:{src:'../uploads/1772595938231_image.png',bx:80,by:0},
+  6:{src:'../uploads/1772595938231_image.png',bx:100,by:0},
+  7:{src:'../uploads/1772595938231_image.png',bx:0,by:100},
+  8:{src:'../uploads/1772595938231_image.png',bx:20,by:100},
+  9:{src:'../uploads/1772595938231_image.png',bx:40,by:100},
+  10:{src:'../uploads/1772595938231_image.png',bx:60,by:100},
+  11:{src:'../uploads/1772595938231_image.png',bx:80,by:100},
+  12:{src:'../uploads/1772595938231_image.png',bx:100,by:100},
+  13:{src:'../uploads/1772595956685_image.png',bx:0,by:0},
+  14:{src:'../uploads/1772595956685_image.png',bx:20,by:0},
+  15:{src:'../uploads/1772595956685_image.png',bx:40,by:0},
+  16:{src:'../uploads/1772595956685_image.png',bx:60,by:0},
+  17:{src:'../uploads/1772595956685_image.png',bx:80,by:0},
+  18:{src:'../uploads/1772595956685_image.png',bx:100,by:0},
+  19:{src:'../uploads/1772595956685_image.png',bx:0,by:100},
+  20:{src:'../uploads/1772595956685_image.png',bx:20,by:100},
+  21:{src:'../uploads/1772595956685_image.png',bx:40,by:100},
+  22:{src:'../uploads/1772595956685_image.png',bx:60,by:100},
+  23:{src:'../uploads/1772595956685_image.png',bx:80,by:100},
+  24:{src:'../uploads/1772595956685_image.png',bx:100,by:100},
+  25:{src:'../uploads/1772596288222_image.png',bx:0,by:0},
+  26:{src:'../uploads/1772596288222_image.png',bx:20,by:0},
+  27:{src:'../uploads/1772596288222_image.png',bx:40,by:0},
+  28:{src:'../uploads/1772596288222_image.png',bx:60,by:0},
+  29:{src:'../uploads/1772596288222_image.png',bx:80,by:0},
+  30:{src:'../uploads/1772596288222_image.png',bx:100,by:0},
+  31:{src:'../uploads/1772596288222_image.png',bx:0,by:100},
+  32:{src:'../uploads/1772596288222_image.png',bx:20,by:100},
+  33:{src:'../uploads/1772596288222_image.png',bx:40,by:100},
+  34:{src:'../uploads/1772596288222_image.png',bx:60,by:100},
+  35:{src:'../uploads/1772596288222_image.png',bx:80,by:100},
+  36:{src:'../uploads/1772596288222_image.png',bx:100,by:100},
+  37:{src:'../uploads/1772596330639_image.png',bx:0,by:0},
+  38:{src:'../uploads/1772596330639_image.png',bx:20,by:0},
+  39:{src:'../uploads/1772596330639_image.png',bx:40,by:0},
+  40:{src:'../uploads/1772596330639_image.png',bx:60,by:0},
+  41:{src:'../uploads/1772596330639_image.png',bx:80,by:0},
+  42:{src:'../uploads/1772596330639_image.png',bx:100,by:0},
+  43:{src:'../uploads/1772596330639_image.png',bx:0,by:100},
+  44:{src:'../uploads/1772596330639_image.png',bx:20,by:100},
+  45:{src:'../uploads/1772596330639_image.png',bx:40,by:100},
+  46:{src:'../uploads/1772596330639_image.png',bx:60,by:100},
+  47:{src:'../uploads/1772596330639_image.png',bx:80,by:100},
+  48:{src:'../uploads/1772596330639_image.png',bx:100,by:100},
+  49:{src:'../uploads/1772596343256_image.png',bx:0,by:0},
+  50:{src:'../uploads/1772596343256_image.png',bx:20,by:0},
+  51:{src:'../uploads/1772596343256_image.png',bx:40,by:0},
+  52:{src:'../uploads/1772596343256_image.png',bx:60,by:0},
+  53:{src:'../uploads/1772596343256_image.png',bx:80,by:0},
+  54:{src:'../uploads/1772596343256_image.png',bx:100,by:0},
+  55:{src:'../uploads/1772596343256_image.png',bx:0,by:100},
+  56:{src:'../uploads/1772596343256_image.png',bx:20,by:100},
+  57:{src:'../uploads/1772596343256_image.png',bx:40,by:100},
+  58:{src:'../uploads/1772596343256_image.png',bx:60,by:100},
+  59:{src:'../uploads/1772596343256_image.png',bx:80,by:100},
+  60:{src:'../uploads/1772596343256_image.png',bx:100,by:100},
 };
 
 const players = [
@@ -613,6 +926,13 @@ function buildCard(p) {
   const wbc = isWBC(r);
   const fa  = isFA(r);
 
+  // Sprite / photo
+  const sprite = SPRITES[p.id];
+  const spriteStyle = sprite
+    ? `background-image:url('${sprite.src}');background-position:${sprite.bx}% ${sprite.by}%;`
+    : '';
+  const hasPhotoClass = sprite ? ' has-photo' : '';
+
   // badges in art area
   let extraBadges = '';
   if (p.rl) extraBadges += `<div class="rl-badge">⚡ Rival Link</div>`;
@@ -641,11 +961,11 @@ function buildCard(p) {
   const wrap = document.createElement('div');
   wrap.className = `flip-card r-${r}`;
   wrap.innerHTML = `
-    <div class="fi2" id="fc-${p.id}" onclick="flip(this,${p.id})">
+    <div class="fi2${hasPhotoClass}" id="fc-${p.id}" onclick="flip(this,${p.id})">
       <div class="face cf">
         <div class="ca">
-          <div class="ab"></div>
-          <span class="ai">${ini}</span>
+          <div class="ab" style="${spriteStyle}"></div>
+          <span class="ai" style="${sprite ? 'display:none' : ''}">${ini}</span>
           <div class="ao">${p.ovr}</div>
           <div class="aps">${posHTML}</div>
           ${extraBadges}
@@ -693,6 +1013,29 @@ function flip(el, id) {
   }
 }
 
+/* ========== MOBILE UI ========== */
+function toggleNav() {
+  const ham = document.getElementById('ham');
+  const nav = document.getElementById('mob-nav');
+  ham.classList.toggle('open');
+  nav.classList.toggle('open');
+}
+
+function toggleFilters() {
+  const btn = document.getElementById('filter-toggle');
+  const fp  = document.getElementById('fp');
+  btn.classList.toggle('open');
+  fp.classList.toggle('collapsed');
+}
+
+// On mobile, start with filters collapsed
+function initMobile() {
+  if (window.innerWidth <= 600) {
+    const fp  = document.getElementById('fp');
+    fp.classList.add('collapsed');
+  }
+}
+
 /* ========== INIT ========== */
 (function init() {
   // Populate team dropdown initially (all teams)
@@ -700,6 +1043,7 @@ function flip(el, id) {
   Object.entries(TEAMS).sort((a,b)=>a[1].c.localeCompare(b[1].c)).forEach(([k,t])=>{
     td.innerHTML += `<option value="${k}">${k} – ${t.c} ${t.n}</option>`;
   });
+  initMobile();
   render();
 })();
 </script>
