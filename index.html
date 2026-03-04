@@ -402,15 +402,118 @@ footer {
 .footer-links a:hover { color: var(--text); }
 .footer-copy { font-family: var(--font-ui); font-size: .72rem; color: rgba(232,236,245,.25); }
 
+/* HAMBURGER */
+.ham {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  width: 40px; height: 40px; padding: 8px; border-radius: 8px; cursor: pointer;
+  background: rgba(255,255,255,.06); border: 1px solid var(--border); flex-shrink: 0;
+  transition: background .2s;
+}
+.ham:hover { background: rgba(255,255,255,.1); }
+.ham span {
+  display: block; height: 2px; background: var(--text); border-radius: 2px;
+  transition: transform .3s, opacity .3s, width .3s;
+}
+.ham.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.ham.open span:nth-child(2) { opacity: 0; width: 0; }
+.ham.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* MOBILE NAV DRAWER */
+.mob-nav {
+  display: none; position: fixed; top: 60px; left: 0; right: 0; z-index: 99;
+  background: rgba(5,8,16,.97); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  flex-direction: column; padding: 12px 16px 20px;
+}
+.mob-nav.open { display: flex; }
+.mob-nav a {
+  font-family: var(--font-ui); font-size: 1.1rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); padding: 14px 12px; border-radius: 8px;
+  border-bottom: 1px solid var(--border); transition: color .2s, background .2s;
+}
+.mob-nav a:last-child { border-bottom: none; }
+.mob-nav a:hover, .mob-nav a.active { color: var(--text); background: rgba(255,255,255,.06); }
+.mob-nav a.active { color: var(--blue); }
+
 /* RESPONSIVE */
-@media (max-width: 768px) {
-  .stats-inner { grid-template-columns: 1fr; }
-  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
-  .stat-item:last-child { border-bottom: none; }
-  .hero-title { font-size: 3rem; }
-  .section-header { flex-direction: column; gap: 4px; }
+@media (max-width: 900px) {
   nav { display: none; }
-  .featured-title { font-size: 1.8rem; }
+  .ham { display: flex; }
+}
+
+@media (max-width: 768px) {
+  /* Nav */
+  .nav-inner { padding: 0 16px; }
+
+  /* Hero */
+  .hero { min-height: 70vh; }
+  .hero-content { padding: 0 16px 56px; }
+  .hero-title { font-size: clamp(2.8rem, 12vw, 4.5rem); }
+  .hero-sub { font-size: 1rem; margin-bottom: 28px; max-width: 100%; }
+  .hero-actions { gap: 10px; }
+  .btn-primary, .btn-secondary { padding: 12px 20px; font-size: .82rem; }
+
+  /* Stats bar — stack vertically */
+  .stats-inner { grid-template-columns: 1fr; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 18px 20px; }
+  .stat-item:last-child { border-bottom: none; }
+
+  /* Sections */
+  .section { padding: 44px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 24px; }
+  .section-title { font-size: 1.7rem; }
+
+  /* Featured event */
+  .featured-event { min-height: 260px; margin-bottom: 44px; }
+  .featured-content { padding: 24px 20px; }
+  .featured-title { font-size: 1.6rem; }
+  .featured-desc { font-size: .85rem; margin-bottom: 16px; }
+
+  /* Events grid — 1 column */
+  .events-grid { grid-template-columns: 1fr; gap: 12px; }
+
+  /* Quick nav — 2 col on mid mobile */
+  .quick-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .quick-tile { padding: 18px 16px; gap: 10px; }
+  .quick-icon { width: 44px; height: 44px; font-size: 1.5rem; }
+  .quick-label { font-size: 1rem; }
+  .quick-desc { font-size: .75rem; }
+
+  /* News items */
+  .news-item { padding: 14px 16px; gap: 10px; }
+  .news-date { display: none; }
+
+  /* Footer */
+  .footer-inner { flex-direction: column; align-items: flex-start; padding: 24px 16px; gap: 12px; }
+  .footer-links { flex-wrap: wrap; gap: 12px; }
+}
+
+@media (max-width: 480px) {
+  /* Hero */
+  .hero-content { padding: 0 16px 48px; }
+  .hero-eyebrow { font-size: .68rem; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .btn-primary, .btn-secondary { text-align: center; padding: 14px 20px; }
+
+  /* Stats */
+  .stat-icon { width: 38px; height: 38px; font-size: 1.2rem; }
+  .stat-value { font-size: 1.3rem; }
+
+  /* Quick nav — single column on small phones */
+  .quick-grid { grid-template-columns: 1fr; }
+
+  /* Events */
+  .featured-title { font-size: 1.3rem; }
+  .featured-desc { display: none; }
+
+  /* News */
+  .news-tag { display: none; }
+  .news-title { font-size: .85rem; }
+
+  /* Footer */
+  .footer-links { gap: 10px; }
+  .footer-links a { font-size: .7rem; }
 }
 </style>
 </head>
@@ -430,8 +533,18 @@ footer {
       <a href="updates.html" class="nav-link">Updates</a>
       <a href="guide.html"   class="nav-link">Guide</a>
     </nav>
+    <button class="ham" id="ham" aria-label="Open menu" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+<div class="mob-nav" id="mob-nav">
+  <a href="index.html" class="active">Home</a>
+  <a href="scouts.html">Scouts</a>
+  <a href="players.html">Players</a>
+  <a href="updates.html">Updates</a>
+  <a href="guide.html">Guide</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -460,7 +573,7 @@ footer {
       <div>
         <div class="stat-label">Steam Players</div>
         <div class="stat-value blue" id="playerCount">Loading…</div>
-        <div class="stat-meta">Live data</div>
+        <div class="stat-meta" id="playerMeta">Live data</div>
       </div>
     </div>
     <div class="stat-item">
@@ -706,18 +819,65 @@ footer {
 </footer>
 
 <script>
+function toggleNav() {
+  const ham = document.getElementById('ham');
+  const nav = document.getElementById('mob-nav');
+  ham.classList.toggle('open');
+  nav.classList.toggle('open');
+  ham.setAttribute('aria-label', nav.classList.contains('open') ? 'Close menu' : 'Open menu');
+}
+// Close mobile nav when any link inside it is tapped
+document.getElementById('mob-nav').querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('ham').classList.remove('open');
+    document.getElementById('mob-nav').classList.remove('open');
+  });
+});
+
 async function loadPlayerCount() {
-  try {
-    const res  = await fetch("https://api.allorigins.win/raw?url=https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=2568430");
-    const data = await res.json();
-    const count = data?.response?.player_count;
-    document.getElementById("playerCount").textContent =
-      count != null ? count.toLocaleString() : "Unavailable";
-  } catch {
-    document.getElementById("playerCount").textContent = "Unavailable";
+  const el = document.getElementById("playerCount");
+  const meta = document.getElementById("playerMeta");
+
+  // Try direct Steam API first (works on desktop, blocked on some mobile browsers due to mixed content)
+  const endpoints = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=2569510")}`,
+    `https://corsproxy.io/?${encodeURIComponent("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=2569510")}`,
+  ];
+
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const count = data?.response?.player_count;
+      if (count != null && count > 0) {
+        el.textContent = count.toLocaleString();
+        if (meta) meta.textContent = "Live · Steam API";
+        return;
+      }
+    } catch { /* try next */ }
   }
+
+  // Fallback: scrape SteamDB embed which has no CORS restriction
+  try {
+    const res = await fetch("https://api.allorigins.win/raw?url=https://steamdb.info/api/GetCurrentPlayers?appid=2569510", {
+      signal: AbortSignal.timeout(6000)
+    });
+    const data = await res.json();
+    const count = data?.players ?? data?.data;
+    if (count != null) {
+      el.textContent = Number(count).toLocaleString();
+      if (meta) meta.textContent = "Live · SteamDB";
+      return;
+    }
+  } catch { /* ignore */ }
+
+  el.textContent = "—";
+  if (meta) meta.textContent = "Data temporarily unavailable";
 }
 loadPlayerCount();
+// Refresh every 3 minutes
+setInterval(loadPlayerCount, 3 * 60 * 1000);
 </script>
 </body>
 </html>
