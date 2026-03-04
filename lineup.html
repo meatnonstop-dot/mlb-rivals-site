@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>MLB Rivals – Lineup Builder</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050810;--surface:#0d1220;--surface2:#141a2e;--border:rgba(255,255,255,.07);
+  --blue:#2f7cf6;--blue-glow:rgba(47,124,246,.45);--red:#e63946;--gold:#f4b942;
+  --text:#e8ecf5;--muted:rgba(232,236,245,.45);
+  --font-d:'Bebas Neue','Arial Narrow',sans-serif;
+  --font-ui:'Barlow Condensed',sans-serif;
+  --font-b:'Barlow',sans-serif;
+  /* card type colors */
+  --ct-hof:#f4b942;--ct-sigblk:#e2c97e;--ct-fasig:#f472b6;--ct-sig:#e879f9;
+  --ct-prime:#a78bfa;--ct-moment:#fb923c;--ct-wbc:#22d3ee;--ct-impact:#2dd4bf;
+  --ct-rising:#a3e635;--ct-live:#38bdf8;--ct-season:#60a5fa;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);overflow-x:hidden;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+/* BG GRID */
+.bg-grid{position:fixed;inset:0;z-index:0;
+  background-image:linear-gradient(rgba(47,124,246,.05)1px,transparent 1px),linear-gradient(90deg,rgba(47,124,246,.05)1px,transparent 1px);
+  background-size:60px 60px;animation:gridScroll 25s linear infinite;pointer-events:none}
+.bg-grid::after{content:'';position:absolute;inset:0;background:
+  radial-gradient(ellipse 80% 60% at 50% 0%,rgba(47,124,246,.10),transparent 70%),
+  radial-gradient(ellipse 60% 40% at 100% 100%,rgba(230,57,70,.06),transparent 60%)}
+@keyframes gridScroll{from{transform:translateY(0)}to{transform:translateY(60px)}}
+
+/* NAV */
+header{position:sticky;top:0;z-index:100;background:rgba(5,8,16,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-d);font-size:1.4rem;letter-spacing:.08em;flex-shrink:0}
+.nav-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);animation:pulse 2s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--blue-glow)}50%{box-shadow:0 0 0 6px rgba(47,124,246,0)}}
+nav{display:flex;gap:2px}
+.nav-link{font-family:var(--font-ui);font-size:.875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 12px;border-radius:6px;transition:color .2s,background .2s}
+.nav-link:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.nav-link.active{color:var(--blue);background:rgba(47,124,246,.1)}
+.ham-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--text);flex-direction:column;gap:5px;align-items:center;justify-content:center;width:38px;height:38px}
+.ham-btn span{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:transform .25s,opacity .25s}
+.ham-btn.open span:nth-child(1){transform:translateY(7px)rotate(45deg)}
+.ham-btn.open span:nth-child(2){opacity:0}
+.ham-btn.open span:nth-child(3){transform:translateY(-7px)rotate(-45deg)}
+.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;background:rgba(5,8,16,.97);border-bottom:1px solid var(--border);padding:12px 20px 20px;flex-direction:column;gap:4px;animation:slideDown .2s ease}
+.mob-nav.open{display:flex}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.mob-nav a{font-family:var(--font-ui);font-size:1rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:12px 14px;border-radius:8px;transition:color .2s,background .2s}
+.mob-nav a:hover,.mob-nav a.active{color:var(--text);background:rgba(255,255,255,.06)}
+.mob-nav a.active{color:var(--blue)}
+
+/* PAGE HERO */
+.page-hero{position:relative;z-index:1;padding:40px 20px 20px;max-width:1200px;margin:0 auto}
+.page-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-ui);font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);background:rgba(47,124,246,.12);border:1px solid rgba(47,124,246,.3);padding:5px 12px;border-radius:4px;margin-bottom:14px;animation:fadeUp .5s ease both}
+.page-title{font-family:var(--font-d);font-size:clamp(2.8rem,8vw,5rem);line-height:.95;letter-spacing:.02em;text-transform:uppercase;margin-bottom:10px;animation:fadeUp .5s .08s ease both}
+.page-title .accent{color:var(--blue)}
+.page-sub{font-family:var(--font-ui);font-size:.95rem;font-weight:400;color:var(--muted);max-width:520px;line-height:1.5;animation:fadeUp .5s .14s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* LINEUP NAME */
+.lineup-name-row{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:12px 20px 8px;display:flex;align-items:center;gap:10px;animation:fadeUp .5s .18s ease both}
+.lineup-name-input{background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.15);color:var(--text);font-family:var(--font-d);font-size:1.6rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 0;outline:none;transition:border-color .2s;min-width:0;flex:1;max-width:320px}
+.lineup-name-input:focus{border-bottom-color:var(--blue)}
+.lineup-name-input::placeholder{color:rgba(232,236,245,.25)}
+.lineup-actions{margin-left:auto;display:flex;gap:8px}
+.action-btn{font-family:var(--font-ui);font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:6px;border:1px solid;cursor:pointer;transition:all .2s}
+.btn-save{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-save:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--blue-glow)}
+.btn-clear{background:transparent;color:var(--muted);border-color:var(--border)}
+.btn-clear:hover{color:var(--text);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.05)}
+.btn-share{background:transparent;color:#34d399;border-color:rgba(52,211,153,.3)}
+.btn-share:hover{background:rgba(52,211,153,.08)}
+
+/* TABS */
+.tabs-wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 20px 0}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);animation:fadeUp .5s .2s ease both}
+.tab-btn{font-family:var(--font-ui);font-size:.9rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:none;border:none;cursor:pointer;color:var(--muted);padding:12px 20px;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s;display:flex;align-items:center;gap:8px}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+.tab-count{font-size:.7rem;background:rgba(47,124,246,.2);color:var(--blue);padding:2px 6px;border-radius:10px;font-weight:700;min-width:20px;text-align:center}
+
+/* CONTENT AREA */
+.content-area{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:24px 20px 160px}
+.tab-pane{display:none}
+.tab-pane.active{display:block;animation:fadeUp .3s ease}
+
+/* SECTION HEADERS */
+.section-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.section-hdr-title{font-family:var(--font-d);font-size:1.4rem;letter-spacing:.06em}
+.section-hdr-title span{color:var(--blue)}
+.section-line{flex:1;height:1px;background:var(--border)}
+.section-sub{font-family:var(--font-ui);font-size:.75rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+/* FIELD GRID — 3-col */
+.field-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.bench-row{margin-top:8px}
+.bench-label{font-family:var(--font-ui);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.bench-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+
+/* PLAYER SLOT */
+.slot{border-radius:10px;border:1.5px dashed rgba(255,255,255,.15);background:rgba(13,18,32,.6);cursor:pointer;transition:border-color .2s,background .2s;min-height:90px;display:flex;flex-direction:column;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent}
+.slot:hover{border-color:rgba(47,124,246,.5);background:rgba(13,18,32,.9)}
+.slot.filled{border-style:solid;border-color:transparent}
+
+/* EMPTY SLOT */
+.slot-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px 6px;height:100%;min-height:90px}
+.slot-empty-pos{font-family:var(--font-d);font-size:1.1rem;letter-spacing:.08em;color:rgba(232,236,245,.5)}
+.slot-empty-icon{color:rgba(255,255,255,.2);font-size:.8rem}
+.slot-empty-order{font-family:var(--font-ui);font-size:.6rem;color:rgba(232,236,245,.25);letter-spacing:.06em;text-transform:uppercase}
+.bench-grid .slot-empty-pos{font-size:.9rem}
+
+/* FILLED SLOT */
+.slot-filled{display:none;flex-direction:column;height:100%;min-height:90px;position:relative}
+.slot.filled .slot-empty{display:none}
+.slot.filled .slot-filled{display:flex}
+.slot-type-bar{height:3px;flex-shrink:0;border-radius:2px 2px 0 0}
+.slot-inner{padding:8px 10px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.slot-top{display:flex;align-items:flex-start;justify-content:space-between;gap:4px}
+.slot-ovr{font-family:var(--font-d);font-size:1.5rem;letter-spacing:.04em;line-height:1}
+.slot-pos-badge{font-family:var(--font-ui);font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:4px;background:rgba(255,255,255,.1);color:var(--muted);flex-shrink:0}
+.slot-name{font-family:var(--font-ui);font-size:.82rem;font-weight:700;line-height:1.2;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.slot-meta{display:flex;align-items:center;justify-content:space-between;gap:4px}
+.slot-year-team{font-size:.68rem;color:var(--muted);font-family:var(--font-ui)}
+.slot-type-label{font-family:var(--font-ui);font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.slot-remove{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.5);border:none;cursor:pointer;color:var(--muted);border-radius:4px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;font-size:10px;z-index:2}
+.slot:hover .slot-remove{opacity:1}
+.slot-remove:hover{color:var(--red);background:rgba(230,57,70,.2)}
+
+/* CARD TYPE COLORS applied inline via JS */
+
+/* PITCHERS */
+.pitcher-section{margin-bottom:28px}
+.sp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:8px}
+.relief-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.relief-col{display:flex;flex-direction:column;gap:10px}
+.relief-col-label{font-family:var(--font-ui);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.lr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* RESERVE */
+.reserve-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+
+/* STATS BAR */
+.stats-bar{position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(5,8,16,.96);backdrop-filter:blur(16px);border-top:1px solid var(--border);padding:0 20px}
+.stats-inner{max-width:1200px;margin:0 auto;height:60px;display:flex;align-items:center;gap:0}
+.stat-item{display:flex;flex-direction:column;align-items:center;padding:0 20px;border-right:1px solid var(--border)}
+.stat-item:last-of-type{border-right:none}
+.stat-lbl{font-family:var(--font-ui);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stat-val{font-family:var(--font-d);font-size:1.3rem;letter-spacing:.04em;line-height:1.1}
+.stat-val.blue{color:var(--blue)}
+.stat-val.gold{color:var(--gold)}
+.stats-right{margin-left:auto;display:flex;gap:8px}
+
+/* PICKER MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:opacity .25s;display:flex;align-items:flex-end;justify-content:center}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-sheet{background:var(--surface);border-radius:16px 16px 0 0;border-top:1px solid var(--border);width:100%;max-width:760px;max-height:88vh;display:flex;flex-direction:column;transform:translateY(20px);transition:transform .25s;overflow:hidden}
+.modal-overlay.open .modal-sheet{transform:translateY(0)}
+.modal-drag{width:36px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin:12px auto 0;flex-shrink:0}
+.modal-head{padding:14px 20px 10px;flex-shrink:0}
+.modal-head-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.modal-title{font-family:var(--font-d);font-size:1.5rem;letter-spacing:.06em}
+.modal-slot-info{font-family:var(--font-ui);font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);background:rgba(47,124,246,.12);border:1px solid rgba(47,124,246,.25);padding:3px 10px;border-radius:20px}
+.modal-close{background:rgba(255,255,255,.08);border:none;cursor:pointer;color:var(--muted);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;transition:color .2s,background .2s}
+.modal-close:hover{color:var(--text);background:rgba(255,255,255,.14)}
+.modal-search-wrap{padding:0 20px 10px;flex-shrink:0;position:relative}
+.modal-search-icon{position:absolute;left:32px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.modal-search{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-ui);font-size:.95rem;font-weight:500;padding:10px 12px 10px 40px;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.modal-search:focus{border-color:rgba(47,124,246,.5)}
+.modal-search::placeholder{color:var(--muted)}
+.modal-filters{padding:0 20px 8px;display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0}
+.modal-filters-row2{padding:0 20px 8px;display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0}
+.f-pill{font-family:var(--font-ui);font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent}
+.f-pill:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.f-pill.active{color:var(--blue);border-color:rgba(47,124,246,.5);background:rgba(47,124,246,.12)}
+.f-pill.ct-active{border-color:currentColor;background:rgba(from currentColor r g b/.15)}
+.modal-body{overflow-y:auto;flex:1;padding:0 20px 20px;-webkit-overflow-scrolling:touch}
+.modal-count{font-family:var(--font-ui);font-size:.75rem;color:var(--muted);margin-bottom:10px;padding-top:4px}
+.player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.player-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .2s,background .2s,transform .1s;overflow:hidden;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent}
+.player-card:hover{border-color:rgba(47,124,246,.5);background:rgba(255,255,255,.04);transform:translateY(-1px)}
+.player-card:active{transform:scale(.98)}
+.player-card.assigned{opacity:.4;pointer-events:none}
+.pc-bar{height:3px}
+.pc-body{padding:10px 10px 8px}
+.pc-ovr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.pc-ovr{font-family:var(--font-d);font-size:1.3rem;letter-spacing:.04em;line-height:1}
+.pc-team{font-family:var(--font-ui);font-size:.65rem;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;background:rgba(255,255,255,.08);color:var(--muted)}
+.pc-name{font-family:var(--font-ui);font-size:.82rem;font-weight:700;line-height:1.2;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-year{font-size:.68rem;color:var(--muted);font-family:var(--font-ui)}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;gap:4px;padding-top:6px;border-top:1px solid rgba(255,255,255,.06);margin-top:4px}
+.pc-pos-tags{display:flex;gap:3px;flex-wrap:wrap}
+.pc-pos-tag{font-family:var(--font-ui);font-size:.6rem;font-weight:700;letter-spacing:.04em;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,.08);color:var(--muted)}
+.pc-type{font-family:var(--font-ui);font-size:.6rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.no-results{text-align:center;padding:40px 20px;color:var(--muted);font-family:var(--font-ui)}
+
+/* TOAST */
+.toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(12px);z-index:300;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 20px;font-family:var(--font-ui);font-size:.85rem;font-weight:600;letter-spacing:.04em;opacity:0;transition:opacity .2s,transform .2s;white-space:nowrap;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:rgba(52,211,153,.4);color:#34d399}
+.toast.info{border-color:rgba(47,124,246,.4);color:var(--blue)}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);background:var(--surface)}
+.footer-inner{max-width:1200px;margin:0 auto;padding:24px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-logo{font-family:var(--font-d);font-size:1.1rem;letter-spacing:.08em}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap}
+.footer-links a{font-family:var(--font-ui);font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{width:100%;font-size:.75rem;color:rgba(232,236,245,.25);font-family:var(--font-ui)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .sp-grid{grid-template-columns:repeat(3,1fr)}
+  .reserve-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:768px){
+  nav{display:none}.ham-btn{display:flex}
+  .page-hero{padding:28px 16px 16px}
+  .lineup-name-row{padding:8px 16px 6px}
+  .tabs-wrap{padding:0 16px 0}
+  .content-area{padding:20px 16px 160px}
+  .tab-btn{padding:10px 14px;font-size:.82rem}
+  .bench-grid{grid-template-columns:repeat(5,1fr);gap:6px}
+  .sp-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .relief-grid{grid-template-columns:1fr;gap:12px}
+  .reserve-grid{grid-template-columns:repeat(4,1fr)}
+  .stat-item{padding:0 12px}
+  .lineup-actions{gap:6px}
+  .action-btn{padding:6px 12px;font-size:.7rem}
+  .stats-inner{gap:0}
+  .player-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+}
+@media(max-width:480px){
+  .nav-inner{padding:0 14px}
+  .page-hero{padding:22px 14px 12px}
+  .lineup-name-row{padding:6px 14px 4px;flex-wrap:wrap;gap:6px}
+  .lineup-name-input{max-width:100%}
+  .lineup-actions{margin-left:0;width:100%;justify-content:flex-end}
+  .tabs-wrap{padding:0 14px 0}
+  .content-area{padding:16px 14px 150px}
+  .field-grid{gap:7px}
+  .bench-grid{gap:5px}
+  .sp-grid{grid-template-columns:repeat(3,1fr);gap:7px}
+  .lr-grid{gap:6px}
+  .slot{min-height:80px}
+  .slot-ovr{font-size:1.3rem}
+  .slot-name{font-size:.76rem}
+  .bench-grid .slot{min-height:70px}
+  .reserve-grid{grid-template-columns:repeat(3,1fr)}
+  .stat-item{padding:0 8px}
+  .stat-val{font-size:1.1rem}
+  .player-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:7px}
+  .modal-sheet{max-height:92vh}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="dot"></span>MLB RIVALS</a>
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="scouts.html" class="nav-link">Scouts</a>
+      <a href="players.html" class="nav-link">Players</a>
+      <a href="updates.html" class="nav-link">Updates</a>
+      <a href="guide.html" class="nav-link">Guide</a>
+      <a href="lineup.html" class="nav-link active">Builder</a>
+    </nav>
+    <button class="ham-btn" id="ham" aria-label="Open menu" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mob-nav" id="mob-nav">
+  <a href="index.html">Home</a>
+  <a href="scouts.html">Scouts</a>
+  <a href="players.html">Players</a>
+  <a href="updates.html">Updates</a>
+  <a href="guide.html">Guide</a>
+  <a href="lineup.html" class="active">Builder</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-eyebrow">⚾ Strategy Tool</div>
+  <h1 class="page-title">Lineup <span class="accent">Builder</span></h1>
+  <p class="page-sub">Build your perfect MLB Rivals lineup. Select players for every position — tap any slot to assign a card from the index.</p>
+</div>
+
+<!-- LINEUP NAME + ACTIONS -->
+<div class="lineup-name-row">
+  <input class="lineup-name-input" id="lineupName" type="text" placeholder="MY LINEUP NAME" maxlength="32" autocomplete="off"/>
+  <div class="lineup-actions">
+    <button class="action-btn btn-share" onclick="shareLineup()">⬆ Export</button>
+    <button class="action-btn btn-clear" onclick="clearLineup()">✕ Reset</button>
+    <button class="action-btn btn-save" onclick="saveLineup()">💾 Save</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="batters" onclick="switchTab('batters',this)">
+      🥎 Batters <span class="tab-count" id="tc-batters">0/9</span>
+    </button>
+    <button class="tab-btn" data-tab="pitchers" onclick="switchTab('pitchers',this)">
+      ⚾ Pitchers <span class="tab-count" id="tc-pitchers">0/12</span>
+    </button>
+    <button class="tab-btn" data-tab="reserve" onclick="switchTab('reserve',this)">
+      📋 Reserve <span class="tab-count" id="tc-reserve">0/10</span>
+    </button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-area">
+
+  <!-- ======= BATTERS TAB ======= -->
+  <div class="tab-pane active" id="tab-batters">
+    <div class="section-hdr">
+      <div class="section-hdr-title">Starting <span>Lineup</span></div>
+      <div class="section-sub">Batting Order 1–9</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="field-grid" id="batter-field">
+      <!-- rendered by JS -->
+    </div>
+    <div class="bench-row">
+      <div class="bench-label">⬛ Bench</div>
+      <div class="bench-grid" id="batter-bench"></div>
+    </div>
+  </div>
+
+  <!-- ======= PITCHERS TAB ======= -->
+  <div class="tab-pane" id="tab-pitchers">
+    <div class="pitcher-section">
+      <div class="section-hdr">
+        <div class="section-hdr-title">Starting <span>Pitchers</span></div>
+        <div class="section-line"></div>
+      </div>
+      <div class="sp-grid" id="sp-grid"></div>
+    </div>
+    <div class="pitcher-section">
+      <div class="section-hdr">
+        <div class="section-hdr-title">Relief <span>Pitchers</span></div>
+        <div class="section-line"></div>
+      </div>
+      <div class="relief-grid">
+        <div>
+          <div class="relief-col-label">Set-up &amp; Mop-up</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="su-mo-grid"></div>
+        </div>
+        <div>
+          <div class="relief-col-label">Long Relievers</div>
+          <div class="lr-grid" id="lr-grid"></div>
+        </div>
+        <div>
+          <div class="relief-col-label">Closing Pitcher</div>
+          <div id="cp-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= RESERVE TAB ======= -->
+  <div class="tab-pane" id="tab-reserve">
+    <div class="section-hdr">
+      <div class="section-hdr-title">Reserve <span>Players</span></div>
+      <div class="section-line"></div>
+    </div>
+    <div class="reserve-grid" id="reserve-grid"></div>
+  </div>
+
+</div><!-- /content-area -->
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-lbl">Avg OVR</div>
+      <div class="stat-val blue" id="stat-ovr">—</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-lbl">Deck Pts</div>
+      <div class="stat-val gold" id="stat-deck">0</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-lbl">Players</div>
+      <div class="stat-val" id="stat-count">0/31</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-lbl">Top Team</div>
+      <div class="stat-val" id="stat-team">—</div>
+    </div>
+    <div class="stats-right">
+    </div>
+  </div>
+</div>
+
+<!-- PLAYER PICKER MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal-sheet" id="modalSheet">
+    <div class="modal-drag"></div>
+    <div class="modal-head">
+      <div class="modal-head-row">
+        <div class="modal-title">Select Player</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="modal-slot-info" id="modalSlotInfo">—</div>
+          <button class="modal-close" onclick="closePicker()">✕</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-search-wrap">
+      <svg class="modal-search-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z"/></svg>
+      <input class="modal-search" id="modalSearch" type="search" placeholder="Search by name, team, year…" autocomplete="off" oninput="renderPicker()"/>
+    </div>
+    <div class="modal-filters" id="posFilters"><!-- pos pills --></div>
+    <div class="modal-filters-row2" id="typeFilters"><!-- type pills --></div>
+    <div class="modal-body">
+      <div class="modal-count" id="modalCount"></div>
+      <div class="player-grid" id="pickerGrid"></div>
+      <div class="no-results" id="noResults" style="display:none">No players found. Try a different search or filter.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">MLB Rivals Hub · 2026</div>
+    <div class="footer-links">
+      <a href="https://community.withhive.com/MLB9IRIVALS" target="_blank">Community</a>
+      <a href="https://twitter.com/MLBrivalsus" target="_blank">X / Twitter</a>
+      <a href="https://store.steampowered.com/app/2568430" target="_blank">Steam</a>
+    </div>
+    <div class="footer-copy">Unofficial fan companion · Not affiliated with Com2uS or MLB</div>
+  </div>
+</footer>
+
+<script>
+// ─── PLAYER DATABASE ──────────────────────────────────────────────────────────
+// Fields: id, name, year, team, pos[], ovr, type, deck
+const PLAYERS = [
+  // HOF
+  {id:1,name:"Derek Jeter",year:"",team:"NYY",pos:["SS"],ovr:135,type:"HOF",deck:30},
+  {id:2,name:"Cal Ripken Jr.",year:"",team:"BAL",pos:["SS","3B"],ovr:132,type:"HOF",deck:30},
+  {id:3,name:"Ozzie Smith",year:"",team:"STL",pos:["SS"],ovr:129,type:"HOF",deck:30},
+  {id:4,name:"Greg Maddux",year:"",team:"ATL",pos:["SP"],ovr:130,type:"HOF",deck:30},
+  {id:5,name:"Don Sutton",year:"",team:"LAD",pos:["SP"],ovr:125,type:"HOF",deck:30},
+  {id:6,name:"Tom Seaver",year:"",team:"NYM",pos:["SP"],ovr:131,type:"HOF",deck:30},
+  {id:7,name:"Jackie Robinson",year:"",team:"LAD",pos:["2B","3B"],ovr:128,type:"HOF",deck:30},
+  {id:8,name:"Fred McGriff",year:"",team:"ATL",pos:["1B","DH"],ovr:125,type:"HOF",deck:28},
+  {id:9,name:"Jeff Bagwell",year:"",team:"HOU",pos:["1B"],ovr:127,type:"HOF",deck:30},
+  {id:10,name:"Jim Thome",year:"",team:"CLE",pos:["1B","3B"],ovr:128,type:"HOF",deck:30},
+  {id:11,name:"Willie Stargell",year:"",team:"PIT",pos:["LF","1B"],ovr:127,type:"HOF",deck:30},
+  {id:12,name:"Paul Molitor",year:"",team:"MIL",pos:["3B","DH","1B"],ovr:126,type:"HOF",deck:30},
+  {id:13,name:"Billy Williams",year:"",team:"CHC",pos:["LF","RF"],ovr:126,type:"HOF",deck:30},
+  {id:14,name:"Sandy Koufax",year:"",team:"LAD",pos:["SP"],ovr:133,type:"HOF",deck:30},
+  {id:15,name:"Ernie Banks",year:"",team:"CHC",pos:["SS","1B"],ovr:127,type:"HOF",deck:30},
+  {id:16,name:"Bob Gibson",year:"",team:"STL",pos:["SP"],ovr:128,type:"HOF",deck:30},
+  // Signature Black
+  {id:17,name:"Clayton Kershaw",year:"'23 SB",team:"LAD",pos:["SP"],ovr:127,type:"Sig Black",deck:28},
+  {id:18,name:"Aaron Judge",year:"'24 SB",team:"NYY",pos:["RF"],ovr:126,type:"Sig Black",deck:28},
+  {id:19,name:"Shohei Ohtani",year:"'25 SB",team:"LAD",pos:["DH","1B"],ovr:128,type:"Sig Black",deck:28},
+  // FA Signature
+  {id:20,name:"Shohei Ohtani",year:"'25 FA",team:"LAD",pos:["SP"],ovr:125,type:"FA Sig",deck:26},
+  {id:21,name:"Yoshinobu Yamamoto",year:"'25 FA",team:"LAD",pos:["SP"],ovr:122,type:"FA Sig",deck:26},
+  {id:22,name:"Gerrit Cole",year:"'24 FA",team:"NYY",pos:["SP"],ovr:121,type:"FA Sig",deck:26},
+  // Signature
+  {id:23,name:"Clayton Kershaw",year:"'23",team:"LAD",pos:["SP"],ovr:123,type:"Signature",deck:24},
+  {id:24,name:"Shohei Ohtani",year:"'25",team:"LAD",pos:["DH","1B","SP"],ovr:124,type:"Signature",deck:24},
+  {id:25,name:"Will Smith",year:"'23",team:"LAD",pos:["C","DH"],ovr:114,type:"Signature",deck:24},
+  {id:26,name:"Justin Turner",year:"'18",team:"LAD",pos:["3B"],ovr:114,type:"Signature",deck:24},
+  {id:27,name:"Alex Vesia",year:"'24",team:"LAD",pos:["RP"],ovr:108,type:"Signature",deck:24},
+  {id:28,name:"Aaron Judge",year:"'22",team:"NYY",pos:["RF"],ovr:122,type:"Signature",deck:24},
+  {id:29,name:"Mike Trout",year:"'23",team:"LAA",pos:["CF"],ovr:123,type:"Signature",deck:24},
+  {id:30,name:"Bryce Harper",year:"'24",team:"PHI",pos:["RF","1B"],ovr:121,type:"Signature",deck:24},
+  {id:31,name:"Ronald Acuna Jr.",year:"'23",team:"ATL",pos:["RF"],ovr:121,type:"Signature",deck:24},
+  {id:32,name:"Francisco Lindor",year:"'24",team:"NYM",pos:["SS"],ovr:119,type:"Signature",deck:24},
+  {id:33,name:"Vladimir Guerrero Jr.",year:"'21",team:"TOR",pos:["1B","3B","DH"],ovr:120,type:"Signature",deck:24},
+  {id:34,name:"Jose Ramirez",year:"'23",team:"CLE",pos:["3B","2B"],ovr:119,type:"Signature",deck:24},
+  {id:35,name:"Corey Seager",year:"'23",team:"TEX",pos:["SS"],ovr:118,type:"Signature",deck:24},
+  {id:36,name:"Yordan Alvarez",year:"'22",team:"HOU",pos:["DH","LF"],ovr:120,type:"Signature",deck:24},
+  {id:37,name:"Max Scherzer",year:"'22",team:"NYM",pos:["SP"],ovr:120,type:"Signature",deck:24},
+  {id:38,name:"Juan Soto",year:"'24",team:"NYY",pos:["RF","LF"],ovr:121,type:"Signature",deck:24},
+  {id:39,name:"Manny Machado",year:"'24",team:"SD",pos:["3B"],ovr:118,type:"Signature",deck:24},
+  {id:40,name:"Paul Goldschmidt",year:"'22",team:"STL",pos:["1B"],ovr:117,type:"Signature",deck:24},
+  // Prime
+  {id:41,name:"Cody Bellinger",year:"'18",team:"LAD",pos:["1B","CF","RF"],ovr:122,type:"Prime",deck:20},
+  {id:42,name:"Vladimir Guerrero Sr.",year:"'82",team:"MON",pos:["RF","DH"],ovr:122,type:"Prime",deck:20},
+  {id:43,name:"Freddie Freeman",year:"'23",team:"LAD",pos:["1B"],ovr:122,type:"Prime",deck:20},
+  {id:44,name:"Mookie Betts",year:"'24",team:"LAD",pos:["RF","SS"],ovr:120,type:"Prime",deck:20},
+  {id:45,name:"Julio Rodriguez",year:"'26",team:"SEA",pos:["CF"],ovr:117,type:"Prime",deck:20},
+  {id:46,name:"Yoshinobu Yamamoto",year:"'25",team:"LAD",pos:["SP"],ovr:117,type:"Prime",deck:20},
+  {id:47,name:"Tyler Glasnow",year:"'24",team:"LAD",pos:["SP"],ovr:108,type:"Prime",deck:20},
+  {id:48,name:"Michael Kopech",year:"",team:"LAD",pos:["CP"],ovr:112,type:"Prime",deck:20},
+  {id:49,name:"Chan Ho Park",year:"",team:"LAD",pos:["RP","SP"],ovr:110,type:"Prime",deck:20},
+  {id:50,name:"Evan Phillips",year:"",team:"LAD",pos:["RP"],ovr:109,type:"Prime",deck:20},
+  {id:51,name:"Hong-Chih Kuo",year:"'10",team:"LAD",pos:["RP"],ovr:107,type:"Prime",deck:20},
+  {id:52,name:"Gerrit Cole",year:"'23",team:"NYY",pos:["SP"],ovr:118,type:"Prime",deck:20},
+  {id:53,name:"Jacob deGrom",year:"'21",team:"NYM",pos:["SP"],ovr:119,type:"Prime",deck:20},
+  {id:54,name:"Nolan Arenado",year:"'23",team:"STL",pos:["3B"],ovr:116,type:"Prime",deck:20},
+  {id:55,name:"Fernando Tatis Jr.",year:"'24",team:"SD",pos:["SS","RF"],ovr:117,type:"Prime",deck:20},
+  {id:56,name:"Freddie Freeman",year:"'21",team:"ATL",pos:["1B"],ovr:118,type:"Prime",deck:20},
+  {id:57,name:"Ozzie Albies",year:"'23",team:"ATL",pos:["2B"],ovr:112,type:"Prime",deck:20},
+  {id:58,name:"Spencer Strider",year:"'23",team:"ATL",pos:["SP"],ovr:115,type:"Prime",deck:20},
+  {id:59,name:"Trea Turner",year:"'23",team:"PHI",pos:["SS"],ovr:115,type:"Prime",deck:20},
+  {id:60,name:"Jose Altuve",year:"'22",team:"HOU",pos:["2B"],ovr:115,type:"Prime",deck:20},
+  {id:61,name:"Justin Verlander",year:"'22",team:"HOU",pos:["SP"],ovr:117,type:"Prime",deck:20},
+  {id:62,name:"Bo Bichette",year:"'23",team:"TOR",pos:["SS"],ovr:114,type:"Prime",deck:20},
+  {id:63,name:"Rafael Devers",year:"'23",team:"BOS",pos:["3B"],ovr:114,type:"Prime",deck:20},
+  {id:64,name:"Bobby Witt Jr.",year:"'24",team:"KC",pos:["SS","3B"],ovr:116,type:"Prime",deck:20},
+  {id:65,name:"Adley Rutschman",year:"'23",team:"BAL",pos:["C"],ovr:113,type:"Prime",deck:20},
+  {id:66,name:"Logan Webb",year:"'23",team:"SF",pos:["SP"],ovr:113,type:"Prime",deck:20},
+  {id:67,name:"Blake Snell",year:"'23",team:"SD",pos:["SP"],ovr:114,type:"Prime",deck:20},
+  {id:68,name:"Zack Wheeler",year:"'23",team:"PHI",pos:["SP"],ovr:115,type:"Prime",deck:20},
+  {id:69,name:"Kyle Tucker",year:"'23",team:"HOU",pos:["RF","LF"],ovr:116,type:"Prime",deck:20},
+  {id:70,name:"Gunnar Henderson",year:"'24",team:"BAL",pos:["SS","3B"],ovr:115,type:"Prime",deck:20},
+  // WBC
+  {id:71,name:"Bryce Harper",year:"'26 WBC",team:"PHI",pos:["RF","1B"],ovr:120,type:"WBC",deck:18},
+  {id:72,name:"Jung Hoo Lee",year:"'26 WBC",team:"SF",pos:["CF"],ovr:116,type:"WBC",deck:18},
+  {id:73,name:"Yoshinobu Yamamoto",year:"'26 WBC",team:"LAD",pos:["SP"],ovr:115,type:"WBC",deck:18},
+  {id:74,name:"Shohei Ohtani",year:"'26 WBC",team:"LAD",pos:["DH","SP"],ovr:122,type:"WBC",deck:18},
+  {id:75,name:"Jose Altuve",year:"'26 WBC",team:"HOU",pos:["2B"],ovr:113,type:"WBC",deck:18},
+  {id:76,name:"Vladimir Guerrero Jr.",year:"'26 WBC",team:"TOR",pos:["1B","DH"],ovr:118,type:"WBC",deck:18},
+  {id:77,name:"Julio Rodriguez",year:"'26 WBC",team:"SEA",pos:["CF"],ovr:115,type:"WBC",deck:18},
+  {id:78,name:"Gunnar Henderson",year:"'26 WBC",team:"BAL",pos:["SS","3B"],ovr:114,type:"WBC",deck:18},
+  {id:79,name:"Bo Bichette",year:"'26 WBC",team:"TOR",pos:["SS"],ovr:112,type:"WBC",deck:18},
+  {id:80,name:"Trea Turner",year:"'26 WBC",team:"PHI",pos:["SS"],ovr:113,type:"WBC",deck:18},
+  // Moment
+  {id:81,name:"Shohei Ohtani",year:"'24 Moment",team:"LAD",pos:["DH","SP"],ovr:118,type:"Moment",deck:20},
+  {id:82,name:"Freddie Freeman",year:"'24 WS",team:"LAD",pos:["1B"],ovr:116,type:"Moment",deck:20},
+  {id:83,name:"Mookie Betts",year:"'24 Moment",team:"LAD",pos:["RF","SS"],ovr:115,type:"Moment",deck:20},
+  {id:84,name:"Aaron Judge",year:"'24 Moment",team:"NYY",pos:["RF"],ovr:117,type:"Moment",deck:20},
+  {id:85,name:"Ronald Acuna Jr.",year:"'24 Moment",team:"ATL",pos:["RF"],ovr:115,type:"Moment",deck:20},
+  {id:86,name:"Bobby Witt Jr.",year:"'24 Moment",team:"KC",pos:["SS","3B"],ovr:114,type:"Moment",deck:20},
+  {id:87,name:"Tarik Skubal",year:"'24 Moment",team:"DET",pos:["SP"],ovr:113,type:"Moment",deck:20},
+  {id:88,name:"Paul Skenes",year:"'24 Moment",team:"PIT",pos:["SP"],ovr:111,type:"Moment",deck:20},
+  {id:89,name:"Zack Wheeler",year:"'24 Moment",team:"PHI",pos:["SP"],ovr:112,type:"Moment",deck:20},
+  {id:90,name:"Corbin Carroll",year:"'23 Moment",team:"ARI",pos:["LF","CF","RF"],ovr:112,type:"Moment",deck:20},
+  // Impact
+  {id:91,name:"Pete Alonso",year:"'23",team:"NYM",pos:["1B"],ovr:109,type:"Impact",deck:16},
+  {id:92,name:"Marcell Ozuna",year:"'23",team:"ATL",pos:["DH","LF"],ovr:108,type:"Impact",deck:16},
+  {id:93,name:"Austin Riley",year:"'24",team:"ATL",pos:["3B"],ovr:110,type:"Impact",deck:16},
+  {id:94,name:"J.T. Realmuto",year:"'24",team:"PHI",pos:["C"],ovr:109,type:"Impact",deck:16},
+  {id:95,name:"Marcus Semien",year:"'24",team:"TEX",pos:["2B","SS"],ovr:108,type:"Impact",deck:16},
+  {id:96,name:"Ian Happ",year:"'24",team:"CHC",pos:["LF","CF"],ovr:104,type:"Impact",deck:16},
+  // Rising Star
+  {id:97,name:"Corey Seager",year:"",team:"LAD",pos:["SS"],ovr:115,type:"Rising Star",deck:14},
+  {id:98,name:"James Outman",year:"",team:"LAD",pos:["CF","LF"],ovr:109,type:"Rising Star",deck:14},
+  {id:99,name:"Mookie Betts",year:"'24 RS",team:"LAD",pos:["RF","SS"],ovr:110,type:"Rising Star",deck:14},
+  {id:100,name:"Yoshinobu Yamamoto",year:"'24 RS",team:"LAD",pos:["SP"],ovr:112,type:"Rising Star",deck:14},
+  {id:101,name:"Jackson Holliday",year:"'24",team:"BAL",pos:["2B","SS"],ovr:104,type:"Rising Star",deck:14},
+  {id:102,name:"Paul Skenes",year:"'24 RS",team:"PIT",pos:["SP"],ovr:106,type:"Rising Star",deck:14},
+  {id:103,name:"Jackson Chourio",year:"'24",team:"MIL",pos:["CF","LF","RF"],ovr:105,type:"Rising Star",deck:14},
+  // Season
+  {id:104,name:"Teoscar Hernandez",year:"",team:"LAD",pos:["LF","RF"],ovr:113,type:"Season",deck:10},
+  {id:105,name:"Orlando Hudson",year:"",team:"LAD",pos:["2B"],ovr:112,type:"Season",deck:10},
+  {id:106,name:"Hyun-jin Ryu",year:"",team:"LAD",pos:["SP"],ovr:107,type:"Season",deck:10},
+  {id:107,name:"Salvador Perez",year:"'24",team:"KC",pos:["C"],ovr:108,type:"Season",deck:10},
+  {id:108,name:"J.T. Realmuto",year:"'23",team:"PHI",pos:["C"],ovr:107,type:"Season",deck:10},
+  {id:109,name:"Sean Murphy",year:"'24",team:"ATL",pos:["C"],ovr:106,type:"Season",deck:10},
+  {id:110,name:"Gabriel Moreno",year:"'24",team:"ARI",pos:["C"],ovr:104,type:"Season",deck:10},
+  {id:111,name:"Ozzie Albies",year:"'25",team:"ATL",pos:["2B"],ovr:108,type:"Season",deck:10},
+  {id:112,name:"Jeff McNeil",year:"'23",team:"NYM",pos:["2B","LF","RF"],ovr:105,type:"Season",deck:10},
+  {id:113,name:"Brendan Rodgers",year:"'24",team:"COL",pos:["2B","SS"],ovr:103,type:"Season",deck:10},
+  {id:114,name:"Alec Bohm",year:"'24",team:"PHI",pos:["3B","1B"],ovr:107,type:"Season",deck:10},
+  {id:115,name:"Anthony Volpe",year:"'24",team:"NYY",pos:["SS"],ovr:104,type:"Season",deck:10},
+  {id:116,name:"Elly De La Cruz",year:"'24",team:"CIN",pos:["SS","3B"],ovr:106,type:"Season",deck:10},
+  {id:117,name:"Lourdes Gurriel Jr.",year:"'24",team:"ARI",pos:["LF","RF"],ovr:105,type:"Season",deck:10},
+  {id:118,name:"Bryan Reynolds",year:"'24",team:"PIT",pos:["CF","LF","RF"],ovr:107,type:"Season",deck:10},
+  {id:119,name:"Nick Castellanos",year:"'24",team:"PHI",pos:["RF","LF"],ovr:106,type:"Season",deck:10},
+  {id:120,name:"Tyler O'Neill",year:"'25",team:"BOS",pos:["LF","RF"],ovr:104,type:"Season",deck:10},
+  {id:121,name:"Aaron Nola",year:"'24",team:"PHI",pos:["SP"],ovr:108,type:"Season",deck:10},
+  {id:122,name:"Nestor Cortes",year:"'23",team:"NYY",pos:["SP"],ovr:105,type:"Season",deck:10},
+  {id:123,name:"Jordan Montgomery",year:"'24",team:"ARI",pos:["SP"],ovr:104,type:"Season",deck:10},
+  {id:124,name:"Clayton Kershaw",year:"'25",team:"LAD",pos:["SP"],ovr:110,type:"Season",deck:10},
+  {id:125,name:"Josh Hader",year:"'23",team:"SD",pos:["CP"],ovr:110,type:"Season",deck:10},
+  {id:126,name:"Ryan Helsley",year:"'24",team:"STL",pos:["CP"],ovr:109,type:"Season",deck:10},
+  {id:127,name:"Edwin Diaz",year:"'23",team:"NYM",pos:["CP"],ovr:112,type:"Season",deck:10},
+  {id:128,name:"Emmanuel Clase",year:"'24",team:"CLE",pos:["CP"],ovr:111,type:"Season",deck:10},
+  {id:129,name:"Camilo Doval",year:"'24",team:"SF",pos:["CP"],ovr:108,type:"Season",deck:10},
+  {id:130,name:"Pete Fairbanks",year:"'25",team:"TB",pos:["CP"],ovr:107,type:"Season",deck:10},
+  {id:131,name:"Willy Adames",year:"'25",team:"SF",pos:["SS"],ovr:106,type:"Season",deck:10},
+  {id:132,name:"Matt Chapman",year:"'25",team:"SF",pos:["3B"],ovr:105,type:"Season",deck:10},
+  {id:133,name:"Ketel Marte",year:"'24",team:"ARI",pos:["2B","CF"],ovr:109,type:"Season",deck:10},
+  // Live
+  {id:134,name:"Shohei Ohtani",year:"'25 Live",team:"LAD",pos:["DH","1B"],ovr:116,type:"Live",deck:12},
+  {id:135,name:"Mookie Betts",year:"'25 Live",team:"LAD",pos:["RF","SS"],ovr:112,type:"Live",deck:12},
+  {id:136,name:"Freddie Freeman",year:"'25 Live",team:"LAD",pos:["1B"],ovr:113,type:"Live",deck:12},
+  {id:137,name:"Aaron Judge",year:"'25 Live",team:"NYY",pos:["RF"],ovr:115,type:"Live",deck:12},
+  {id:138,name:"Juan Soto",year:"'25 Live",team:"NYY",pos:["RF","LF"],ovr:114,type:"Live",deck:12},
+  {id:139,name:"Tarik Skubal",year:"'25 Live",team:"DET",pos:["SP"],ovr:111,type:"Live",deck:12},
+  {id:140,name:"Bobby Witt Jr.",year:"'25 Live",team:"KC",pos:["SS","3B"],ovr:115,type:"Live",deck:12},
+  {id:141,name:"Corbin Carroll",year:"'25 Live",team:"ARI",pos:["LF","CF","RF"],ovr:108,type:"Live",deck:12},
+  {id:142,name:"Gunnar Henderson",year:"'25 Live",team:"BAL",pos:["SS","3B"],ovr:113,type:"Live",deck:12},
+  {id:143,name:"Paul Goldschmidt",year:"'25 Live",team:"STL",pos:["1B"],ovr:108,type:"Live",deck:12},
+];
+
+// ─── CARD TYPE CONFIG ─────────────────────────────────────────────────────────
+const CT = {
+  "HOF":        {color:"#f4b942",label:"HOF"},
+  "Sig Black":  {color:"#e2c97e",label:"Sig Black"},
+  "FA Sig":     {color:"#f472b6",label:"FA Sig"},
+  "Signature":  {color:"#e879f9",label:"Sig"},
+  "Prime":      {color:"#a78bfa",label:"Prime"},
+  "Moment":     {color:"#fb923c",label:"Moment"},
+  "WBC":        {color:"#22d3ee",label:"WBC"},
+  "Impact":     {color:"#2dd4bf",label:"Impact"},
+  "Rising Star":{color:"#a3e635",label:"Rising★"},
+  "Live":       {color:"#38bdf8",label:"Live"},
+  "Season":     {color:"#60a5fa",label:"Season"},
+};
+
+// ─── SLOT CONFIGS ─────────────────────────────────────────────────────────────
+const BATTER_SLOTS = [
+  {id:"LF",label:"LF",order:9,pos:["LF","CF","RF"]},
+  {id:"CF",label:"CF",order:5,pos:["CF","LF","RF"]},
+  {id:"RF",label:"RF",order:1,pos:["RF","CF","LF"]},
+  {id:"3B",label:"3B",order:8,pos:["3B","SS","2B","1B"]},
+  {id:"SS",label:"SS",order:2,pos:["SS","3B","2B"]},
+  {id:"2B",label:"2B",order:7,pos:["2B","SS","3B"]},
+  {id:"DH",label:"DH",order:3,pos:["DH","1B","LF","RF","CF","C"]},
+  {id:"C",label:"C",order:6,pos:["C","DH"]},
+  {id:"1B",label:"1B",order:4,pos:["1B","DH","3B"]},
+];
+const BENCH_SLOTS = [
+  {id:"B1",label:"Bench",pos:null},
+  {id:"B2",label:"Bench",pos:null},
+  {id:"B3",label:"Bench",pos:null},
+  {id:"B4",label:"Bench",pos:null},
+  {id:"B5",label:"Bench",pos:null},
+];
+const SP_SLOTS = [
+  {id:"SP1",label:"#1 SP",pos:["SP"]},
+  {id:"SP2",label:"#2 SP",pos:["SP"]},
+  {id:"SP3",label:"#3 SP",pos:["SP"]},
+  {id:"SP4",label:"#4 SP",pos:["SP"]},
+  {id:"SP5",label:"#5 SP",pos:["SP"]},
+];
+const RP_SU_MO = [
+  {id:"SU",label:"Set-up",pos:["RP","CP"]},
+  {id:"MO",label:"Mop-up",pos:["RP","CP"]},
+];
+const RP_LR = [
+  {id:"LR1",label:"Long Rel.",pos:["RP","SP","CP"]},
+  {id:"LR2",label:"Long Rel.",pos:["RP","SP","CP"]},
+  {id:"LR3",label:"Long Rel.",pos:["RP","SP","CP"]},
+  {id:"LR4",label:"Long Rel.",pos:["RP","SP","CP"]},
+];
+const CP_SLOT = [{id:"CP",label:"Closer",pos:["CP","RP"]}];
+const RESERVE_SLOTS = Array.from({length:10},(_,i)=>({id:`R${i+1}`,label:"Reserve",pos:null}));
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let lineup = {};
+let activeSlotId = null;
+let activeSlotPosFilter = null;
+let modalPosFilter = "ALL";
+let modalTypeFilter = "ALL";
+
+const ALL_SLOTS = [...BATTER_SLOTS,...BENCH_SLOTS,...SP_SLOTS,...RP_SU_MO,...RP_LR,...CP_SLOT,...RESERVE_SLOTS];
+
+function getPlayer(id) { return id ? PLAYERS.find(p=>p.id===id) : null; }
+function getAssignedIds() { return Object.values(lineup).filter(Boolean); }
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  loadFromStorage();
+  buildSlots();
+  renderAll();
+  buildPickerFilters();
+  updateStats();
+});
+
+// ─── BUILD SLOT ELEMENTS ──────────────────────────────────────────────────────
+function buildSlots() {
+  renderSlotGroup(BATTER_SLOTS, 'batter-field');
+  renderSlotGroup(BENCH_SLOTS, 'batter-bench');
+  renderSlotGroup(SP_SLOTS, 'sp-grid');
+  renderSlotGroup(RP_SU_MO, 'su-mo-grid');
+  renderSlotGroup(RP_LR, 'lr-grid');
+  renderSlotGroup(CP_SLOT, 'cp-grid');
+  renderSlotGroup(RESERVE_SLOTS, 'reserve-grid');
+}
+
+function renderSlotGroup(slots, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  slots.forEach(s => {
+    const el = createSlotEl(s);
+    container.appendChild(el);
+  });
+}
+
+function createSlotEl(slotConfig) {
+  const el = document.createElement('div');
+  el.className = 'slot';
+  el.id = 'slot-' + slotConfig.id;
+  el.dataset.slotId = slotConfig.id;
+  el.innerHTML = `
+    <div class="slot-empty">
+      <div class="slot-empty-pos">${slotConfig.label}</div>
+      <div class="slot-empty-icon">＋</div>
+      ${slotConfig.order ? `<div class="slot-empty-order">Order #${slotConfig.order}</div>` : ''}
+    </div>
+    <div class="slot-filled">
+      <div class="slot-type-bar"></div>
+      <div class="slot-inner">
+        <div class="slot-top">
+          <div class="slot-ovr"></div>
+          <div class="slot-pos-badge">${slotConfig.label}</div>
+        </div>
+        <div class="slot-name"></div>
+        <div class="slot-meta">
+          <div class="slot-year-team"></div>
+          <div class="slot-type-label"></div>
+        </div>
+      </div>
+      <button class="slot-remove" title="Remove player" onclick="removeFromSlot(event,'${slotConfig.id}')">✕</button>
+    </div>`;
+  el.addEventListener('click', (e) => {
+    if (e.target.classList.contains('slot-remove')) return;
+    openPicker(slotConfig.id, slotConfig.pos);
+  });
+  return el;
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderAll() {
+  ALL_SLOTS.forEach(s => renderSlot(s.id));
+  updateTabCounts();
+  updateStats();
+}
+
+function renderSlot(slotId) {
+  const el = document.getElementById('slot-' + slotId);
+  if (!el) return;
+  const playerId = lineup[slotId];
+  const player = getPlayer(playerId);
+  if (player) {
+    el.classList.add('filled');
+    const ct = CT[player.type] || {color:'#60a5fa',label:player.type};
+    el.querySelector('.slot-type-bar').style.background = ct.color;
+    el.querySelector('.slot-ovr').textContent = player.ovr;
+    el.querySelector('.slot-ovr').style.color = ct.color;
+    el.querySelector('.slot-name').textContent = player.name;
+    el.querySelector('.slot-year-team').textContent = [player.year, player.team].filter(Boolean).join(' · ');
+    el.querySelector('.slot-type-label').textContent = ct.label;
+    el.querySelector('.slot-type-label').style.color = ct.color;
+    el.style.borderColor = ct.color + '60';
+    el.style.background = `linear-gradient(135deg, ${ct.color}0d 0%, rgba(13,18,32,.9) 50%)`;
+  } else {
+    el.classList.remove('filled');
+    el.style.borderColor = '';
+    el.style.background = '';
+  }
+}
+
+// ─── PICKER ───────────────────────────────────────────────────────────────────
+function openPicker(slotId, posFilter) {
+  activeSlotId = slotId;
+  activeSlotPosFilter = posFilter;
+  const slotConfig = ALL_SLOTS.find(s=>s.id===slotId);
+  // Set slot info label
+  document.getElementById('modalSlotInfo').textContent = slotConfig ? `${slotConfig.label} Slot` : slotId;
+  // Reset filters
+  modalPosFilter = (posFilter && posFilter.length === 1) ? posFilter[0] : "ALL";
+  modalTypeFilter = "ALL";
+  // Update position pills active state
+  document.querySelectorAll('#posFilters .f-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.pos === modalPosFilter);
+  });
+  document.querySelectorAll('#typeFilters .f-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.type === "ALL");
+  });
+  document.getElementById('modalSearch').value = '';
+  renderPicker();
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('modalSearch').focus(), 300);
+}
+
+function closePicker() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  activeSlotId = null;
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closePicker();
+}
+
+function buildPickerFilters() {
+  const positions = ["ALL","C","1B","2B","3B","SS","LF","CF","RF","DH","SP","RP","CP"];
+  const posContainer = document.getElementById('posFilters');
+  posContainer.innerHTML = positions.map(p =>
+    `<button class="f-pill ${p==='ALL'?'active':''}" data-pos="${p}" onclick="setPosFilter('${p}')">${p}</button>`
+  ).join('');
+
+  const types = ["ALL",...Object.keys(CT)];
+  const typeContainer = document.getElementById('typeFilters');
+  typeContainer.innerHTML = types.map(t => {
+    const col = CT[t]?.color || '';
+    return `<button class="f-pill ${t==='ALL'?'active':''}" data-type="${t}" style="${col?`--ct:${col}`:''}" onclick="setTypeFilter('${t}')">${t==='ALL'?'All Types':CT[t]?.label||t}</button>`;
+  }).join('');
+}
+
+function setPosFilter(pos) {
+  modalPosFilter = pos;
+  document.querySelectorAll('#posFilters .f-pill').forEach(p => p.classList.toggle('active', p.dataset.pos === pos));
+  renderPicker();
+}
+
+function setTypeFilter(type) {
+  modalTypeFilter = type;
+  document.querySelectorAll('#typeFilters .f-pill').forEach(p => p.classList.toggle('active', p.dataset.type === type));
+  renderPicker();
+}
+
+function renderPicker() {
+  const query = (document.getElementById('modalSearch').value || '').toLowerCase().trim();
+  const assigned = getAssignedIds();
+  let filtered = PLAYERS.filter(p => {
+    // Position filter
+    if (modalPosFilter !== "ALL" && !p.pos.includes(modalPosFilter)) return false;
+    // Type filter
+    if (modalTypeFilter !== "ALL" && p.type !== modalTypeFilter) return false;
+    // Search
+    if (query) {
+      const haystack = `${p.name} ${p.year} ${p.team} ${p.type} ${p.pos.join(' ')}`.toLowerCase();
+      if (!haystack.includes(query)) return false;
+    }
+    return true;
+  }).sort((a,b) => b.ovr - a.ovr);
+
+  const grid = document.getElementById('pickerGrid');
+  const noResults = document.getElementById('noResults');
+  document.getElementById('modalCount').textContent = `${filtered.length} player${filtered.length!==1?'s':''} found`;
+
+  if (!filtered.length) {
+    grid.innerHTML = '';
+    noResults.style.display = 'block';
+    return;
+  }
+  noResults.style.display = 'none';
+  grid.innerHTML = filtered.map(p => {
+    const ct = CT[p.type] || {color:'#60a5fa',label:p.type};
+    const isAssigned = assigned.includes(p.id);
+    return `<div class="player-card ${isAssigned?'assigned':''}" onclick="assignPlayer(${p.id})">
+      <div class="pc-bar" style="background:${ct.color}"></div>
+      <div class="pc-body">
+        <div class="pc-ovr-row">
+          <div class="pc-ovr" style="color:${ct.color}">${p.ovr}</div>
+          <div class="pc-team">${p.team}</div>
+        </div>
+        <div class="pc-name">${p.name}</div>
+        <div class="pc-year">${p.year||'—'}</div>
+        <div class="pc-foot">
+          <div class="pc-pos-tags">${p.pos.map(pos=>`<span class="pc-pos-tag">${pos}</span>`).join('')}</div>
+          <div class="pc-type" style="color:${ct.color}">${ct.label}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function assignPlayer(playerId) {
+  if (!activeSlotId) return;
+  lineup[activeSlotId] = playerId;
+  renderSlot(activeSlotId);
+  updateTabCounts();
+  updateStats();
+  saveToStorage();
+  closePicker();
+  showToast(`${getPlayer(playerId).name} assigned!`, 'success');
+}
+
+function removeFromSlot(e, slotId) {
+  e.stopPropagation();
+  lineup[slotId] = null;
+  renderSlot(slotId);
+  updateTabCounts();
+  updateStats();
+  saveToStorage();
+}
+
+// ─── STATS ────────────────────────────────────────────────────────────────────
+function updateStats() {
+  const allIds = getAssignedIds();
+  const players = allIds.map(id => getPlayer(id)).filter(Boolean);
+  const totalDeck = players.reduce((sum,p) => sum+p.deck, 0);
+  const avgOvr = players.length ? (players.reduce((sum,p)=>sum+p.ovr,0)/players.length).toFixed(1) : '—';
+  // Top team
+  const teamCounts = {};
+  players.forEach(p => { teamCounts[p.team] = (teamCounts[p.team]||0)+1; });
+  const topTeam = Object.entries(teamCounts).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—';
+  document.getElementById('stat-ovr').textContent = avgOvr;
+  document.getElementById('stat-deck').textContent = totalDeck;
+  document.getElementById('stat-count').textContent = `${players.length}/31`;
+  document.getElementById('stat-team').textContent = topTeam;
+}
+
+function updateTabCounts() {
+  const batters = [...BATTER_SLOTS,...BENCH_SLOTS].filter(s=>lineup[s.id]).length;
+  const battersTotal = BATTER_SLOTS.length;
+  const pitchers = [...SP_SLOTS,...RP_SU_MO,...RP_LR,...CP_SLOT].filter(s=>lineup[s.id]).length;
+  const pitchersTotal = SP_SLOTS.length + RP_SU_MO.length + RP_LR.length + CP_SLOT.length;
+  const reserve = RESERVE_SLOTS.filter(s=>lineup[s.id]).length;
+  document.getElementById('tc-batters').textContent = `${batters}/${battersTotal}`;
+  document.getElementById('tc-pitchers').textContent = `${pitchers}/${pitchersTotal}`;
+  document.getElementById('tc-reserve').textContent = `${reserve}/10`;
+}
+
+// ─── SAVE / LOAD ──────────────────────────────────────────────────────────────
+function saveToStorage() {
+  try {
+    localStorage.setItem('mlbr_lineup', JSON.stringify(lineup));
+    const name = document.getElementById('lineupName').value;
+    if (name) localStorage.setItem('mlbr_lineup_name', name);
+  } catch(e) {}
+}
+
+function loadFromStorage() {
+  try {
+    const saved = localStorage.getItem('mlbr_lineup');
+    if (saved) lineup = JSON.parse(saved);
+    const name = localStorage.getItem('mlbr_lineup_name');
+    if (name) document.getElementById('lineupName').value = name;
+  } catch(e) { lineup = {}; }
+}
+
+function saveLineup() {
+  saveToStorage();
+  showToast('Lineup saved!', 'success');
+}
+
+function clearLineup() {
+  if (!confirm('Clear all lineup slots?')) return;
+  lineup = {};
+  renderAll();
+  showToast('Lineup cleared', 'info');
+}
+
+function shareLineup() {
+  const players = getAssignedIds().map(id => getPlayer(id)).filter(Boolean);
+  if (!players.length) { showToast('No players assigned yet', 'info'); return; }
+  const name = document.getElementById('lineupName').value || 'My Lineup';
+  const lines = [`📋 ${name} | MLB Rivals Lineup`, ''];
+  // Batters
+  lines.push('⚾ BATTERS');
+  BATTER_SLOTS.forEach(s => {
+    const p = getPlayer(lineup[s.id]);
+    lines.push(`${s.label}: ${p ? `${p.name} ${p.year} (${p.ovr} OVR)` : '—'}`);
+  });
+  lines.push('');
+  lines.push('⚾ PITCHERS');
+  [...SP_SLOTS,...RP_SU_MO,...RP_LR,...CP_SLOT].forEach(s => {
+    const p = getPlayer(lineup[s.id]);
+    lines.push(`${s.label}: ${p ? `${p.name} ${p.year} (${p.ovr} OVR)` : '—'}`);
+  });
+  const text = lines.join('\n');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!', 'success'));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('Copied!', 'success');
+  }
+}
+
+// ─── UI HELPERS ───────────────────────────────────────────────────────────────
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showToast(msg, type='info') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast ${type} show`;
+  clearTimeout(el._timer);
+  el._timer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+function toggleNav() {
+  const ham = document.getElementById('ham');
+  const nav = document.getElementById('mob-nav');
+  ham.classList.toggle('open');
+  nav.classList.toggle('open');
+}
+document.getElementById('mob-nav').querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('ham').classList.remove('open');
+    document.getElementById('mob-nav').classList.remove('open');
+  });
+});
+
+// Auto-save on name change
+document.getElementById('lineupName').addEventListener('input', () => saveToStorage());
+
+// Swipe down to close modal on mobile
+let touchStartY = 0;
+document.getElementById('modalSheet').addEventListener('touchstart', e => {
+  touchStartY = e.touches[0].clientY;
+}, {passive:true});
+document.getElementById('modalSheet').addEventListener('touchmove', e => {
+  const dy = e.touches[0].clientY - touchStartY;
+  if (dy > 60 && document.querySelector('.modal-body').scrollTop === 0) closePicker();
+}, {passive:true});
+</script>
+</body>
+</html>
