@@ -2,22 +2,18 @@
 <html>
 <head>
   <title>MLB Rivals – Players</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* =======================
-       GLOBAL BACKGROUND
-    ======================== */
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at top, rgba(15,23,42,0.95), rgba(0,0,0,1));
+      background: radial-gradient(circle at top, #0f172a, #000);
     }
 
-    /* =======================
-       NAVIGATION
-    ======================== */
+    /* ================= NAVIGATION ================= */
+
     .nav-link {
       position: relative;
       padding: 6px 0;
@@ -43,9 +39,8 @@
       width: 100%;
     }
 
-    /* =======================
-       CARD STRUCTURE
-    ======================== */
+    /* ================= CARD SYSTEM ================= */
+
     .flip-card {
       perspective: 1200px;
     }
@@ -53,9 +48,10 @@
     .flip-inner {
       position: relative;
       width: 100%;
-      height: 400px;
+      height: 380px;
       transform-style: preserve-3d;
-      transition: transform 0.7s cubic-bezier(.22,.61,.36,1);
+      transition: transform .7s cubic-bezier(.22,.61,.36,1);
+      cursor: pointer;
     }
 
     .flipped {
@@ -69,16 +65,12 @@
       border-radius: 20px;
       backface-visibility: hidden;
       padding: 1.2rem;
-      overflow: hidden;
-
       background: linear-gradient(
         to bottom,
         rgba(30,30,45,0.95),
         rgba(10,10,15,0.98)
       );
-
       border: 2px solid rgba(255,255,255,0.08);
-
       box-shadow:
         inset 0 0 10px rgba(255,255,255,0.05),
         0 10px 25px rgba(0,0,0,0.6);
@@ -88,90 +80,15 @@
       transform: rotateY(180deg);
     }
 
-    /* =======================
-       RARITY FRAME COLORS
-    ======================== */
-    .SIGNATURE .face {
-      border-color: rgba(236,72,153,0.6);
-      box-shadow:
-        inset 0 0 12px rgba(236,72,153,0.2),
-        0 10px 25px rgba(0,0,0,0.6);
-    }
-
-    .PRIME .face {
-      border-color: rgba(59,130,246,0.6);
-      box-shadow:
-        inset 0 0 12px rgba(59,130,246,0.2),
-        0 10px 25px rgba(0,0,0,0.6);
-    }
-
-    .IMPACT .face {
-      border-color: rgba(16,185,129,0.6);
-      box-shadow:
-        inset 0 0 12px rgba(16,185,129,0.2),
-        0 10px 25px rgba(0,0,0,0.6);
-    }
-
-    /* =======================
-       CARD ART
-    ======================== */
-    .card-art-wrapper {
-      position: relative;
-      height: 220px;
-      border-radius: 14px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .card-art-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Subtle art shine */
-    .card-art-wrapper::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        120deg,
-        transparent 45%,
-        rgba(255,255,255,0.06),
-        transparent 55%
-      );
-      transform: translateX(-100%);
-      animation: sweep 9s ease-in-out infinite;
-    }
-
-    @keyframes sweep {
-      0% { transform: translateX(-100%); opacity: 0; }
-      40% { opacity: 0.2; }
-      60% { opacity: 0.2; }
-      100% { transform: translateX(100%); opacity: 0; }
-    }
-
-    /* =======================
-       STAT BARS
-    ======================== */
     .stat-bar {
       height: 10px;
       border-radius: 999px;
       width: 0%;
-      transition: width 0.8s cubic-bezier(.22,.61,.36,1);
+      transition: width .8s cubic-bezier(.22,.61,.36,1);
     }
 
     .SIGNATURE .stat-bar {
-      background: linear-gradient(to right, #ec4899, #9333ea);
-    }
-
-    .PRIME .stat-bar {
-      background: linear-gradient(to right, #3b82f6, #6366f1);
-    }
-
-    .IMPACT .stat-bar {
-      background: linear-gradient(to right, #10b981, #14b8a6);
+      background: linear-gradient(to right,#ec4899,#9333ea);
     }
 
   </style>
@@ -179,19 +96,20 @@
 
 <body class="text-white min-h-screen">
 
-<!-- =======================
-     HEADER
-======================== -->
+<!-- ================= HEADER ================= -->
+
 <header class="bg-black/85 backdrop-blur border-b border-white/10 sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-    <div class="flex items-center gap-3">
-      <div class="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></div>
-      <h1 class="text-xl font-extrabold tracking-wider text-blue-400">
+    <!-- Clickable Logo -->
+    <a href="index.html" class="flex items-center gap-3 group">
+      <div class="w-3 h-3 rounded-full bg-blue-500 animate-pulse group-hover:scale-110 transition"></div>
+      <h1 class="text-xl font-extrabold tracking-wider text-blue-400 group-hover:text-blue-300 transition">
         MLB RIVALS
       </h1>
-    </div>
+    </a>
 
+    <!-- Navigation -->
     <nav class="flex gap-8 text-sm text-white/70">
       <a href="index.html" class="nav-link">Home</a>
       <a href="scouts.html" class="nav-link">Scouts</a>
@@ -203,9 +121,8 @@
   </div>
 </header>
 
-<!-- =======================
-     CONTENT
-======================== -->
+<!-- ================= CONTENT ================= -->
+
 <section class="max-w-6xl mx-auto px-6 py-12">
 
   <h2 class="text-4xl font-extrabold mb-10">Player Index</h2>
@@ -214,65 +131,64 @@
 
 </section>
 
+<!-- ================= SCRIPT ================= -->
+
 <script>
+
 const players = [
   {
     name: "Shohei Ohtani",
     team: "LAD",
     rarity: "SIGNATURE",
     ovr: 66,
-    image: "ohtani.jpg",
     stats: { Power: 92, Contact: 88, Speed: 78 }
   }
 ];
 
-function renderPlayers(){
+function renderPlayers() {
 
   const grid = document.getElementById("playerGrid");
   grid.innerHTML = "";
 
-  players.forEach((player,index)=>{
+  players.forEach((player, index) => {
 
     let statsHTML = "";
-    for(let stat in player.stats){
+
+    for (let stat in player.stats) {
       statsHTML += `
         <div class="mb-3">
           <p class="text-sm mb-1">${stat}</p>
           <div class="bg-white/10 rounded-full">
             <div class="stat-bar" id="stat-${index}-${stat}"></div>
           </div>
-        </div>`;
+        </div>
+      `;
     }
 
     const card = document.createElement("div");
     card.className = "flip-card " + player.rarity;
 
     card.innerHTML = `
-      <div class="flip-inner" onclick="flipCard(this,${index})">
+      <div class="flip-inner" onclick="flipCard(this, ${index})">
 
         <div class="face">
-
-          <div class="flex justify-between items-start mb-3">
-            <div class="text-xs tracking-wider opacity-70">
-              ${player.rarity}
-            </div>
-            <div class="px-3 py-1 rounded-full text-xs font-bold
-                        bg-black/70 border border-white/20">
+          <div class="flex justify-between items-start mb-3 text-xs opacity-70">
+            <span>${player.rarity}</span>
+            <span class="px-3 py-1 rounded-full bg-black/70 border border-white/20 font-bold">
               OVR ${player.ovr}
-            </div>
+            </span>
           </div>
 
-          <div class="card-art-wrapper mb-4">
-            <img src="${player.image}" alt="${player.name}">
+          <div class="mb-4 h-40 bg-white/5 rounded flex items-center justify-center text-white/40">
+            CARD ART
           </div>
 
           <h3 class="font-semibold text-lg">${player.name}</h3>
           <p class="text-sm text-white/60">${player.team}</p>
-
         </div>
 
         <div class="face back">
-          <h3 class="font-bold mb-4 text-lg">${player.name}</h3>
+          <h3 class="font-bold mb-4">${player.name}</h3>
           ${statsHTML}
         </div>
 
@@ -283,21 +199,25 @@ function renderPlayers(){
   });
 }
 
-function flipCard(el,index){
+function flipCard(el, index) {
+
   el.classList.toggle("flipped");
 
-  if(el.classList.contains("flipped")){
+  if (el.classList.contains("flipped")) {
+
     const player = players[index];
-    setTimeout(()=>{
-      for(let stat in player.stats){
+
+    setTimeout(() => {
+      for (let stat in player.stats) {
         document.getElementById(`stat-${index}-${stat}`)
           .style.width = player.stats[stat] + "%";
       }
-    },200);
+    }, 200);
   }
 }
 
 renderPlayers();
+
 </script>
 
 </body>
