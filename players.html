@@ -12,7 +12,7 @@
       background: radial-gradient(circle at top, #0f172a, #000);
     }
 
-    /* ================= NAVIGATION ================= */
+    /* ================= NAV ================= */
 
     .nav-link {
       position: relative;
@@ -34,14 +34,14 @@
     .nav-link:hover { color: white; }
     .nav-link:hover::after { width: 100%; }
 
-    /* ================= CARD STRUCTURE ================= */
+    /* ================= CARD SYSTEM ================= */
 
     .flip-card { perspective: 1200px; }
 
     .flip-inner {
       position: relative;
       width: 100%;
-      height: 430px;
+      height: 440px;
       transform-style: preserve-3d;
       transition: transform .7s cubic-bezier(.22,.61,.36,1);
       cursor: pointer;
@@ -65,7 +65,7 @@
 
     .back { transform: rotateY(180deg); }
 
-    /* ================= RARITY BACKGROUNDS ================= */
+    /* ================= RARITY BACKGROUND ================= */
 
     .SIGNATURE .face {
       background:
@@ -114,7 +114,6 @@
     /* ================= CARD ART ================= */
 
     .card-art-wrapper {
-      position: relative;
       height: 200px;
       border-radius: 14px;
       overflow: hidden;
@@ -179,11 +178,11 @@
 
   <h2 class="text-4xl font-extrabold mb-6">Player Index</h2>
 
-  <!-- Filters -->
+  <!-- FILTERS -->
   <div class="grid md:grid-cols-4 gap-4 mb-10">
 
     <input id="searchInput"
-      placeholder="Search player..."
+      placeholder="Search name, team, rarity..."
       class="bg-white/10 px-4 py-2 rounded"
       oninput="renderPlayers()">
 
@@ -245,18 +244,34 @@ function renderPlayers(){
   const grid = document.getElementById("playerGrid");
   grid.innerHTML = "";
 
-  const search = document.getElementById("searchInput").value.toLowerCase();
+  const search = document.getElementById("searchInput").value.trim().toLowerCase();
   const team = document.getElementById("teamFilter").value;
   const position = document.getElementById("positionFilter").value;
   const sort = document.getElementById("sortOVR").value;
 
-  let filtered = players.filter(p =>
-    p.name.toLowerCase().includes(search) &&
-    (team === "ALL" || p.team === team) &&
-    (position === "ALL" || p.position === position)
-  );
+  let filtered = players.filter(player => {
+
+    const matchesSearch =
+      player.name.toLowerCase().includes(search) ||
+      player.team.toLowerCase().includes(search) ||
+      player.position.toLowerCase().includes(search) ||
+      player.rarity.toLowerCase().includes(search);
+
+    const matchesTeam = team === "ALL" || player.team === team;
+    const matchesPosition = position === "ALL" || player.position === position;
+
+    return matchesSearch && matchesTeam && matchesPosition;
+  });
 
   filtered.sort((a,b)=> sort==="DESC" ? b.ovr-a.ovr : a.ovr-b.ovr);
+
+  if(filtered.length === 0){
+    grid.innerHTML = `
+      <div class="col-span-full text-center text-white/50 py-20">
+        No players found.
+      </div>`;
+    return;
+  }
 
   filtered.forEach((player,index)=>{
 
@@ -266,7 +281,7 @@ function renderPlayers(){
         <div class="mb-3">
           <p class="text-sm mb-1">${stat}</p>
           <div class="bg-white/10 rounded-full">
-            <div class="stat-bar" id="stat-${index}-${stat}"></div>
+            <div class="stat-bar" id="stat-${player.name}-${stat}"></div>
           </div>
         </div>`;
     }
@@ -275,7 +290,7 @@ function renderPlayers(){
     card.className="flip-card "+player.rarity;
 
     card.innerHTML=`
-      <div class="flip-inner" onclick="flipCard(this,${index})">
+      <div class="flip-inner" onclick="flipCard(this,'${player.name}')">
 
         <div class="face relative">
 
@@ -315,14 +330,14 @@ function renderPlayers(){
   });
 }
 
-function flipCard(el,index){
+function flipCard(el,name){
   el.classList.toggle("flipped");
 
   if(el.classList.contains("flipped")){
-    const player=players[index];
+    const player = players.find(p=>p.name===name);
     setTimeout(()=>{
       for(let stat in player.stats){
-        document.getElementById(`stat-${index}-${stat}`)
+        document.getElementById(`stat-${player.name}-${stat}`)
           .style.width=player.stats[stat]+"%";
       }
     },200);
