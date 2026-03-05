@@ -41,18 +41,21 @@ header{position:sticky;top:0;z-index:100;background:rgba(5,8,16,.92);backdrop-fi
 .nav-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);animation:pulse 2s ease-in-out infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--blue-glow)}50%{box-shadow:0 0 0 6px rgba(47,124,246,0)}}
 nav{display:flex;gap:2px}
-.nav-link{font-family:var(--font-ui);font-size:.875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 12px;border-radius:6px;transition:color .2s,background .2s}
-.nav-link:hover{color:var(--text);background:rgba(255,255,255,.06)}
-.nav-link.active{color:var(--blue);background:rgba(47,124,246,.1)}
-.ham-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--text);flex-direction:column;gap:5px;align-items:center;justify-content:center;width:38px;height:38px}
-.ham-btn span{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:transform .25s,opacity .25s}
-.ham-btn.open span:nth-child(1){transform:translateY(7px)rotate(45deg)}
-.ham-btn.open span:nth-child(2){opacity:0}
-.ham-btn.open span:nth-child(3){transform:translateY(-7px)rotate(-45deg)}
-.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;background:rgba(5,8,16,.97);border-bottom:1px solid var(--border);padding:12px 20px 20px;flex-direction:column;gap:4px;animation:slideDown .2s ease}
+.nav-link{font-family:var(--font-ui);font-size:.875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 14px;border-radius:6px;transition:color .2s,background .2s}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(255,255,255,.06)}
+.nav-link.active{color:var(--blue)}
+/* HAMBURGER */
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;padding:8px;border-radius:8px;cursor:pointer;background:rgba(255,255,255,.06);border:1px solid var(--border);flex-shrink:0;transition:background .2s}
+.ham:hover{background:rgba(255,255,255,.1)}
+.ham span{display:block;height:2px;background:var(--text);border-radius:2px;transition:transform .3s,opacity .3s,width .3s}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0;width:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+/* MOBILE NAV DRAWER */
+.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;background:rgba(5,8,16,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);flex-direction:column;padding:12px 16px 20px}
 .mob-nav.open{display:flex}
-@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.mob-nav a{font-family:var(--font-ui);font-size:1rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:12px 14px;border-radius:8px;transition:color .2s,background .2s}
+.mob-nav a{font-family:var(--font-ui);font-size:1.1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:14px 12px;border-radius:8px;border-bottom:1px solid var(--border);transition:color .2s,background .2s}
+.mob-nav a:last-child{border-bottom:none}
 .mob-nav a:hover,.mob-nav a.active{color:var(--text);background:rgba(255,255,255,.06)}
 .mob-nav a.active{color:var(--blue)}
 
@@ -221,7 +224,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
   .reserve-grid{grid-template-columns:repeat(4,1fr)}
 }
 @media(max-width:768px){
-  nav{display:none}.ham-btn{display:flex}
+  nav{display:none}.ham{display:flex}
   .page-hero{padding:28px 16px 16px}
   .lineup-name-row{padding:8px 16px 6px}
   .tabs-wrap{padding:0 16px 0}
@@ -267,16 +270,19 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
 <!-- HEADER -->
 <header>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><span class="dot"></span>MLB RIVALS</a>
+    <a href="index.html" class="nav-logo">
+      <span class="dot"></span>MLB Rivals
+    </a>
     <nav>
       <a href="index.html" class="nav-link">Home</a>
       <a href="scouts.html" class="nav-link">Scouts</a>
       <a href="players.html" class="nav-link">Players</a>
       <a href="updates.html" class="nav-link">Updates</a>
       <a href="guide.html" class="nav-link">Guide</a>
+      <a href="events.html" class="nav-link">Events</a>
       <a href="lineup.html" class="nav-link active">Builder</a>
     </nav>
-    <button class="ham-btn" id="ham" aria-label="Open menu" onclick="toggleNav()">
+    <button class="ham" id="ham" aria-label="Open menu" onclick="toggleNav()">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -287,6 +293,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
   <a href="players.html">Players</a>
   <a href="updates.html">Updates</a>
   <a href="guide.html">Guide</a>
+  <a href="events.html">Events</a>
   <a href="lineup.html" class="active">Builder</a>
 </div>
 
@@ -444,6 +451,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);background
     <div class="footer-links">
       <a href="https://community.withhive.com/MLB9IRIVALS" target="_blank">Community</a>
       <a href="https://twitter.com/MLBrivalsus" target="_blank">X / Twitter</a>
+      <a href="https://www.facebook.com/mlbrivals.us" target="_blank">Facebook</a>
       <a href="https://store.steampowered.com/app/2568430" target="_blank">Steam</a>
     </div>
     <div class="footer-copy">Unofficial fan companion · Not affiliated with Com2uS or MLB</div>
