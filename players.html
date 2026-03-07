@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>MLB Rivals – Player Index</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="preload" as="image" href="https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg"/>
+<link rel="preload" as="image" href="https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg"/>
+<link rel="preload" as="image" href="https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg"/>
+<link rel="preload" as="image" href="https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg"/>
+<link rel="preload" as="image" href="https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg"/>
+<link rel="preload" as="image" href="https://res.cloudinary.com/dwusifgvb/image/upload/v1772690716/hof_sprite_sxqiyo.png"/>
+<link rel="preload" as="image" href="https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png"/>
+<link rel="preload" as="image" href="https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050810; --surface:#0d1220; --surface2:#141a2e;
+  --border:rgba(255,255,255,.07);
+  --blue:#2f7cf6; --blue-glow:rgba(47,124,246,.45);
+  --text:#e8ecf5; --muted:rgba(232,236,245,.45);
+  --fd:'Bebas Neue',sans-serif; --fu:'Barlow Condensed',sans-serif; --fb:'Barlow',sans-serif;
+  /* rarity colors */
+  --hof:#f4b942; --sig-black:#c0c0c0; --sig:#ec4899; --moment:#10b981;
+  --wbc:#38bdf8; --prime:#3b82f6; --impact:#eab308; --gray:#6b7280;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+/* BG */
+.bg-grid{position:fixed;inset:0;z-index:0;
+  background-image:linear-gradient(rgba(47,124,246,.05)1px,transparent 1px),linear-gradient(90deg,rgba(47,124,246,.05)1px,transparent 1px);
+  background-size:60px 60px;animation:gridScroll 25s linear infinite;pointer-events:none}
+.bg-grid::after{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(47,124,246,.12),transparent 70%)}
+@keyframes gridScroll{from{transform:translateY(0)}to{transform:translateY(60px)}}
+
+/* NAV */
+header{position:sticky;top:0;z-index:100;background:rgba(5,8,16,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-size:1.4rem;letter-spacing:.08em;flex-shrink:0}
+.nav-logo-img {
+  height: 32px; width: auto; display: block;
+  filter: brightness(1.1);
+  transition: filter .2s, transform .2s;
+}
+.nav-logo:hover .nav-logo-img { filter: brightness(1.3); transform: scale(1.05); }
+
+@keyframes dpulse{0%,100%{box-shadow:0 0 0 0 var(--blue-glow)}50%{box-shadow:0 0 0 6px rgba(47,124,246,0)}}
+nav{display:flex;gap:2px}
+.nav-link{font-family:var(--fu);font-size:.875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 14px;border-radius:6px;transition:color .2s,background .2s}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(255,255,255,.06)}
+.nav-link.active{color:var(--blue)}
+
+/* PAGE HEADER */
+.ph{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:40px 24px 24px}
+.ph-title{font-family:var(--fd);font-size:2.8rem;letter-spacing:.04em;text-transform:uppercase}
+.ph-title span{color:var(--blue)}
+.ph-sub{font-family:var(--fu);font-size:.95rem;color:var(--muted);margin-top:4px}
+
+/* FILTERS */
+.fw{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 24px 24px}
+.fp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.frow{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.fg{display:flex;flex-direction:column;gap:5px;flex:1;min-width:130px}
+.fg.wide{flex:2;min-width:200px}
+.fg.narrow{flex:0 0 90px;min-width:90px}
+.fl{font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.fi,.fs{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--fu);font-size:.875rem;font-weight:600;padding:8px 12px;border-radius:8px;outline:none;transition:border-color .2s;width:100%}
+.fi:focus,.fs:focus{border-color:rgba(47,124,246,.5)}
+.fs option{background:#141a2e}
+.btn-clear{font-family:var(--fu);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:8px;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap;height:37px}
+.btn-clear:hover{background:rgba(255,255,255,.1);color:var(--text)}
+.ovr-wrap{display:flex;gap:6px;align-items:center}
+.ovr-wrap input{width:52px;text-align:center}
+.ovr-sep{font-family:var(--fu);font-size:.8rem;color:var(--muted)}
+
+/* RESULTS BAR */
+.rb{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 24px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.rc{font-family:var(--fu);font-size:.85rem;color:var(--muted)}
+.rc strong{color:var(--text)}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.li{display:flex;align-items:center;gap:5px;font-family:var(--fu);font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ld{width:8px;height:8px;border-radius:2px}
+
+/* GRID */
+.pg{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:14px}
+.nr{grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--fu);color:var(--muted);font-size:1.1rem}
+
+/* FLIP CARD */
+.flip-card{perspective:1200px;cursor:pointer}
+.fi2{position:relative;width:100%;aspect-ratio:5/7;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.22,.61,.36,1)}
+.fi2.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:14px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.bk{transform:rotateY(180deg)}
+
+/* CARD FRONT */
+.cf{display:flex;flex-direction:column}
+.ca{flex:0 0 62%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.ab{position:absolute;inset:0;overflow:hidden}
+
+/* Base sheen removed — each rarity defines its own color below */
+@keyframes sheen{from{transform:translateX(-100%)skewX(-15deg)}to{transform:translateX(400%)skewX(-15deg)}}
+@keyframes sheen-slow{from{transform:translateX(-100%)skewX(-15deg)}to{transform:translateX(400%)skewX(-15deg)}}
+
+/* ── Per-rarity colored sheens ── */
+/* HOF — rich gold, handled separately with extra layers below */
+.r-HOF .ab::before{content:'';position:absolute;top:0;bottom:0;left:-60%;width:45%;
+  background:linear-gradient(to right,transparent,rgba(255,215,80,.55),rgba(255,245,150,.7),rgba(255,215,80,.55),transparent);
+  animation:sheen-slow 2.8s linear infinite;z-index:4}
+
+/* Sig Black — silver-chrome */
+.r-SIGNATURE_BLACK .ab::before,.r-FA_SIGNATURE_BLACK .ab::before,.r-WBC_SIGNATURE_BLACK .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(220,220,230,.18),rgba(255,255,255,.38),rgba(220,220,230,.18),transparent);
+  animation:sheen 3.5s linear infinite;z-index:4}
+
+/* Signature — pink-purple */
+.r-SIGNATURE .ab::before,.r-FA_SIGNATURE .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(236,72,153,.2),rgba(249,168,212,.45),rgba(236,72,153,.2),transparent);
+  animation:sheen 4s linear infinite;z-index:4}
+
+/* WBC Signature — sky blue */
+.r-WBC_SIGNATURE .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(56,189,248,.2),rgba(186,230,253,.45),rgba(56,189,248,.2),transparent);
+  animation:sheen 4s linear infinite;z-index:4}
+
+/* Moment — emerald green */
+.r-MOMENT .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(16,185,129,.2),rgba(110,231,183,.45),rgba(16,185,129,.2),transparent);
+  animation:sheen 4s linear infinite;z-index:4}
+
+/* Prime — blue */
+.r-PRIME .ab::before,.r-FA_PRIME .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(59,130,246,.2),rgba(147,197,253,.42),rgba(59,130,246,.2),transparent);
+  animation:sheen 4.5s linear infinite;z-index:4}
+
+/* WBC Prime — sky blue (lighter) */
+.r-WBC_PRIME .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(56,189,248,.18),rgba(186,230,253,.38),rgba(56,189,248,.18),transparent);
+  animation:sheen 4.5s linear infinite;z-index:4}
+
+/* Impact — amber/gold */
+.r-IMPACT .ab::before,.r-FA_IMPACT .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(234,179,8,.2),rgba(253,230,138,.42),rgba(234,179,8,.2),transparent);
+  animation:sheen 5s linear infinite;z-index:4}
+
+/* Season — cool gray */
+.r-SEASON .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(156,163,175,.1),rgba(209,213,219,.22),rgba(156,163,175,.1),transparent);
+  animation:sheen 6s linear infinite;z-index:4}
+
+/* Live — very subtle gray */
+.r-LIVE .ab::before{
+  content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(to right,transparent,rgba(156,163,175,.07),rgba(229,231,235,.16),rgba(156,163,175,.07),transparent);
+  animation:sheen 7s linear infinite;z-index:4}
+.ai{position:relative;z-index:2;font-family:var(--fd);font-size:4.5rem;letter-spacing:.02em;opacity:.18;user-select:none;pointer-events:none;line-height:1}
+.ao{position:absolute;top:9px;left:11px;z-index:3;font-family:var(--fd);font-size:2rem;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.9);letter-spacing:.02em}
+.aps{position:absolute;top:9px;right:9px;z-index:3;display:flex;flex-direction:column;gap:2px;align-items:flex-end}
+.pb{font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.12)}
+.rl-badge{position:absolute;top:9px;left:50%;transform:translateX(-50%);z-index:3;font-family:var(--fu);font-size:.52rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:rgba(47,124,246,.85);border:1px solid rgba(100,160,255,.4);color:#fff;white-space:nowrap}
+.emb-badge{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:3;font-family:var(--fu);font-size:.52rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:3px;white-space:nowrap;backdrop-filter:blur(4px)}
+.wbc-badge{position:absolute;bottom:8px;right:9px;z-index:3;font-family:var(--fu);font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:rgba(56,189,248,.85);border:1px solid rgba(56,189,248,.5);color:#fff}
+.hof-crown{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:3;font-family:var(--fu);font-size:.52rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 9px;border-radius:3px;background:rgba(244,185,66,.85);color:#000;white-space:nowrap}
+.live-badge{position:absolute;bottom:8px;left:9px;z-index:3;display:flex;align-items:center;gap:3px;font-family:var(--fu);font-size:.52rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:rgba(230,57,70,.85);color:#fff}
+.live-dot{width:4px;height:4px;border-radius:50%;background:#fff;animation:dpulse 1.5s ease-in-out infinite}
+
+/* CARD INFO */
+.ci{flex:1;padding:9px 11px;background:rgba(0,0,0,.55);display:flex;flex-direction:column;gap:3px}
+.crl{font-family:var(--fu);font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.cn{font-family:var(--fu);font-size:1rem;font-weight:800;line-height:1.15}
+.cm{font-family:var(--fu);font-size:.7rem;color:var(--muted);display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.ct{font-weight:700}
+.yb{font-family:var(--fu);font-size:.58rem;font-weight:700;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1)}
+
+/* CARD BACK */
+.cbk{display:flex;flex-direction:column;padding:13px;background:var(--surface2);border:2px solid rgba(255,255,255,.08)}
+.bh{margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:10px}
+.bn{font-family:var(--fu);font-size:1rem;font-weight:800;line-height:1.1}
+.bs{font-family:var(--fu);font-size:.65rem;color:var(--muted);margin-top:2px}
+.ss{display:flex;flex-direction:column;gap:7px;flex:1}
+.sr{/* stat row */}
+.sh{display:flex;justify-content:space-between;margin-bottom:3px}
+.sn{font-family:var(--fu);font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sv{font-family:var(--fd);font-size:.9rem;letter-spacing:.04em}
+.st{height:5px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
+.sf{height:100%;border-radius:999px;width:0;transition:width .8s cubic-bezier(.22,.61,.36,1)}
+.hint{font-family:var(--fu);font-size:.58rem;color:var(--muted);text-align:center;margin-top:auto;padding-top:8px;opacity:.45}
+
+/* ===== RARITY BACKGROUNDS ===== */
+
+/* ══════════════════════════════════════════
+   HOF — Dark marble base + gold fire burst
+   Matches actual in-game HOF card aesthetic:
+   black cracked bg, gold corner explosion,
+   clean gold border with outer glow
+══════════════════════════════════════════ */
+@keyframes hofFireShift{
+  0%  {opacity:.85; background-position: 100% 0%, 80% 20%, 60% 5%, 95% 50%}
+  25% {opacity:1;   background-position: 95%  5%, 85% 15%, 55% 0%,  90% 45%}
+  50% {opacity:.9;  background-position: 100% 2%, 75% 25%, 65% 8%,  98% 55%}
+  75% {opacity:.95; background-position: 92%  0%, 82% 18%, 58% 3%,  93% 48%}
+  100%{opacity:.85; background-position: 100% 0%, 80% 20%, 60% 5%,  95% 50%}
+}
+@keyframes hofGlowPulse{
+  0%,100%{box-shadow:0 0 18px rgba(244,185,66,.5), 0 0 40px rgba(244,185,66,.2)}
+  50%     {box-shadow:0 0 28px rgba(244,185,66,.75),0 0 60px rgba(244,185,66,.35)}
+}
+
+/* Card border + outer glow */
+.r-HOF .face.cf{
+  border:2px solid rgba(244,185,66,.85);
+  animation:hofGlowPulse 3s ease-in-out infinite;
+}
+
+/* Dark marble/cracked base */
+.r-HOF .ab{
+  background:
+    /* marble crack veins — subtle lighter streaks */
+    repeating-linear-gradient(
+      128deg,
+      transparent 0px, transparent 18px,
+      rgba(60,40,0,.35) 18px, rgba(60,40,0,.35) 19px,
+      transparent 19px, transparent 38px
+    ),
+    repeating-linear-gradient(
+      52deg,
+      transparent 0px, transparent 28px,
+      rgba(40,25,0,.25) 28px, rgba(40,25,0,.25) 29px,
+      transparent 29px, transparent 55px
+    ),
+    /* dark base */
+    radial-gradient(circle at 50% 50%, #1a1208, #0a0804 60%, #050402 100%);
+}
+
+/* Gold fire particle burst — layered radial spots */
+.r-HOF .ab::after{
+  content:'';position:absolute;inset:0;
+  background:
+    /* main top-right blaze */
+    radial-gradient(ellipse 65% 55% at 95% 5%,  rgba(255,180,20,.85), rgba(220,120,5,.55) 35%, transparent 65%),
+    /* secondary burst upper right */
+    radial-gradient(ellipse 40% 35% at 82% 18%, rgba(255,210,60,.7),  rgba(200,100,0,.4)  40%, transparent 65%),
+    /* ember scatter top center */
+    radial-gradient(ellipse 30% 22% at 62% 8%,  rgba(255,160,10,.5),  transparent 60%),
+    /* bottom-right edge ember */
+    radial-gradient(ellipse 35% 28% at 98% 55%, rgba(220,140,10,.45), transparent 60%),
+    /* left edge subtle warmth */
+    radial-gradient(ellipse 25% 40% at 2%  40%,  rgba(180,100,5,.25),  transparent 65%),
+    /* bottom glow */
+    radial-gradient(ellipse 70% 20% at 50% 100%, rgba(160,90,5,.3),   transparent 70%);
+  animation:hofFireShift 4s ease-in-out infinite;
+  mix-blend-mode:screen;
+}
+
+.r-HOF .ao {color:#ffe066; text-shadow:0 0 10px rgba(255,200,50,.8), 0 2px 8px rgba(0,0,0,.9)}
+.r-HOF .crl{color:var(--hof)}
+.r-HOF .sf {background:linear-gradient(to right,#f4b942,#fde68a)}
+.r-HOF .cbk{border-color:rgba(244,185,66,.3)}
+.r-HOF .bh {border-color:rgba(244,185,66,.18)}
+/* SIGNATURE_BLACK / FA_SIGNATURE_BLACK / WBC_SIGNATURE_BLACK */
+.r-SIGNATURE_BLACK .face.cf,.r-FA_SIGNATURE_BLACK .face.cf,.r-WBC_SIGNATURE_BLACK .face.cf{border:2px solid rgba(192,192,192,.65);box-shadow:0 0 28px rgba(192,192,192,.3)}
+.r-SIGNATURE_BLACK .ab,.r-FA_SIGNATURE_BLACK .ab,.r-WBC_SIGNATURE_BLACK .ab{background:radial-gradient(circle at 70% 30%,#1e1e1e,#050505 70%)}
+.r-SIGNATURE_BLACK .ab::after,.r-FA_SIGNATURE_BLACK .ab::after,.r-WBC_SIGNATURE_BLACK .ab::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 60% 40%,rgba(200,200,200,.25),transparent 60%)}
+.r-SIGNATURE_BLACK .ao,.r-FA_SIGNATURE_BLACK .ao,.r-WBC_SIGNATURE_BLACK .ao{color:#e0e0e0}
+.r-SIGNATURE_BLACK .crl,.r-FA_SIGNATURE_BLACK .crl,.r-WBC_SIGNATURE_BLACK .crl{color:var(--sig-black)}
+.r-SIGNATURE_BLACK .sf,.r-FA_SIGNATURE_BLACK .sf,.r-WBC_SIGNATURE_BLACK .sf{background:linear-gradient(to right,#9ca3af,#e5e7eb)}
+/* SIGNATURE / FA_SIGNATURE */
+.r-SIGNATURE .face.cf,.r-FA_SIGNATURE .face.cf{border:2px solid rgba(236,72,153,.65);box-shadow:0 0 25px rgba(236,72,153,.4)}
+.r-SIGNATURE .ab,.r-FA_SIGNATURE .ab{background:radial-gradient(circle at 70% 30%,#5e1a50,#190614 70%)}
+.r-SIGNATURE .ab::after,.r-FA_SIGNATURE .ab::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 60% 40%,rgba(236,72,153,.6),rgba(147,51,234,.35) 50%,transparent 70%)}
+.r-SIGNATURE .ao,.r-FA_SIGNATURE .ao{color:#f9a8d4}
+.r-SIGNATURE .crl,.r-FA_SIGNATURE .crl{color:var(--sig)}
+.r-SIGNATURE .sf,.r-FA_SIGNATURE .sf{background:linear-gradient(to right,#ec4899,#9333ea)}
+/* WBC_SIGNATURE */
+.r-WBC_SIGNATURE .face.cf{border:2px solid rgba(56,189,248,.65);box-shadow:0 0 25px rgba(56,189,248,.35)}
+.r-WBC_SIGNATURE .ab{background:radial-gradient(circle at 70% 30%,#0d4a70,#020f1a 70%)}
+.r-WBC_SIGNATURE .ab::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 60% 40%,rgba(56,189,248,.55),transparent 65%)}
+.r-WBC_SIGNATURE .ao{color:#7dd3fc}
+.r-WBC_SIGNATURE .crl{color:var(--wbc)}
+.r-WBC_SIGNATURE .sf{background:linear-gradient(to right,#38bdf8,#818cf8)}
+/* MOMENT */
+.r-MOMENT .face.cf{border:2px solid rgba(16,185,129,.65);box-shadow:0 0 25px rgba(16,185,129,.4)}
+.r-MOMENT .ab{background:radial-gradient(circle at 70% 30%,#065a35,#01160b 70%)}
+.r-MOMENT .ab::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 60% 40%,rgba(16,185,129,.6),rgba(5,150,105,.3) 55%,transparent 70%)}
+.r-MOMENT .ao{color:#6ee7b7}
+.r-MOMENT .crl{color:var(--moment)}
+.r-MOMENT .sf{background:linear-gradient(to right,#10b981,#14b8a6)}
+/* PRIME / FA_PRIME */
+.r-PRIME .face.cf,.r-FA_PRIME .face.cf{border:2px solid rgba(59,130,246,.65);box-shadow:0 0 22px rgba(59,130,246,.35)}
+.r-PRIME .ab,.r-FA_PRIME .ab{background:radial-gradient(circle at 70% 30%,#0d3a8c,#030e2a 70%)}
+.r-PRIME .ab::after,.r-FA_PRIME .ab::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 60% 40%,rgba(59,130,246,.55),transparent 65%)}
+.r-PRIME .ao,.r-FA_PRIME .ao{color:#93c5fd}
+.r-PRIME .crl,.r-FA_PRIME .crl{color:var(--prime)}
+.r-PRIME .sf,.r-FA_PRIME .sf{background:linear-gradient(to right,#3b82f6,#6366f1)}
+/* WBC_PRIME */
+.r-WBC_PRIME .face.cf{border:2px solid rgba(56,189,248,.5);box-shadow:0 0 20px rgba(56,189,248,.3)}
+.r-WBC_PRIME .ab{background:radial-gradient(circle at 70% 30%,#0a4a72,#020e1d 70%)}
+.r-WBC_PRIME .ab::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 60% 40%,rgba(56,189,248,.5),transparent 65%)}
+.r-WBC_PRIME .ao{color:#bae6fd}
+.r-WBC_PRIME .crl{color:var(--wbc)}
+.r-WBC_PRIME .sf{background:linear-gradient(to right,#38bdf8,#60a5fa)}
+/* IMPACT / FA_IMPACT */
+.r-IMPACT .face.cf,.r-FA_IMPACT .face.cf{border:2px solid rgba(234,179,8,.6);box-shadow:0 0 20px rgba(234,179,8,.3)}
+.r-IMPACT .ab,.r-FA_IMPACT .ab{background:radial-gradient(circle at 70% 30%,#5a3800,#180e00 70%)}
+.r-IMPACT .ab::after,.r-FA_IMPACT .ab::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 60% 40%,rgba(234,179,8,.55),transparent 65%)}
+.r-IMPACT .ao,.r-FA_IMPACT .ao{color:#fde68a}
+.r-IMPACT .crl,.r-FA_IMPACT .crl{color:var(--impact)}
+.r-IMPACT .sf,.r-FA_IMPACT .sf{background:linear-gradient(to right,#eab308,#f59e0b)}
+/* SEASON */
+.r-SEASON .face.cf{border:2px solid rgba(107,114,128,.4);box-shadow:0 0 12px rgba(107,114,128,.2)}
+.r-SEASON .ab{background:radial-gradient(circle at 70% 30%,#22252f,#0a0b0f 70%)}
+.r-SEASON .ab::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 60% 40%,rgba(107,114,128,.4),transparent 65%)}
+.r-SEASON .ao{color:#d1d5db}
+.r-SEASON .crl{color:var(--gray)}
+.r-SEASON .sf{background:linear-gradient(to right,#6b7280,#9ca3af)}
+/* LIVE */
+.r-LIVE .face.cf{border:2px solid rgba(156,163,175,.35);box-shadow:0 0 10px rgba(156,163,175,.15)}
+.r-LIVE .ab{background:radial-gradient(circle at 70% 30%,#1a1c22,#080909 70%)}
+.r-LIVE .ab::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 60% 40%,rgba(156,163,175,.3),transparent 65%)}
+.r-LIVE .ao{color:#e5e7eb}
+.r-LIVE .crl{color:#9ca3af}
+.r-LIVE .sf{background:linear-gradient(to right,#9ca3af,#d1d5db)}
+
+/* When real card photo is present — keep rarity tint very subtle so photo shows clearly */
+.has-photo .ab{background-repeat:no-repeat!important}
+.has-photo .ab::after{opacity:.15!important}
+
+/* HAMBURGER */
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:40px;height:40px;padding:8px;border-radius:8px;cursor:pointer;
+  background:rgba(255,255,255,.06);border:1px solid var(--border);flex-shrink:0;transition:background .2s}
+.ham:hover{background:rgba(255,255,255,.1)}
+.ham span{display:block;height:2px;background:var(--text);border-radius:2px;transition:transform .3s,opacity .3s,width .3s}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0;width:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* MOBILE NAV DRAWER */
+.mob-nav{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;
+  background:rgba(5,8,16,.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);flex-direction:column;padding:12px 16px 20px}
+.mob-nav.open{display:flex}
+.mob-nav a{font-family:var(--fu);font-size:1.1rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);padding:14px 12px;border-radius:8px;
+  border-bottom:1px solid var(--border);transition:color .2s,background .2s}
+.mob-nav a:last-child{border-bottom:none}
+.mob-nav a:hover,.mob-nav a.active{color:var(--text);background:rgba(255,255,255,.06)}
+.mob-nav a.active{color:var(--blue)}
+
+/* FILTER TOGGLE (mobile) */
+.filter-toggle{display:none;width:100%;font-family:var(--fu);font-size:.85rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;background:var(--surface);
+  border:1px solid var(--border);color:var(--text);padding:12px 16px;border-radius:10px;
+  cursor:pointer;text-align:left;align-items:center;justify-content:space-between;
+  transition:background .2s;margin-bottom:10px}
+.filter-toggle .ft-arrow{transition:transform .3s;font-size:.7rem}
+.filter-toggle.open .ft-arrow{transform:rotate(180deg)}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);background:var(--surface)}
+.footer-inner{max-width:1280px;margin:0 auto;padding:28px 24px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;flex-wrap:wrap}
+.footer-logo{font-family:var(--fd);font-size:1.1rem;letter-spacing:.08em;color:var(--muted)}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links a{font-family:var(--fu);font-size:.75rem;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);transition:color .2s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-family:var(--fu);font-size:.72rem;color:rgba(232,236,245,.25)}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media(max-width:900px){
+  nav{display:none}
+  .ham{display:flex}
+  .pg{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+}
+
+/* Mobile */
+@media(max-width:600px){
+  /* layout */
+  .nav-inner{padding:0 14px}
+  .ph{padding:24px 14px 16px}
+  .ph-title{font-size:2rem}
+  .fw{padding:0 14px 18px}
+  .pg{padding:0 14px 80px;grid-template-columns:repeat(2,1fr);gap:10px}
+
+  /* prevent iOS auto-zoom on inputs */
+  .fi,.fs{font-size:16px!important}
+
+  /* filter panel */
+  .filter-toggle{display:flex}
+  .fp{padding:14px;border-radius:10px}
+  .fp.collapsed{display:none}
+  .frow{flex-direction:column;gap:8px}
+  .fg,.fg.wide,.fg.narrow{flex:1 1 100%;min-width:0;width:100%}
+  .btn-clear{width:100%;height:44px;font-size:.85rem}
+
+  /* results bar */
+  .rb{padding:0 14px 12px;flex-direction:column;align-items:flex-start;gap:8px}
+  .legend{gap:6px}
+  .li{font-size:.55rem}
+  .ld{width:7px;height:7px}
+
+  /* cards — slightly larger tap target */
+  .flip-card{cursor:pointer}
+  .ao{font-size:1.6rem}
+  .pb{font-size:.5rem;padding:2px 5px}
+  .rl-badge,.emb-badge,.wbc-badge,.hof-crown,.live-badge{font-size:.45rem;padding:2px 5px}
+  .ci{padding:7px 8px}
+  .cn{font-size:.85rem}
+  .cm{font-size:.62rem;gap:3px}
+
+  /* card back */
+  .cbk{padding:10px}
+  .bn{font-size:.9rem}
+  .bs{font-size:.58rem}
+  .sn{font-size:.58rem}
+  .sv{font-size:.8rem}
+  .hint{font-size:.52rem}
+
+  /* footer */
+  .footer-inner{flex-direction:column;align-items:flex-start;padding:24px 16px;gap:8px}
+  .footer-links{gap:14px}
+  .footer-copy{font-size:.65rem}
+}
+
+/* Very small phones */
+@media(max-width:360px){
+  .pg{grid-template-columns:repeat(2,1fr);gap:8px}
+  .ao{font-size:1.4rem}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="https://res.cloudinary.com/dwusifgvb/image/upload/v1772851851/rivals_logo_szbn3h.png" alt="MLB Rivals" class="nav-logo-img"/>
+    </a>
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="scouts.html" class="nav-link">Scouts</a>
+      <a href="players.html" class="nav-link active">Players</a>
+      <a href="updates.html" class="nav-link">Updates</a>
+      <a href="guide.html" class="nav-link">Guide</a>
+      <a href="events.html" class="nav-link">Events</a>
+      <a href="lineup.html" class="nav-link">Builder</a>
+    </nav>
+    <button class="ham" id="ham" aria-label="Open menu" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mob-nav" id="mob-nav">
+  <a href="index.html">Home</a>
+  <a href="scouts.html">Scouts</a>
+  <a href="players.html" class="active">Players</a>
+  <a href="updates.html">Updates</a>
+  <a href="guide.html">Guide</a>
+  <a href="events.html">Events</a>
+  <a href="lineup.html">Builder</a>
+</div>
+
+<div class="ph">
+  <h1 class="ph-title">Player <span>Index</span></h1>
+  <p class="ph-sub">Browse, search &amp; filter every card in the database by rarity, team, position and more.</p>
+</div>
+
+<div class="fw">
+  <button class="filter-toggle" id="filter-toggle" onclick="toggleFilters()">
+    <span>⚙ Filters &amp; Search</span>
+    <span class="ft-arrow">▼</span>
+  </button>
+  <div class="fp" id="fp">
+    <div class="frow">
+      <div class="fg wide"><label class="fl">Search</label><input class="fi" id="q" placeholder="Player name or team…" oninput="render()"/></div>
+      <div class="fg"><label class="fl">League</label>
+        <select class="fs" id="league" onchange="onLeague()">
+          <option value="">All Leagues</option>
+          <option value="AL">American League</option>
+          <option value="NL">National League</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Division</label>
+        <select class="fs" id="division" onchange="onDivision()">
+          <option value="">All Divisions</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Team</label>
+        <select class="fs" id="team" onchange="render()">
+          <option value="">All Teams</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Position</label>
+        <select class="fs" id="pos" onchange="render()">
+          <option value="">All Positions</option>
+          <option>SP</option><option>RP</option><option>CP</option>
+          <option>C</option><option>1B</option><option>2B</option>
+          <option>3B</option><option>SS</option><option>LF</option>
+          <option>CF</option><option>RF</option><option>DH</option>
+        </select>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Card Type</label>
+        <select class="fs" id="rarity" onchange="onRarity()">
+          <option value="">All Types</option>
+          <option value="HOF">HOF</option>
+          <option value="SIGNATURE_BLACK">Signature Black</option>
+          <option value="FA_SIGNATURE_BLACK">FA Signature Black</option>
+          <option value="WBC_SIGNATURE_BLACK">WBC Signature Black</option>
+          <option value="SIGNATURE">Signature</option>
+          <option value="FA_SIGNATURE">FA Signature</option>
+          <option value="WBC_SIGNATURE">WBC Signature</option>
+          <option value="MOMENT">Moment</option>
+          <option value="WBC_PRIME">WBC Prime</option>
+          <option value="PRIME">Prime</option>
+          <option value="FA_PRIME">FA Prime</option>
+          <option value="IMPACT">Impact</option>
+          <option value="FA_IMPACT">FA Impact</option>
+          <option value="SEASON">Season</option>
+          <option value="LIVE">Live S</option>
+        </select>
+      </div>
+      <div class="fg" id="emblem-group" style="display:none">
+        <label class="fl">Moment Emblem</label>
+        <select class="fs" id="emblem" onchange="render()">
+          <option value="">All Emblems</option>
+        </select>
+      </div>
+      <div class="fg narrow"><label class="fl">Min OVR</label><input class="fi" id="ovrMin" type="number" min="50" max="99" placeholder="50" oninput="render()"/></div>
+      <div class="fg narrow"><label class="fl">Max OVR</label><input class="fi" id="ovrMax" type="number" min="50" max="99" placeholder="99" oninput="render()"/></div>
+      <div class="fg narrow"><label class="fl">Year</label><input class="fi" id="year" type="number" min="1900" max="2026" placeholder="Any" oninput="render()"/></div>
+      <div class="fg"><label class="fl">Sort By</label>
+        <select class="fs" id="sort" onchange="render()">
+          <option value="RARITY_D">Rarity (Highest)</option>
+          <option value="RARITY_A">Rarity (Lowest)</option>
+          <option value="OVR_D">OVR High → Low</option>
+          <option value="OVR_A">OVR Low → High</option>
+          <option value="NAME_A">Name A → Z</option>
+          <option value="YEAR_D">Year (Newest)</option>
+          <option value="YEAR_A">Year (Oldest)</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:flex-end"><button class="btn-clear" onclick="clearFilters()">Clear All</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="rb">
+  <span class="rc">Showing <strong id="cnt">0</strong> of <strong id="tot">0</strong> players</span>
+  <div class="legend">
+    <div class="li"><div class="ld" style="background:#f4b942"></div>HOF</div>
+    <div class="li"><div class="ld" style="background:#c0c0c0"></div>Sig. Black</div>
+    <div class="li"><div class="ld" style="background:#ec4899"></div>Signature</div>
+    <div class="li"><div class="ld" style="background:#10b981"></div>Moment</div>
+    <div class="li"><div class="ld" style="background:#38bdf8"></div>WBC</div>
+    <div class="li"><div class="ld" style="background:#3b82f6"></div>Prime</div>
+    <div class="li"><div class="ld" style="background:#eab308"></div>Impact</div>
+    <div class="li"><div class="ld" style="background:#6b7280"></div>Season/Live</div>
+  </div>
+</div>
+
+<div class="pg" id="grid"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">MLB Rivals Hub · 2026</div>
+    <div class="footer-links">
+      <a href="https://community.withhive.com/MLB9IRIVALS" target="_blank">Community</a>
+      <a href="https://twitter.com/MLBrivalsus" target="_blank">X / Twitter</a>
+      <a href="https://www.facebook.com/mlbrivals.us" target="_blank">Facebook</a>
+      <a href="https://store.steampowered.com/app/2568430" target="_blank">Steam</a>
+    </div>
+    <div class="footer-copy">Unofficial fan companion · Not affiliated with Com2uS or MLB</div>
+  </div>
+</footer>
+
+<script>
+/* ========== DATA ========== */
+const TEAMS = {
+  NYY:{n:'Yankees',c:'New York',l:'AL',d:'AL East'},
+  BOS:{n:'Red Sox',c:'Boston',l:'AL',d:'AL East'},
+  BAL:{n:'Orioles',c:'Baltimore',l:'AL',d:'AL East'},
+  TB:{n:'Rays',c:'Tampa Bay',l:'AL',d:'AL East'},
+  TOR:{n:'Blue Jays',c:'Toronto',l:'AL',d:'AL East'},
+  CWS:{n:'White Sox',c:'Chicago',l:'AL',d:'AL Central'},
+  CLE:{n:'Guardians',c:'Cleveland',l:'AL',d:'AL Central'},
+  DET:{n:'Tigers',c:'Detroit',l:'AL',d:'AL Central'},
+  KC:{n:'Royals',c:'Kansas City',l:'AL',d:'AL Central'},
+  MIN:{n:'Twins',c:'Minnesota',l:'AL',d:'AL Central'},
+  HOU:{n:'Astros',c:'Houston',l:'AL',d:'AL West'},
+  LAA:{n:'Angels',c:'Los Angeles',l:'AL',d:'AL West'},
+  OAK:{n:'Athletics',c:'Oakland',l:'AL',d:'AL West'},
+  SEA:{n:'Mariners',c:'Seattle',l:'AL',d:'AL West'},
+  TEX:{n:'Rangers',c:'Texas',l:'AL',d:'AL West'},
+  ATL:{n:'Braves',c:'Atlanta',l:'NL',d:'NL East'},
+  MIA:{n:'Marlins',c:'Miami',l:'NL',d:'NL East'},
+  NYM:{n:'Mets',c:'New York',l:'NL',d:'NL East'},
+  PHI:{n:'Phillies',c:'Philadelphia',l:'NL',d:'NL East'},
+  WSH:{n:'Nationals',c:'Washington',l:'NL',d:'NL East'},
+  CHC:{n:'Cubs',c:'Chicago',l:'NL',d:'NL Central'},
+  CIN:{n:'Reds',c:'Cincinnati',l:'NL',d:'NL Central'},
+  MIL:{n:'Brewers',c:'Milwaukee',l:'NL',d:'NL Central'},
+  PIT:{n:'Pirates',c:'Pittsburgh',l:'NL',d:'NL Central'},
+  STL:{n:'Cardinals',c:'St. Louis',l:'NL',d:'NL Central'},
+  ARI:{n:'D-backs',c:'Arizona',l:'NL',d:'NL West'},
+  COL:{n:'Rockies',c:'Colorado',l:'NL',d:'NL West'},
+  LAD:{n:'Dodgers',c:'Los Angeles',l:'NL',d:'NL West'},
+  SD:{n:'Padres',c:'San Diego',l:'NL',d:'NL West'},
+  SF:{n:'Giants',c:'San Francisco',l:'NL',d:'NL West'},
+};
+
+const RARITY = {
+  HOF:{label:'HOF',rank:15},
+  SIGNATURE_BLACK:{label:'Sig. Black',rank:14},
+  FA_SIGNATURE_BLACK:{label:'FA Sig. Black',rank:13},
+  WBC_SIGNATURE_BLACK:{label:'WBC Sig. Black',rank:12},
+  SIGNATURE:{label:'Signature',rank:11},
+  FA_SIGNATURE:{label:'FA Signature',rank:10},
+  WBC_SIGNATURE:{label:'WBC Signature',rank:9},
+  MOMENT:{label:'Moment',rank:8},
+  PRIME:{label:'Prime',rank:7},
+  FA_PRIME:{label:'FA Prime',rank:6},
+  WBC_PRIME:{label:'WBC Prime',rank:5},
+  IMPACT:{label:'Impact',rank:4},
+  FA_IMPACT:{label:'FA Impact',rank:3},
+  SEASON:{label:'Season',rank:2},
+  LIVE:{label:'Live S',rank:1},
+};
+
+const EMBLEM_COLORS = {
+  'Slugger':'#f97316','Franchise':'#7c3aed','Setup Man':'#06b6d4',
+  'Frontline':'#ef4444','Closer':'#b91c1c','Playoff Hero':'#f4b942',
+  'Seasoned Player':'#92400e','Elite':'#10b981','Fireman':'#ea580c',
+  'Rising Star':'#fbbf24','Leadership':'#3b82f6','Hot Start':'#dc2626',
+  'Up the Middle':'#14b8a6','Power Hitter':'#dc2626','5-Tool Player':'#22c55e',
+  'Swingman':'#8b5cf6','Hit Machine':'#f97316','Bullpen Ace':'#1d4ed8',
+  '2025 Performer Trio':'#d946ef','Free Agent':'#475569','Commander':'#1e3a5f',
+};
+
+/* ========== SPRITE MAP ========== */
+// Sheet 1-5: 6×2 grids (background-size: 600% 200%) — IDs 1-60
+// HOF sprite: 3×2 grid (background-size: 300% 200%) — IDs 61-65
+// resized_sprite_2: 10×6 grid (background-size: 1000% 600%) — IDs 66-118
+// resized_sprite_1: 10×7 grid (background-size: 1000% 700%) — IDs 119-165
+const SPRITES = {
+  1:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:0,by:0},
+  2:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:20,by:0},
+  3:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:40,by:0},
+  4:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:60,by:0},
+  5:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:80,by:0},
+  6:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:100,by:0},
+  7:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:0,by:100},
+  8:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:20,by:100},
+  9:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:40,by:100},
+  10:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:60,by:100},
+  11:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:80,by:100},
+  12:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',bx:100,by:100},
+  13:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:0,by:0},
+  14:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:20,by:0},
+  15:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:40,by:0},
+  16:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:60,by:0},
+  17:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:80,by:0},
+  18:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:100,by:0},
+  19:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:0,by:100},
+  20:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:20,by:100},
+  21:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:40,by:100},
+  22:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:60,by:100},
+  23:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:80,by:100},
+  24:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',bx:100,by:100},
+  25:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:0,by:0},
+  26:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:20,by:0},
+  27:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:40,by:0},
+  28:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:60,by:0},
+  29:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:80,by:0},
+  30:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:100,by:0},
+  31:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:0,by:100},
+  32:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:20,by:100},
+  33:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:40,by:100},
+  34:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:60,by:100},
+  35:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:80,by:100},
+  36:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',bx:100,by:100},
+  37:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:0,by:0},
+  38:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:20,by:0},
+  39:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:40,by:0},
+  40:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:60,by:0},
+  41:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:80,by:0},
+  42:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:100,by:0},
+  43:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:0,by:100},
+  44:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:20,by:100},
+  45:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:40,by:100},
+  46:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:60,by:100},
+  47:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:80,by:100},
+  48:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',bx:100,by:100},
+  49:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:0,by:0},
+  50:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:20,by:0},
+  51:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:40,by:0},
+  52:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:60,by:0},
+  53:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:80,by:0},
+  54:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:100,by:0},
+  55:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:0,by:100},
+  56:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:20,by:100},
+  57:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:40,by:100},
+  58:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:60,by:100},
+  59:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:80,by:100},
+  60:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',bx:100,by:100},
+  61:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690716/hof_sprite_sxqiyo.png',bx:0,by:0,sz:'300% 200%'},
+  62:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690716/hof_sprite_sxqiyo.png',bx:50,by:0,sz:'300% 200%'},
+  63:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690716/hof_sprite_sxqiyo.png',bx:100,by:0,sz:'300% 200%'},
+  64:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690716/hof_sprite_sxqiyo.png',bx:50,by:100,sz:'300% 200%'},
+  65:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690716/hof_sprite_sxqiyo.png',bx:100,by:100,sz:'300% 200%'},
+  66:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:0,by:0,sz:'1000% 600%'},
+  67:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:11.11,by:0,sz:'1000% 600%'},
+  68:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:22.22,by:0,sz:'1000% 600%'},
+  69:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:33.33,by:0,sz:'1000% 600%'},
+  70:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:44.44,by:0,sz:'1000% 600%'},
+  71:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:66.67,by:0,sz:'1000% 600%'},
+  72:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:77.78,by:0,sz:'1000% 600%'},
+  73:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:88.89,by:0,sz:'1000% 600%'},
+  74:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:100,by:0,sz:'1000% 600%'},
+  75:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:0,by:20,sz:'1000% 600%'},
+  76:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:11.11,by:20,sz:'1000% 600%'},
+  77:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:22.22,by:20,sz:'1000% 600%'},
+  78:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:33.33,by:20,sz:'1000% 600%'},
+  79:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:44.44,by:20,sz:'1000% 600%'},
+  80:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:55.56,by:20,sz:'1000% 600%'},
+  81:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:66.67,by:20,sz:'1000% 600%'},
+  82:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:77.78,by:20,sz:'1000% 600%'},
+  83:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:88.89,by:20,sz:'1000% 600%'},
+  84:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:100,by:20,sz:'1000% 600%'},
+  85:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:0,by:40,sz:'1000% 600%'},
+  86:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:11.11,by:40,sz:'1000% 600%'},
+  87:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:22.22,by:40,sz:'1000% 600%'},
+  88:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:33.33,by:40,sz:'1000% 600%'},
+  89:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:44.44,by:40,sz:'1000% 600%'},
+  90:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:55.56,by:40,sz:'1000% 600%'},
+  91:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:66.67,by:40,sz:'1000% 600%'},
+  92:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:77.78,by:40,sz:'1000% 600%'},
+  93:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:88.89,by:40,sz:'1000% 600%'},
+  94:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:100,by:40,sz:'1000% 600%'},
+  95:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:0,by:60,sz:'1000% 600%'},
+  96:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:11.11,by:60,sz:'1000% 600%'},
+  97:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:22.22,by:60,sz:'1000% 600%'},
+  98:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:33.33,by:60,sz:'1000% 600%'},
+  99:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:44.44,by:60,sz:'1000% 600%'},
+  100:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:55.56,by:60,sz:'1000% 600%'},
+  101:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:66.67,by:60,sz:'1000% 600%'},
+  102:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:77.78,by:60,sz:'1000% 600%'},
+  103:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:88.89,by:60,sz:'1000% 600%'},
+  104:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:100,by:60,sz:'1000% 600%'},
+  105:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:0,by:80,sz:'1000% 600%'},
+  106:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:11.11,by:80,sz:'1000% 600%'},
+  107:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:22.22,by:80,sz:'1000% 600%'},
+  108:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:33.33,by:80,sz:'1000% 600%'},
+  109:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:44.44,by:80,sz:'1000% 600%'},
+  110:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:55.56,by:80,sz:'1000% 600%'},
+  111:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:66.67,by:80,sz:'1000% 600%'},
+  112:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:77.78,by:80,sz:'1000% 600%'},
+  113:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:88.89,by:80,sz:'1000% 600%'},
+  114:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:100,by:80,sz:'1000% 600%'},
+  115:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:0,by:100,sz:'1000% 600%'},
+  116:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:11.11,by:100,sz:'1000% 600%'},
+  117:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:22.22,by:100,sz:'1000% 600%'},
+  118:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png',bx:33.33,by:100,sz:'1000% 600%'},
+  119:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:0,by:0,sz:'1000% 700%'},
+  120:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:11.11,by:0,sz:'1000% 700%'},
+  121:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:22.22,by:0,sz:'1000% 700%'},
+  122:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:33.33,by:0,sz:'1000% 700%'},
+  123:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:44.44,by:0,sz:'1000% 700%'},
+  124:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:55.56,by:0,sz:'1000% 700%'},
+  125:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:66.67,by:0,sz:'1000% 700%'},
+  126:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:77.78,by:0,sz:'1000% 700%'},
+  127:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:88.89,by:0,sz:'1000% 700%'},
+  128:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:100,by:0,sz:'1000% 700%'},
+  129:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:0,by:16.67,sz:'1000% 700%'},
+  130:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:11.11,by:16.67,sz:'1000% 700%'},
+  131:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:22.22,by:16.67,sz:'1000% 700%'},
+  132:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:33.33,by:16.67,sz:'1000% 700%'},
+  133:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:44.44,by:16.67,sz:'1000% 700%'},
+  134:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:55.56,by:16.67,sz:'1000% 700%'},
+  135:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:66.67,by:16.67,sz:'1000% 700%'},
+  136:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:77.78,by:16.67,sz:'1000% 700%'},
+  137:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:33.33,by:50,sz:'1000% 700%'},
+  138:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:44.44,by:50,sz:'1000% 700%'},
+  139:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:55.56,by:50,sz:'1000% 700%'},
+  140:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:66.67,by:50,sz:'1000% 700%'},
+  141:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:77.78,by:50,sz:'1000% 700%'},
+  142:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:88.89,by:50,sz:'1000% 700%'},
+  143:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:0,by:66.67,sz:'1000% 700%'},
+  144:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:11.11,by:66.67,sz:'1000% 700%'},
+  145:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:22.22,by:66.67,sz:'1000% 700%'},
+  146:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:33.33,by:66.67,sz:'1000% 700%'},
+  147:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:44.44,by:66.67,sz:'1000% 700%'},
+  148:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:55.56,by:66.67,sz:'1000% 700%'},
+  149:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:33.33,by:83.33,sz:'1000% 700%'},
+  150:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:44.44,by:83.33,sz:'1000% 700%'},
+  151:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:55.56,by:83.33,sz:'1000% 700%'},
+  152:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:66.67,by:83.33,sz:'1000% 700%'},
+  153:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:77.78,by:83.33,sz:'1000% 700%'},
+  154:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:88.89,by:83.33,sz:'1000% 700%'},
+  155:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:100,by:83.33,sz:'1000% 700%'},
+  156:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:0,by:100,sz:'1000% 700%'},
+  157:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:11.11,by:100,sz:'1000% 700%'},
+  158:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:22.22,by:100,sz:'1000% 700%'},
+  159:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:33.33,by:100,sz:'1000% 700%'},
+  160:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:44.44,by:100,sz:'1000% 700%'},
+  161:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:55.56,by:100,sz:'1000% 700%'},
+  162:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:66.67,by:100,sz:'1000% 700%'},
+  163:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:77.78,by:100,sz:'1000% 700%'},
+  164:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:88.89,by:100,sz:'1000% 700%'},
+  165:{src:'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',bx:100,by:100,sz:'1000% 700%'},
+};
+
+/* Preload all sprite images for smooth rendering */
+[
+  'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet1_jyzngj.jpg',
+  'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611372/sheet2_kexg6r.jpg',
+  'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet3_h6optx.jpg',
+  'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet4_fzn6vg.jpg',
+  'https://res.cloudinary.com/dwusifgvb/image/upload/v1772611373/sheet5_yt11qx.jpg',
+  'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690716/hof_sprite_sxqiyo.png',
+  'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690718/resized_sprite_1_rlng6m.png',
+  'https://res.cloudinary.com/dwusifgvb/image/upload/v1772690717/resized_sprite_2_wpk5bq.png'
+].forEach(u => { const i = new Image(); i.src = u; });
+
+const players = [
+  // HOF
+  {id:1,name:'Derek Jeter',team:'NYY',pos:['SS'],rarity:'HOF',ovr:76,year:null,emblem:null,rl:false},
+  {id:2,name:'Fred McGriff',team:'ATL',pos:['1B'],rarity:'HOF',ovr:72,year:null,emblem:null,rl:false},
+  // SIGNATURE
+  {id:3,name:'Shohei Ohtani',team:'LAD',pos:['DH'],rarity:'SIGNATURE',ovr:71,year:2025,emblem:null,rl:false},
+  {id:4,name:'Pedro Guerrero',team:'LAD',pos:['RF','CF'],rarity:'SIGNATURE',ovr:71,year:1982,emblem:null,rl:false},
+  {id:5,name:'Cody Bellinger',team:'LAD',pos:['1B','CF'],rarity:'SIGNATURE',ovr:68,year:2018,emblem:null,rl:false},
+  {id:6,name:'Clayton Kershaw',team:'LAD',pos:['SP'],rarity:'SIGNATURE',ovr:66,year:2023,emblem:null,rl:false},
+  {id:7,name:'Hunter Goodman',team:'COL',pos:['C','DH'],rarity:'SIGNATURE',ovr:66,year:2025,emblem:null,rl:true},
+  {id:8,name:'Will Smith',team:'LAD',pos:['C','DH'],rarity:'SIGNATURE',ovr:66,year:2023,emblem:null,rl:false},
+  {id:9,name:'Josh Rojas',team:'ARI',pos:['3B','2B'],rarity:'SIGNATURE',ovr:66,year:2022,emblem:null,rl:false},
+  {id:10,name:'Justin Turner',team:'LAD',pos:['3B'],rarity:'SIGNATURE',ovr:66,year:2018,emblem:null,rl:false},
+  {id:11,name:'Ryan McMahon',team:'COL',pos:['3B','2B'],rarity:'SIGNATURE',ovr:66,year:2022,emblem:null,rl:false},
+  {id:12,name:'Shohei Ohtani',team:'LAD',pos:['SP'],rarity:'SIGNATURE',ovr:64,year:2025,emblem:null,rl:false},
+  {id:13,name:'Al Leiter',team:'MIA',pos:['SP'],rarity:'SIGNATURE',ovr:64,year:1996,emblem:null,rl:false},
+  {id:14,name:'Travis Jankowski',team:'SD',pos:['RF','CF'],rarity:'SIGNATURE',ovr:64,year:2018,emblem:null,rl:false},
+  {id:15,name:'Alex Vesia',team:'LAD',pos:['RP'],rarity:'SIGNATURE',ovr:63,year:2024,emblem:null,rl:false},
+  {id:16,name:'Gary Sánchez',team:'SD',pos:['C'],rarity:'SIGNATURE',ovr:59,year:2023,emblem:null,rl:false},
+  // WBC PRIME
+  {id:17,name:'Julio Rodríguez',team:'SEA',pos:['CF'],rarity:'WBC_PRIME',ovr:68,year:2026,emblem:null,rl:false},
+  // MOMENT
+  {id:18,name:'Nick Martinez',team:'CIN',pos:['SP'],rarity:'MOMENT',ovr:70,year:null,emblem:'Free Agent',rl:false},
+  {id:19,name:'Shohei Ohtani',team:'LAD',pos:['SP'],rarity:'MOMENT',ovr:70,year:null,emblem:'2025 Performer Trio',rl:false},
+  {id:20,name:'Shohei Ohtani',team:'LAD',pos:['DH'],rarity:'MOMENT',ovr:70,year:null,emblem:'2025 Performer Trio',rl:true},
+  {id:21,name:'Corey Seager',team:'LAD',pos:['SS'],rarity:'MOMENT',ovr:70,year:null,emblem:'Rising Star',rl:false},
+  {id:22,name:'Shohei Ohtani',team:'LAD',pos:['DH'],rarity:'MOMENT',ovr:70,year:null,emblem:'Rising Star',rl:false},
+  {id:23,name:'Hyun-Jin Ryu',team:'LAD',pos:['SP'],rarity:'MOMENT',ovr:69,year:null,emblem:'Free Agent',rl:false},
+  {id:24,name:'Teoscar Hernández',team:'LAD',pos:['LF'],rarity:'MOMENT',ovr:69,year:null,emblem:'Free Agent',rl:false},
+  {id:25,name:'Jurickson Profar',team:'ATL',pos:['LF'],rarity:'MOMENT',ovr:68,year:null,emblem:'Free Agent',rl:false},
+  {id:26,name:'Orlando Hudson',team:'LAD',pos:['2B'],rarity:'MOMENT',ovr:68,year:null,emblem:'Up the Middle',rl:false},
+  {id:27,name:'Jordan Schmidt',team:'SF',pos:['SP'],rarity:'MOMENT',ovr:67,year:null,emblem:'Elite',rl:false},
+  {id:28,name:'Blake Snell',team:'LAD',pos:['SP'],rarity:'MOMENT',ovr:66,year:null,emblem:'Free Agent',rl:false},
+  {id:29,name:'Joe Musgrove',team:'SD',pos:['SP'],rarity:'MOMENT',ovr:66,year:null,emblem:'Elite',rl:false},
+  {id:30,name:'Tyler Anderson',team:'COL',pos:['SP'],rarity:'MOMENT',ovr:66,year:null,emblem:'Elite',rl:false},
+  {id:31,name:'Chan Ho Park',team:'LAD',pos:['RP'],rarity:'MOMENT',ovr:65,year:null,emblem:'Swingman',rl:false},
+  {id:32,name:'Enrique Hernández',team:'LAD',pos:['2B'],rarity:'MOMENT',ovr:65,year:null,emblem:'Leadership',rl:false},
+  {id:33,name:'Joc Pederson',team:'LAD',pos:['CF'],rarity:'MOMENT',ovr:65,year:null,emblem:'Leadership',rl:false},
+  {id:34,name:'Evan Phillips',team:'LAD',pos:['RP'],rarity:'MOMENT',ovr:64,year:null,emblem:'Bullpen Ace',rl:false},
+  {id:35,name:'Michael Kopech',team:'LAD',pos:['CP'],rarity:'MOMENT',ovr:64,year:null,emblem:'Closer',rl:false},
+  {id:36,name:'Teoscar Hernández',team:'LAD',pos:['LF'],rarity:'MOMENT',ovr:64,year:null,emblem:'Slugger',rl:false},
+  // IMPACT
+  {id:37,name:'Bronson Arroyo',team:'CIN',pos:['SP'],rarity:'IMPACT',ovr:61,year:2012,emblem:null,rl:false},
+  {id:38,name:'Harold Baines',team:'BAL',pos:['DH'],rarity:'IMPACT',ovr:61,year:1993,emblem:null,rl:false},
+  {id:39,name:'Chris Taylor',team:'LAD',pos:['LF','2B'],rarity:'IMPACT',ovr:61,year:2022,emblem:null,rl:false},
+  {id:40,name:'Aaron Bummer',team:'CWS',pos:['RP'],rarity:'IMPACT',ovr:60,year:2019,emblem:null,rl:false},
+  {id:41,name:'Huston Street',team:'COL',pos:['CP'],rarity:'IMPACT',ovr:60,year:2009,emblem:null,rl:false},
+  {id:42,name:'Jon Matlack',team:'TEX',pos:['SP'],rarity:'IMPACT',ovr:60,year:1980,emblem:null,rl:false},
+  {id:43,name:'Reynaldo López',team:'CLE',pos:['RP'],rarity:'IMPACT',ovr:60,year:2023,emblem:null,rl:false},
+  {id:44,name:'Neal Cotts',team:'TEX',pos:['RP'],rarity:'IMPACT',ovr:60,year:2013,emblem:null,rl:false},
+  {id:45,name:'Damian Miller',team:'ARI',pos:['C'],rarity:'IMPACT',ovr:60,year:2000,emblem:null,rl:false},
+  {id:46,name:'Andrew Chafin',team:'OAK',pos:['RP'],rarity:'IMPACT',ovr:59,year:2021,emblem:null,rl:false},
+  {id:47,name:'Jason Frasor',team:'TOR',pos:['RP'],rarity:'IMPACT',ovr:59,year:2007,emblem:null,rl:false},
+  {id:48,name:'Chris Taylor',team:'LAD',pos:['SS','LF'],rarity:'IMPACT',ovr:59,year:2020,emblem:null,rl:false},
+  // LIVE S
+  {id:49,name:'Cristopher Sánchez',team:'PHI',pos:['SP'],rarity:'LIVE',ovr:85,year:2025,emblem:null,rl:false},
+  {id:50,name:'Logan Webb',team:'SF',pos:['SP'],rarity:'LIVE',ovr:84,year:2025,emblem:null,rl:false},
+  {id:51,name:'Trea Turner',team:'PHI',pos:['SS'],rarity:'LIVE',ovr:84,year:2025,emblem:null,rl:false},
+  {id:52,name:'Yoshinobu Yamamoto',team:'LAD',pos:['SP'],rarity:'LIVE',ovr:83,year:2025,emblem:null,rl:false},
+  {id:53,name:'Corbin Carroll',team:'ARI',pos:['RF'],rarity:'LIVE',ovr:83,year:2025,emblem:null,rl:false},
+  {id:54,name:'Shohei Ohtani',team:'LAD',pos:['DH'],rarity:'LIVE',ovr:83,year:2025,emblem:null,rl:false},
+  {id:55,name:'Elly De La Cruz',team:'CIN',pos:['SS'],rarity:'LIVE',ovr:83,year:2025,emblem:null,rl:false},
+  {id:56,name:'Brice Turang',team:'MIL',pos:['2B'],rarity:'LIVE',ovr:83,year:2025,emblem:null,rl:false},
+  {id:57,name:'Francisco Lindor',team:'NYM',pos:['SS'],rarity:'LIVE',ovr:83,year:2025,emblem:null,rl:false},
+  {id:58,name:'Freddy Peralta',team:'MIL',pos:['SP'],rarity:'LIVE',ovr:82,year:2025,emblem:null,rl:false},
+  {id:59,name:'Nathan Eovaldi',team:'TEX',pos:['SP'],rarity:'LIVE',ovr:82,year:2025,emblem:null,rl:false},
+  {id:60,name:'Ryne Nelson',team:'ARI',pos:['SP'],rarity:'LIVE',ovr:81,year:2025,emblem:null,rl:false},
+  // ═══════════════════════════════════════════
+  // NEW CARDS FROM HOF SPRITE
+  // ═══════════════════════════════════════════
+  // HOF
+  {id:61,name:'Jeff Bagwell',team:'HOU',pos:['1B'],rarity:'HOF',ovr:75,year:null,emblem:null,rl:false},
+  {id:62,name:'Cal Ripken Jr.',team:'BAL',pos:['SS','3B'],rarity:'HOF',ovr:77,year:null,emblem:null,rl:false},
+  {id:63,name:'Harmon Killebrew',team:'MIN',pos:['1B','3B'],rarity:'HOF',ovr:75,year:null,emblem:null,rl:false},
+  {id:64,name:'Enos Slaughter',team:'STL',pos:['RF','LF'],rarity:'HOF',ovr:76,year:null,emblem:null,rl:false},
+  {id:65,name:'George Kell',team:'DET',pos:['3B'],rarity:'HOF',ovr:74,year:null,emblem:null,rl:false},
+
+  // ═══════════════════════════════════════════
+  // NEW CARDS FROM resized_sprite_2 (10×6)
+  // ═══════════════════════════════════════════
+  // SIGNATURE — Row 0
+  {id:66,name:'Hong-Chih Kuo',team:'LAD',pos:['RP'],rarity:'SIGNATURE',ovr:62,year:2010,emblem:null,rl:false},
+  {id:67,name:'Paul Wagner',team:'PIT',pos:['RP'],rarity:'SIGNATURE',ovr:62,year:1993,emblem:null,rl:false},
+  {id:68,name:'Hyun-Jin Ryu',team:'LAD',pos:['SP'],rarity:'SIGNATURE',ovr:62,year:2014,emblem:null,rl:false},
+  {id:69,name:'Hyun-Jin Ryu',team:'LAD',pos:['SP'],rarity:'SIGNATURE',ovr:62,year:2018,emblem:null,rl:false},
+  {id:70,name:'Ryan Dempster',team:'CHC',pos:['SP'],rarity:'SIGNATURE',ovr:62,year:2010,emblem:null,rl:false},
+  // col5 = Jankowski (already ID 14)
+  {id:71,name:'Clayton Kershaw',team:'LAD',pos:['SP'],rarity:'SIGNATURE',ovr:74,year:2015,emblem:null,rl:false},
+  {id:72,name:'Clayton Kershaw',team:'LAD',pos:['SP'],rarity:'SIGNATURE',ovr:73,year:2014,emblem:null,rl:false},
+  {id:73,name:'Justin Verlander',team:'HOU',pos:['SP'],rarity:'SIGNATURE',ovr:73,year:2018,emblem:null,rl:false},
+  {id:74,name:'Ronald Acuña Jr.',team:'ATL',pos:['RF'],rarity:'SIGNATURE',ovr:73,year:2023,emblem:null,rl:false},
+  // SIGNATURE — Row 1 (cols 0-7)
+  {id:75,name:'Clayton Kershaw',team:'LAD',pos:['SP'],rarity:'SIGNATURE',ovr:71,year:2011,emblem:null,rl:false},
+  {id:76,name:'Gerrit Cole',team:'HOU',pos:['SP'],rarity:'SIGNATURE',ovr:71,year:2018,emblem:null,rl:false},
+  {id:77,name:'Chris Sale',team:'BOS',pos:['SP'],rarity:'SIGNATURE',ovr:71,year:2018,emblem:null,rl:false},
+  {id:78,name:'Willie McCovey',team:'SF',pos:['1B'],rarity:'SIGNATURE',ovr:71,year:1969,emblem:null,rl:false},
+  {id:79,name:'Eddie Mathews',team:'ATL',pos:['3B'],rarity:'SIGNATURE',ovr:71,year:1953,emblem:null,rl:false},
+  {id:80,name:'Shawn Green',team:'LAD',pos:['RF'],rarity:'SIGNATURE',ovr:70,year:2001,emblem:null,rl:false},
+  {id:81,name:'Clayton Kershaw',team:'LAD',pos:['SP'],rarity:'SIGNATURE',ovr:70,year:2013,emblem:null,rl:false},
+  {id:82,name:'Eric Young Sr.',team:'COL',pos:['RF'],rarity:'SIGNATURE',ovr:70,year:1996,emblem:null,rl:false},
+  // WBC_SIGNATURE — Row 1 (cols 8-9)
+  {id:83,name:'Clayton Kershaw',team:'LAD',pos:['SP'],rarity:'WBC_SIGNATURE',ovr:78,year:2026,emblem:null,rl:false},
+  {id:84,name:'Yoshinobu Yamamoto',team:'LAD',pos:['SP'],rarity:'WBC_SIGNATURE',ovr:71,year:2026,emblem:null,rl:false},
+  // SIGNATURE — Row 2 col0
+  {id:85,name:'Shohei Ohtani',team:'LAD',pos:['DH'],rarity:'SIGNATURE',ovr:71,year:2026,emblem:null,rl:false},
+  // WBC_SIGNATURE — Row 2 cols 1-3
+  {id:86,name:'Will Smith',team:'LAD',pos:['C'],rarity:'WBC_SIGNATURE',ovr:68,year:2026,emblem:null,rl:false},
+  {id:87,name:'Ha-Seong Kim',team:'SD',pos:['C'],rarity:'WBC_SIGNATURE',ovr:61,year:2026,emblem:null,rl:false},
+  {id:88,name:'Ha-Seong Kim',team:'SD',pos:['CF'],rarity:'WBC_SIGNATURE',ovr:61,year:2026,emblem:null,rl:false},
+  // PRIME — Row 2 cols 4-9
+  {id:89,name:'Xander Bogaerts',team:'SD',pos:['SS'],rarity:'PRIME',ovr:67,year:2023,emblem:null,rl:false},
+  {id:90,name:'J.T. Realmuto',team:'PHI',pos:['C'],rarity:'PRIME',ovr:66,year:2019,emblem:null,rl:false},
+  {id:91,name:'Abner Uribe',team:'MIL',pos:['RP'],rarity:'PRIME',ovr:66,year:2025,emblem:null,rl:false},
+  {id:92,name:'Al Oliver',team:'PIT',pos:['RF'],rarity:'PRIME',ovr:66,year:1975,emblem:null,rl:false},
+  {id:93,name:'Teoscar Hernández',team:'LAD',pos:['DH'],rarity:'PRIME',ovr:66,year:2024,emblem:null,rl:false},
+  {id:94,name:'Willson Contreras',team:'MIL',pos:['C','DH'],rarity:'PRIME',ovr:66,year:2024,emblem:null,rl:false},
+  // PRIME — Row 3 (all 10)
+  {id:95,name:'Enrique Hernández',team:'LAD',pos:['CF','2B'],rarity:'PRIME',ovr:66,year:2018,emblem:null,rl:false},
+  {id:96,name:'Justin Turner',team:'LAD',pos:['3B'],rarity:'PRIME',ovr:66,year:2016,emblem:null,rl:false},
+  {id:97,name:'Kyle Seager',team:'SEA',pos:['3B'],rarity:'PRIME',ovr:66,year:2013,emblem:null,rl:false},
+  {id:98,name:'Yu Darvish',team:'LAD',pos:['SP'],rarity:'PRIME',ovr:66,year:2017,emblem:null,rl:false},
+  {id:99,name:'Chan Ho Park',team:'LAD',pos:['SP'],rarity:'PRIME',ovr:65,year:1998,emblem:null,rl:false},
+  {id:100,name:'Evan Phillips',team:'LAD',pos:['RP'],rarity:'PRIME',ovr:65,year:2022,emblem:null,rl:false},
+  {id:101,name:'Garrett Cleavinger',team:'TB',pos:['RP'],rarity:'PRIME',ovr:67,year:2026,emblem:null,rl:false},
+  {id:102,name:'David Bednar',team:'PIT',pos:['CP'],rarity:'PRIME',ovr:67,year:2026,emblem:null,rl:false},
+  {id:103,name:'Andrés Muñoz',team:'SEA',pos:['CP'],rarity:'PRIME',ovr:67,year:2026,emblem:null,rl:false},
+  {id:104,name:'Randy Arozarena',team:'SEA',pos:['LF'],rarity:'PRIME',ovr:67,year:2026,emblem:null,rl:false},
+  // WBC_PRIME — Row 4 cols 0-1
+  {id:105,name:'Otto López',team:'MIA',pos:['SS'],rarity:'WBC_PRIME',ovr:67,year:2026,emblem:null,rl:false},
+  {id:106,name:'Ceddanne Rafaela',team:'BOS',pos:['CF'],rarity:'WBC_PRIME',ovr:67,year:2026,emblem:null,rl:false},
+  // SIGNATURE — Row 4 col 2
+  {id:107,name:'Corey Seager',team:'LAD',pos:['SS'],rarity:'SIGNATURE',ovr:65,year:2017,emblem:null,rl:false},
+  // PRIME — Row 4 cols 3-9
+  {id:108,name:'Plácido Polanco',team:'STL',pos:['3B'],rarity:'PRIME',ovr:65,year:2001,emblem:null,rl:false},
+  {id:109,name:'Riley Greene',team:'DET',pos:['CF'],rarity:'PRIME',ovr:65,year:2023,emblem:null,rl:false},
+  {id:110,name:'Rafael Palmeiro',team:'BAL',pos:['1B'],rarity:'PRIME',ovr:65,year:1994,emblem:null,rl:false},
+  {id:111,name:'Luis González',team:'HOU',pos:['LF'],rarity:'PRIME',ovr:65,year:1997,emblem:null,rl:false},
+  {id:112,name:'Justin Turner',team:'LAD',pos:['3B'],rarity:'PRIME',ovr:65,year:2021,emblem:null,rl:false},
+  {id:113,name:'Shawn Green',team:'LAD',pos:['RF'],rarity:'PRIME',ovr:65,year:2003,emblem:null,rl:false},
+  {id:114,name:'Starling Marté',team:'PIT',pos:['LF'],rarity:'PRIME',ovr:65,year:2014,emblem:null,rl:false},
+  // SIGNATURE_BLACK — Row 5 cols 0-3
+  {id:115,name:'Ryan Helsley',team:'STL',pos:['CP'],rarity:'SIGNATURE_BLACK',ovr:64,year:2024,emblem:null,rl:false},
+  {id:116,name:'Griffin Jax',team:'MIN',pos:['RP'],rarity:'SIGNATURE_BLACK',ovr:64,year:2024,emblem:null,rl:false},
+  {id:117,name:'Kenley Jansen',team:'LAD',pos:['CP'],rarity:'SIGNATURE_BLACK',ovr:64,year:2017,emblem:null,rl:false},
+  {id:118,name:'Aroldis Chapman',team:'NYY',pos:['CP'],rarity:'SIGNATURE_BLACK',ovr:64,year:2021,emblem:null,rl:false},
+
+  // ═══════════════════════════════════════════
+  // NEW CARDS FROM resized_sprite_1 (10×7)
+  // ═══════════════════════════════════════════
+  // MOMENT — Row 0 cols 0-5 (Commander catcher set)
+  {id:119,name:'Alejandro Kirk',team:'TOR',pos:['C'],rarity:'MOMENT',ovr:72,year:null,emblem:'Commander',rl:false},
+  {id:120,name:'Hunter Goodman',team:'COL',pos:['C'],rarity:'MOMENT',ovr:71,year:null,emblem:'Commander',rl:false},
+  {id:121,name:'Darren Daulton',team:'PHI',pos:['C'],rarity:'MOMENT',ovr:71,year:null,emblem:'Commander',rl:false},
+  {id:122,name:'Shea Langeliers',team:'OAK',pos:['C'],rarity:'MOMENT',ovr:71,year:null,emblem:'Commander',rl:false},
+  {id:123,name:'Iván Rodríguez',team:'TEX',pos:['C'],rarity:'MOMENT',ovr:71,year:null,emblem:'Commander',rl:false},
+  {id:124,name:'Joe Mauer',team:'MIN',pos:['C'],rarity:'MOMENT',ovr:71,year:null,emblem:'Commander',rl:false},
+  // WBC_SIGNATURE_BLACK — Row 0 cols 6-9
+  {id:125,name:'Jarren Duran',team:'BOS',pos:['CF'],rarity:'WBC_SIGNATURE_BLACK',ovr:72,year:2026,emblem:null,rl:false},
+  {id:126,name:'Aaron Nola',team:'PHI',pos:['SP'],rarity:'WBC_SIGNATURE_BLACK',ovr:72,year:2026,emblem:null,rl:false},
+  {id:127,name:'Manny Machado',team:'SD',pos:['3B'],rarity:'WBC_SIGNATURE_BLACK',ovr:73,year:2026,emblem:null,rl:false},
+  {id:128,name:'Fernando Tatis Jr.',team:'SD',pos:['RF'],rarity:'WBC_SIGNATURE_BLACK',ovr:73,year:2026,emblem:null,rl:false},
+  // WBC_SIGNATURE — Row 1 cols 0-7
+  {id:129,name:'Fernando Tatis Jr.',team:'SD',pos:['SS'],rarity:'WBC_SIGNATURE',ovr:71,year:2026,emblem:null,rl:false},
+  {id:130,name:'Cal Raleigh',team:'SEA',pos:['C'],rarity:'WBC_SIGNATURE',ovr:71,year:2026,emblem:null,rl:false},
+  {id:131,name:'Juan Soto',team:'NYM',pos:['RF'],rarity:'WBC_SIGNATURE',ovr:73,year:2026,emblem:null,rl:false},
+  {id:132,name:'Logan Webb',team:'SF',pos:['SP'],rarity:'WBC_SIGNATURE',ovr:71,year:2026,emblem:null,rl:false},
+  {id:133,name:'Ronald Acuña Jr.',team:'ATL',pos:['RF'],rarity:'WBC_SIGNATURE',ovr:71,year:2026,emblem:null,rl:false},
+  {id:134,name:'Ronald Acuña Jr.',team:'ATL',pos:['LF'],rarity:'WBC_SIGNATURE',ovr:71,year:2026,emblem:null,rl:false},
+  {id:135,name:'Maikel García',team:'KC',pos:['SS'],rarity:'WBC_SIGNATURE',ovr:71,year:2026,emblem:null,rl:false},
+  {id:136,name:'Jarren Duran',team:'BOS',pos:['CF'],rarity:'WBC_SIGNATURE',ovr:72,year:2026,emblem:null,rl:false},
+  // PRIME — Row 3 cols 3-8
+  {id:137,name:'Jon Gray',team:'TEX',pos:['SP'],rarity:'PRIME',ovr:64,year:2022,emblem:null,rl:false},
+  {id:138,name:'Byron Buxton',team:'MIN',pos:['CF','DH'],rarity:'PRIME',ovr:64,year:2022,emblem:null,rl:false},
+  {id:139,name:'Joc Pederson',team:'LAD',pos:['LF'],rarity:'PRIME',ovr:64,year:2016,emblem:null,rl:false},
+  {id:140,name:'Harrison Bader',team:'STL',pos:['CF'],rarity:'PRIME',ovr:64,year:2021,emblem:null,rl:false},
+  {id:141,name:'Manuel Margot',team:'SD',pos:['CF'],rarity:'PRIME',ovr:64,year:2019,emblem:null,rl:false},
+  {id:142,name:'Chris Taylor',team:'LAD',pos:['SS'],rarity:'PRIME',ovr:64,year:2019,emblem:null,rl:false},
+  // WBC_PRIME — Row 4 cols 0-5
+  {id:143,name:'Alejandro Kirk',team:'TOR',pos:['DH'],rarity:'WBC_PRIME',ovr:67,year:2026,emblem:null,rl:false},
+  {id:144,name:'Alejandro Kirk',team:'TOR',pos:['C'],rarity:'WBC_PRIME',ovr:67,year:2026,emblem:null,rl:false},
+  {id:145,name:'Jameson Taillon',team:'CHC',pos:['SP'],rarity:'WBC_PRIME',ovr:66,year:2026,emblem:null,rl:false},
+  {id:146,name:'Griffin Jax',team:'MIN',pos:['SP'],rarity:'WBC_PRIME',ovr:66,year:2026,emblem:null,rl:false},
+  {id:147,name:'Garrett Whitlock',team:'BOS',pos:['RP'],rarity:'WBC_PRIME',ovr:66,year:2026,emblem:null,rl:false},
+  {id:148,name:'Eduard Bazardo',team:'BOS',pos:['RP'],rarity:'WBC_PRIME',ovr:66,year:2026,emblem:null,rl:false},
+  // MOMENT — Row 5 cols 3-4 (new Moments only)
+  {id:149,name:'Jerry Reuss',team:'LAD',pos:['SP'],rarity:'MOMENT',ovr:63,year:null,emblem:'Swingman',rl:false},
+  {id:150,name:'Craig Kimbrel',team:'LAD',pos:['CP'],rarity:'MOMENT',ovr:61,year:null,emblem:'Closer',rl:false},
+  // PRIME — Row 5 cols 5-9
+  {id:151,name:'Clayton Kershaw',team:'LAD',pos:['SP'],rarity:'PRIME',ovr:75,year:2015,emblem:null,rl:false},
+  {id:152,name:'Clayton Kershaw',team:'LAD',pos:['SP'],rarity:'PRIME',ovr:74,year:2014,emblem:null,rl:false},
+  {id:153,name:'Cody Bellinger',team:'LAD',pos:['CF','1B'],rarity:'PRIME',ovr:73,year:2019,emblem:null,rl:false},
+  {id:154,name:'Max Scherzer',team:'WSH',pos:['SP'],rarity:'PRIME',ovr:70,year:2017,emblem:null,rl:false},
+  {id:155,name:'Tyler Mahle',team:'CIN',pos:['SP'],rarity:'PRIME',ovr:65,year:2021,emblem:null,rl:false},
+  // FA_PRIME — Row 6 all 10 cols
+  {id:156,name:'Andrew Miller',team:'CLE',pos:['RP'],rarity:'FA_PRIME',ovr:64,year:2017,emblem:null,rl:false},
+  {id:157,name:'Alexis Díaz',team:'CIN',pos:['CP'],rarity:'FA_PRIME',ovr:62,year:2022,emblem:null,rl:false},
+  {id:158,name:'Cole Ragans',team:'KC',pos:['SP'],rarity:'FA_PRIME',ovr:62,year:2023,emblem:null,rl:false},
+  {id:159,name:'Germán Márquez',team:'COL',pos:['SP'],rarity:'FA_PRIME',ovr:62,year:2017,emblem:null,rl:false},
+  {id:160,name:'Amed Rosario',team:'CLE',pos:['SS'],rarity:'FA_PRIME',ovr:63,year:2023,emblem:null,rl:false},
+  {id:161,name:'Joc Pederson',team:'LAD',pos:['LF'],rarity:'FA_PRIME',ovr:63,year:2016,emblem:null,rl:false},
+  {id:162,name:'Joc Pederson',team:'LAD',pos:['CF'],rarity:'FA_PRIME',ovr:63,year:2015,emblem:null,rl:false},
+  {id:163,name:'Shane Victorino',team:'PHI',pos:['CF'],rarity:'FA_PRIME',ovr:62,year:2007,emblem:null,rl:false},
+  {id:164,name:'Shohei Ohtani',team:'LAD',pos:['SP'],rarity:'FA_PRIME',ovr:62,year:2025,emblem:null,rl:false},
+  {id:165,name:'Rich Hill',team:'LAD',pos:['SP'],rarity:'FA_PRIME',ovr:62,year:2017,emblem:null,rl:false},
+];
+
+/* ========== STATS ========== */
+function hash(id, s) {
+  let h = (id * 2654435761) >>> 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) ^ s.charCodeAt(i) * 2246822519) >>> 0;
+  return h;
+}
+function stat(p, k) {
+  const v = (hash(p.id, k) % 23) - 9;
+  return Math.max(45, Math.min(99, p.ovr + v));
+}
+function getStats(p) {
+  const pit = p.pos.some(x => ['SP','RP','CP'].includes(x));
+  if (pit) return { Velocity: stat(p,'vel'), Control: stat(p,'ctrl'), Break: stat(p,'brk'), Stamina: stat(p,'stm') };
+  return { Contact: stat(p,'con'), Power: stat(p,'pow'), Speed: stat(p,'spd'), Fielding: stat(p,'fld') };
+}
+
+/* ========== HELPERS ========== */
+function initials(name) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+function displayName(p) {
+  if (p.rarity === 'HOF') return p.name;
+  const parts = p.name.split(' ');
+  const abbr = parts[0][0] + '. ' + parts.slice(1).join(' ');
+  return p.year ? `${abbr} '${String(p.year).slice(-2)}` : abbr;
+}
+function isWBC(r) { return r.startsWith('WBC_'); }
+function isFA(r) { return r.startsWith('FA_'); }
+
+/* ========== FILTER CASCADE ========== */
+const ALL_DIVISIONS = {
+  AL: ['AL East','AL Central','AL West'],
+  NL: ['NL East','NL Central','NL West'],
+};
+
+function onLeague() {
+  const l = document.getElementById('league').value;
+  const dd = document.getElementById('division');
+  const td = document.getElementById('team');
+  dd.innerHTML = '<option value="">All Divisions</option>';
+  if (l) ALL_DIVISIONS[l].forEach(d => dd.innerHTML += `<option>${d}</option>`);
+  td.innerHTML = '<option value="">All Teams</option>';
+  const pool = l ? Object.entries(TEAMS).filter(([,t])=>t.l===l) : Object.entries(TEAMS);
+  pool.sort((a,b)=>a[1].c.localeCompare(b[1].c)).forEach(([k,t])=>{
+    td.innerHTML += `<option value="${k}">${k} – ${t.c} ${t.n}</option>`;
+  });
+  render();
+}
+function onDivision() {
+  const d = document.getElementById('division').value;
+  const l = document.getElementById('league').value;
+  const td = document.getElementById('team');
+  td.innerHTML = '<option value="">All Teams</option>';
+  const pool = Object.entries(TEAMS).filter(([,t])=>{
+    if (d) return t.d === d;
+    if (l) return t.l === l;
+    return true;
+  });
+  pool.sort((a,b)=>a[1].c.localeCompare(b[1].c)).forEach(([k,t])=>{
+    td.innerHTML += `<option value="${k}">${k} – ${t.c} ${t.n}</option>`;
+  });
+  render();
+}
+function onRarity() {
+  const r = document.getElementById('rarity').value;
+  const eg = document.getElementById('emblem-group');
+  const es = document.getElementById('emblem');
+  if (r === 'MOMENT') {
+    eg.style.display = '';
+    const emblems = [...new Set(players.filter(p=>p.rarity==='MOMENT'&&p.emblem).map(p=>p.emblem))].sort();
+    es.innerHTML = '<option value="">All Emblems</option>';
+    emblems.forEach(e => es.innerHTML += `<option>${e}</option>`);
+  } else {
+    eg.style.display = 'none';
+  }
+  render();
+}
+function clearFilters() {
+  ['q','ovrMin','ovrMax','year'].forEach(id => document.getElementById(id).value = '');
+  ['league','division','team','pos','rarity','emblem','sort'].forEach(id => document.getElementById(id).selectedIndex = 0);
+  document.getElementById('emblem-group').style.display = 'none';
+  onLeague();
+}
+
+/* ========== RENDER ========== */
+function render() {
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const league = document.getElementById('league').value;
+  const division = document.getElementById('division').value;
+  const team = document.getElementById('team').value;
+  const pos = document.getElementById('pos').value;
+  const rarity = document.getElementById('rarity').value;
+  const emblem = document.getElementById('emblem').value;
+  const ovrMin = parseInt(document.getElementById('ovrMin').value) || 0;
+  const ovrMax = parseInt(document.getElementById('ovrMax').value) || 99;
+  const year = document.getElementById('year').value.trim();
+  const sort = document.getElementById('sort').value;
+
+  let list = players.filter(p => {
+    const ti = TEAMS[p.team];
+    if (q && !p.name.toLowerCase().includes(q) && !p.team.toLowerCase().includes(q)
+        && !(ti && ti.n.toLowerCase().includes(q))) return false;
+    if (league && ti && ti.l !== league) return false;
+    if (division && ti && ti.d !== division) return false;
+    if (team && p.team !== team) return false;
+    if (pos && !p.pos.includes(pos)) return false;
+    if (rarity && p.rarity !== rarity) return false;
+    if (emblem && p.emblem !== emblem) return false;
+    if (p.ovr < ovrMin || p.ovr > ovrMax) return false;
+    if (year && p.year !== parseInt(year)) return false;
+    return true;
+  });
+
+  list.sort((a, b) => {
+    switch(sort) {
+      case 'RARITY_A': return RARITY[a.rarity].rank - RARITY[b.rarity].rank;
+      case 'OVR_D': return b.ovr - a.ovr;
+      case 'OVR_A': return a.ovr - b.ovr;
+      case 'NAME_A': return a.name.localeCompare(b.name);
+      case 'YEAR_D': return (b.year||0) - (a.year||0);
+      case 'YEAR_A': return (a.year||0) - (b.year||0);
+      default: { // RARITY_D
+        const rd = RARITY[b.rarity].rank - RARITY[a.rarity].rank;
+        return rd !== 0 ? rd : b.ovr - a.ovr;
+      }
+    }
+  });
+
+  document.getElementById('cnt').textContent = list.length;
+  document.getElementById('tot').textContent = players.length;
+
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  if (!list.length) {
+    grid.innerHTML = '<div class="nr">No players match your filters.</div>';
+    return;
+  }
+
+  list.forEach(p => grid.appendChild(buildCard(p)));
+}
+
+function buildCard(p) {
+  const r = p.rarity;
+  const cfg = RARITY[r];
+  const ti = TEAMS[p.team];
+  const dn = displayName(p);
+  const ini = initials(p.name);
+  const stats = getStats(p);
+  const pit = p.pos.some(x => ['SP','RP','CP'].includes(x));
+  const wbc = isWBC(r);
+  const fa  = isFA(r);
+
+  // Sprite / photo
+  const sprite = SPRITES[p.id];
+  const spriteStyle = sprite
+    ? `background-image:url('${sprite.src}');background-position:${sprite.bx}% ${sprite.by}%;background-size:${sprite.sz || '600% 200%'};`
+    : '';
+  const hasPhotoClass = sprite ? ' has-photo' : '';
+
+  // badges in art area
+  let extraBadges = '';
+  if (p.rl) extraBadges += `<div class="rl-badge">⚡ Rival Link</div>`;
+  if (p.emblem) {
+    const ec = EMBLEM_COLORS[p.emblem] || '#555';
+    extraBadges += `<div class="emb-badge" style="background:${ec}cc;border:1px solid ${ec}66;color:#fff">${p.emblem}</div>`;
+  }
+  if (wbc) extraBadges += `<div class="wbc-badge">🌐 WBC</div>`;
+  if (r === 'HOF') extraBadges += `<div class="hof-crown">Hall of Fame</div>`;
+  if (r === 'LIVE') extraBadges += `<div class="live-badge"><span class="live-dot"></span>LIVE S</div>`;
+  if (fa) extraBadges += `<div style="position:absolute;bottom:8px;right:9px;z-index:3;font-family:var(--fu);font-size:.52rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:rgba(100,116,139,.85);color:#fff">FA</div>`;
+
+  const posHTML = p.pos.map(x => `<span class="pb">${x}</span>`).join('');
+
+  // Build stats HTML for back
+  let statsHTML = '';
+  Object.entries(stats).forEach(([k, v]) => {
+    statsHTML += `<div class="sr">
+      <div class="sh"><span class="sn">${k}</span><span class="sv" style="color:${statColor(v)}">${v}</span></div>
+      <div class="st"><div class="sf" data-val="${v}" style="width:0%"></div></div>
+    </div>`;
+  });
+
+  const backSub = `${ti ? ti.c + ' ' + ti.n : p.team} · ${cfg.label}${p.emblem ? ' · '+p.emblem : ''}`;
+
+  const wrap = document.createElement('div');
+  wrap.className = `flip-card r-${r}`;
+  wrap.innerHTML = `
+    <div class="fi2${hasPhotoClass}" id="fc-${p.id}" onclick="flip(this,${p.id})">
+      <div class="face cf">
+        <div class="ca">
+          <div class="ab" style="${spriteStyle}"></div>
+          <span class="ai" style="${sprite ? 'display:none' : ''}">${ini}</span>
+          <div class="ao">${p.ovr}</div>
+          <div class="aps">${posHTML}</div>
+          ${extraBadges}
+        </div>
+        <div class="ci">
+          <div class="crl">${cfg.label}</div>
+          <div class="cn">${dn}</div>
+          <div class="cm">
+            <span class="ct">${p.team}</span>
+            <span>·</span>
+            <span>${ti ? ti.d : ''}</span>
+            ${p.year ? `<span class="yb">${p.year}</span>` : ''}
+          </div>
+        </div>
+      </div>
+      <div class="face bk cbk">
+        <div class="bh">
+          <div class="bn">${p.name}</div>
+          <div class="bs">${backSub}</div>
+        </div>
+        <div class="ss">${statsHTML}</div>
+        <div class="hint">Tap again to flip back</div>
+      </div>
+    </div>`;
+  return wrap;
+}
+
+function statColor(v) {
+  if (v >= 85) return '#6ee7b7';
+  if (v >= 75) return '#93c5fd';
+  if (v >= 65) return '#e8ecf5';
+  return 'var(--muted)';
+}
+
+function flip(el, id) {
+  el.classList.toggle('flipped');
+  if (el.classList.contains('flipped')) {
+    setTimeout(() => {
+      el.querySelectorAll('.sf').forEach(bar => {
+        bar.style.width = bar.dataset.val + '%';
+      });
+    }, 150);
+  } else {
+    el.querySelectorAll('.sf').forEach(bar => bar.style.width = '0%');
+  }
+}
+
+/* ========== MOBILE UI ========== */
+function toggleNav() {
+  const ham = document.getElementById('ham');
+  const nav = document.getElementById('mob-nav');
+  ham.classList.toggle('open');
+  nav.classList.toggle('open');
+  ham.setAttribute('aria-label', nav.classList.contains('open') ? 'Close menu' : 'Open menu');
+}
+document.getElementById('mob-nav').querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('ham').classList.remove('open');
+    document.getElementById('mob-nav').classList.remove('open');
+  });
+});
+
+function toggleFilters() {
+  const btn = document.getElementById('filter-toggle');
+  const fp  = document.getElementById('fp');
+  btn.classList.toggle('open');
+  fp.classList.toggle('collapsed');
+}
+
+// On mobile, start with filters collapsed
+function initMobile() {
+  if (window.innerWidth <= 600) {
+    const fp  = document.getElementById('fp');
+    fp.classList.add('collapsed');
+  }
+}
+
+/* ========== INIT ========== */
+(function init() {
+  // Populate team dropdown initially (all teams)
+  const td = document.getElementById('team');
+  Object.entries(TEAMS).sort((a,b)=>a[1].c.localeCompare(b[1].c)).forEach(([k,t])=>{
+    td.innerHTML += `<option value="${k}">${k} – ${t.c} ${t.n}</option>`;
+  });
+  initMobile();
+  render();
+})();
+</script>
+</body>
+</html>
